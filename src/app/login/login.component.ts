@@ -37,18 +37,7 @@ closeResult: string;
          this._service.error('Error!','Ha ocurrido un error.'+text)
 
   }
-  toast(text){
-    // Get the snackbar DIV
-    var x = document.getElementById("toast")
 
-        // Add the "show" class to DIV
-        x.innerHTML=text;
-        x.className = "show bg-danger";
-
-
-        // After 3 seconds, remove the show class from DIV
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-  }
   login(formValue:any){
    //console.log(`user: ${formValue.username} pass: ${formValue.password}`)
 
@@ -94,10 +83,9 @@ closeResult: string;
         this.router.navigate([`home/${type}`])
       }).catch(error => {
         console.clear
-   $('#Loading').css('display','none')
+        $('#Loading').css('display','none')
 
         this.create(error)
-        this.toast(error)
 
       })
 

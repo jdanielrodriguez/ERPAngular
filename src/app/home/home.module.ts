@@ -7,8 +7,6 @@ import { HomeRoutingModule } from './home.routing';
 import { NavComponent } from './nav.component';
 
 import { UsuarioGuard } from "./../_guards/usuario.guard";
-import { EmpresaGuard } from "./../_guards/empresa.guard";
-import { ClienteGuard } from "./../_guards/cliente.guard";
 import { AdminGuard } from "./../_guards/admin.guard";
 @NgModule({
   imports: [
@@ -20,8 +18,6 @@ import { AdminGuard } from "./../_guards/admin.guard";
   declarations: [NavComponent],
   providers: [
     UsuarioGuard,
-    EmpresaGuard,
-    ClienteGuard,
     AdminGuard
   ]
 })

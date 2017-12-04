@@ -7,8 +7,8 @@ import { AdminGuard } from "./../_guards/admin.guard";
 const routes: Routes = [
   { path: '', redirectTo: 'usuario', pathMatch: 'full' },
   { path: '', component: NavComponent, children: [
-    { path: 'usuario',loadChildren: 'app/home/usuario/usuario.module#UsuarioModule', canActivate: [UsuarioGuard]},
-    { path: 'admin',loadChildren: 'app/home/admin/admin.module#AdminModule', canActivate: [AdminGuard]},
+    // { path: 'usuario',loadChildren: 'app/home/usuario/usuario.module#UsuarioModule', canActivate: [UsuarioGuard]},
+    // { path: 'admin',loadChildren: 'app/home/admin/admin.module#AdminModule', canActivate: [AdminGuard]},
   ]},
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
