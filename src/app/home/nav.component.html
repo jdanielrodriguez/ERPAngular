@@ -1,9 +1,9 @@
-<div class="page-container page-navigation-top-fixed page-navigation-toggled page-container-wide">
+<div class="page-container page-navigation-top-fixed">
 
   <!-- START PAGE SIDEBAR -->
   <div class="page-sidebar mCustomScrollbar _mCS_1 mCS-autoHide page-sidebar-fixed scroll" style="height: 858px;">
       <!-- START X-NAVIGATION -->
-      <ul id="navigations" class="x-navigation x-navigation-minimized">
+      <ul id="navigations" class="x-navigation">
           <li class="xn-logo">
               <a href="index.html">Joli Admin</a>
               <a class="x-navigation-control"></a>
@@ -29,9 +29,24 @@
           <li class="xn-title">Navigation</li>
           <li>
               <a routerLinkActive="active"
-              [routerLink]="[ './usuario' ]"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+              [routerLink]="[ './admin/dashboard' ]"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
           </li>
-          <li class="xn-openable active" #pages >
+          <li class="xn-openable" #usuarios >
+              <a (click)="abrir(usuarios)"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a>
+              <ul>
+                  <li><a href="pages-gallery.html"><span class="fa fa-image"></span> Empleados</a></li>
+                  <li class="xn-openable" #ususarios1>
+                      <a (click)="abrir(ususarios1)"><span class="fa fa-envelope"></span> Usuarios</a>
+                      <ul>
+                          <li><a routerLinkActive="active"
+                            [routerLink]="[ './admin/usuarios' ]"><span class="fa fa-file-text"></span> Usuarios</a></li>
+                          <li><a href="pages-mailbox-compose.html"><span class="fa fa-pencil"></span> Tipo Usuarios</a></li>
+                      </ul>
+                  </li>
+
+              </ul>
+          </li>
+          <li class="xn-openable" #pages >
               <a (click)="abrir(pages)"><span class="fa fa-files-o"></span> <span class="xn-text">Pages</span></a>
               <ul>
                   <li><a href="pages-gallery.html"><span class="fa fa-image"></span> Gallery</a></li>
