@@ -1,9 +1,9 @@
-<div class="page-container page-navigation-top-fixed">
+<div class="page-container page-navigation-top-fixed page-navigation-toggled page-container-wide">
 
   <!-- START PAGE SIDEBAR -->
   <div class="page-sidebar mCustomScrollbar _mCS_1 mCS-autoHide page-sidebar-fixed scroll" style="height: 858px;">
       <!-- START X-NAVIGATION -->
-      <ul id="navigations" class="x-navigation">
+      <ul id="navigations" class="x-navigation x-navigation-minimized">
           <li class="xn-logo">
               <a href="index.html">Joli Admin</a>
               <a class="x-navigation-control"></a>
@@ -31,7 +31,7 @@
               <a routerLinkActive="active"
               [routerLink]="[ './usuario' ]"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
           </li>
-          <li class="xn-openable" #pages >
+          <li class="xn-openable active" #pages >
               <a (click)="abrir(pages)"><span class="fa fa-files-o"></span> <span class="xn-text">Pages</span></a>
               <ul>
                   <li><a href="pages-gallery.html"><span class="fa fa-image"></span> Gallery</a></li>
