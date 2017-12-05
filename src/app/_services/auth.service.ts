@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions } from "@angular/http";
 
 import { path } from "../config.module";
 
-import "rxjs/add/operator/toPromise"; 
+import "rxjs/add/operator/toPromise";
 
 @Injectable()
 export class AuthService {
@@ -15,7 +15,7 @@ export class AuthService {
   private basePath:string = path.path
 
   constructor(private http:Http){
-    
+
   }
 
   private handleError(error:any):Promise<any> {
@@ -37,8 +37,8 @@ export class AuthService {
   }
 
   recovery(form:any):Promise<any>{
-    let url = `${this.basePath}/api/users/password/reset`
-    
+    let url = `${this.basePath}/api/usuarios/password/reset`
+
     return this.http.post(url,form)
                       .toPromise()
                       .then(response => {

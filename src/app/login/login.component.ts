@@ -34,7 +34,7 @@ closeResult: string;
   };
 
   create(text) {
-         this._service.error('Error!','Ha ocurrido un error.'+text)
+         this._service.error('Error!',text)
 
   }
 
@@ -58,17 +58,17 @@ closeResult: string;
         localStorage.setItem('currentPicture', response.picture);
         localStorage.setItem('currentState', response.state);
 
-        switch(response.type){
+        switch(response.rol){
           case 1:{
             type = 'usuario';
             break;
           }
           case 2:{
-            type = 'cliente';
+            type = 'usuario';
             break;
           }
           case 3:{
-            type = 'empresa';
+            type = 'admin';
             break;
           }
           case 4:{
@@ -84,8 +84,9 @@ closeResult: string;
       }).catch(error => {
         console.clear
         $('#Loading').css('display','none')
-
-        this.create(error)
+        if(error.status==401){
+          this.create("Usuario o contraseña incorrectos");
+        }
 
       })
 

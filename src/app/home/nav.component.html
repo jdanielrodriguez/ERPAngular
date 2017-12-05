@@ -1,269 +1,322 @@
-<div id="wrapper">
-  <!-- Navigation -->
-  <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0">
-      <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg "  href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
-          <div class="top-left-part">
-              <a class="logo" href="index.html"><b><img src="../assets/images/fs-icon.png" alt="Home"></b><span id="apple-admin" class="hidden-xs"><img src="../assets/images/fs.png" alt="Home"></span></a>
-          </div>
-          <ul class="nav navbar-top-links navbar-left">
-            <li><a (click)="hideNav()" class="open-close hidden-xs waves-effect waves-light"><i class=" ti-menu"></i></a></li>
+<div class="page-container page-navigation-top-fixed">
 
-            <!-- /.dropdown -->
-            <li class="dropdown" *ngIf="type=='tutor'" (click)="updateNotifications()"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><i class="icon-bell"></i> <span class="badge badge-xs badge-success" *ngIf="nNotifications>0">{{nNotifications}}</span></a>
-                <ul class="dropdown-menu dropdown-alerts">
-                    <li *ngFor="let data of notifications">
-                        <a (click)="updateNotification(data.id)" [routerLink]="[ './tutor/alumnos' , 1 ]">
-                            <div> <i *ngIf="data.type==2" class="ti-check fa-fw"></i> <i *ngIf="data.type==1" class="ti-folder fa-fw"></i> {{data.title}}  </div>
-                        </a>
-                      <div class="divider"style="padding: 0px;margin: 0px;"></div>
-                    </li>
+  <!-- START PAGE SIDEBAR -->
+  <div class="page-sidebar mCustomScrollbar _mCS_1 mCS-autoHide page-sidebar-fixed scroll" style="height: 858px;">
+      <!-- START X-NAVIGATION -->
+      <ul id="navigations" class="x-navigation">
+          <li class="xn-logo">
+              <a href="index.html">Joli Admin</a>
+              <a class="x-navigation-control"></a>
+          </li>
+          <li class="xn-profile">
+              <a class="profile-mini">
+                  <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
+              </a>
+              <div class="profile">
+                  <div class="profile-image">
+                      <img src="assets/images/users/avatar.jpg" alt="John Doe"/>
+                  </div>
+                  <div class="profile-data">
+                      <div class="profile-data-name">John Doe</div>
+                      <div class="profile-data-title">Web Developer/Designer</div>
+                  </div>
+                  <div class="profile-controls">
+                      <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
+                      <a href="pages-messages.html" class="profile-control-right"><span class="fa fa-envelope"></span></a>
+                  </div>
+              </div>
+          </li>
+          <li class="xn-title">Navigation</li>
+          <li>
+              <a routerLinkActive="active"
+              [routerLink]="[ './usuario' ]"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+          </li>
+          <li class="xn-openable" #pages >
+              <a (click)="abrir(pages)"><span class="fa fa-files-o"></span> <span class="xn-text">Pages</span></a>
+              <ul>
+                  <li><a href="pages-gallery.html"><span class="fa fa-image"></span> Gallery</a></li>
+                  <li><a href="pages-profile.html"><span class="fa fa-user"></span> Profile</a></li>
+                  <li><a href="pages-address-book.html"><span class="fa fa-users"></span> Address Book</a></li>
+                  <li class="xn-openable" #timeline>
+                      <a (click)="abrir(timeline)"><span class="fa fa-clock-o"></span> Timeline</a>
+                      <ul>
+                          <li><a href="pages-timeline.html"><span class="fa fa-align-center"></span> Default</a></li>
+                          <li><a href="pages-timeline-simple.html"><span class="fa fa-align-justify"></span> Full Width</a></li>
+                      </ul>
+                  </li>
+                  <li class="xn-openable" #mailbox>
+                      <a (click)="abrir(mailbox)"><span class="fa fa-envelope"></span> Mailbox</a>
+                      <ul>
+                          <li><a href="pages-mailbox-inbox.html"><span class="fa fa-inbox"></span> Inbox</a></li>
+                          <li><a href="pages-mailbox-message.html"><span class="fa fa-file-text"></span> Message</a></li>
+                          <li><a href="pages-mailbox-compose.html"><span class="fa fa-pencil"></span> Compose</a></li>
+                      </ul>
+                  </li>
+                  <li><a href="pages-messages.html"><span class="fa fa-comments"></span> Messages</a></li>
+                  <li><a href="pages-calendar.html"><span class="fa fa-calendar"></span> Calendar</a></li>
+                  <li><a href="pages-tasks.html"><span class="fa fa-edit"></span> Tasks</a></li>
+                  <li><a href="pages-content-table.html"><span class="fa fa-columns"></span> Content Table</a></li>
+                  <li><a href="pages-faq.html"><span class="fa fa-question-circle"></span> FAQ</a></li>
+                  <li><a href="pages-search.html"><span class="fa fa-search"></span> Search</a></li>
+                  <li class="xn-openable" #blog>
+                      <a (click)="abrir(blog)"><span class="fa fa-file"></span> Blog</a>
 
-                </ul>
-                <!-- /.dropdown-alerts -->
-            </li>
-        </ul>
-          <ul class="nav navbar-top-links navbar-right pull-right">
-              <li>
-                  <form role="search" class="app-search hidden-xs">
-                      <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
-              </li>
-              <li class="dropdown">
-                  <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="{{((picture!='null')?(picture):'https://d30y9cdsu7xlg0.cloudfront.net/png/17241-200.png')}}" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{((firstname!="null")?(firstname+' '):'')+((lastname!="null")?lastname:user)}}</b> </a>
-                  <ul class="dropdown-menu dropdown-user">
-                      <li *ngIf="type=='admin'"><a routerLinkActive="active"
-                        [routerLink]="[ './admin/profile' ]"><i class="ti-user"></i> Mi Perfil</a></li>
-                      <li *ngIf="type=='usuario'"><a routerLinkActive="active"
-                        [routerLink]="[ './usuario/profile' ]"><i class="ti-user"></i> Mi Perfil</a></li>
-                      <li *ngIf="type=='empresa'"><a routerLinkActive="active"
-                        [routerLink]="[ './empresa/profile' ]"><i class="ti-user"></i> Mi Perfil</a></li>
-                      <li *ngIf="type=='cliente'"><a routerLinkActive="active"
-                        [routerLink]="[ './cliente/profile' ]"><i class="ti-user"></i> Mi Perfil</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li *ngIf="type=='admin'"><a routerLinkActive="active"
-                        [routerLink]="[ './admin/config' ]"><i class="ti-settings"></i> Configuracion de Cuenta</a></li>
-                      <li *ngIf="type=='usuario'"><a routerLinkActive="active"
-                        [routerLink]="[ './usuario/config' ]"><i class="ti-settings"></i> Configuracion de Cuenta</a></li>
-                      <li *ngIf="type=='empresa'"><a routerLinkActive="active"
-                        [routerLink]="[ './empresa/config' ]"><i class="ti-settings"></i> Configuracion de Cuenta</a></li>
-                      <li *ngIf="type=='cliente'"><a routerLinkActive="active"
-                        [routerLink]="[ './cliente/config' ]"><i class="ti-settings"></i> Configuracion de Cuenta</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="/" (click)="logout()"><i class="fa fa-power-off"></i> Logout</a></li>
-                  </ul>
-                  <!-- /.dropdown-user -->
-              </li>
-              <!-- /.dropdown -->
-          </ul>
-      </div>
-      <!-- /.navbar-header -->
-      <!-- /.navbar-top-links -->
-      <!-- /.navbar-static-side -->
-  </nav>
+                      <ul>
+                          <li><a href="pages-blog-list.html"><span class="fa fa-copy"></span> List of Posts</a></li>
+                          <li><a href="pages-blog-post.html"><span class="fa fa-file-o"></span>Single Post</a></li>
+                      </ul>
+                  </li>
+                  <li class="xn-openable" #login>
+                      <a (click)="abrir(login)"><span class="fa fa-sign-in"></span> Login</a>
+                      <ul>
+                          <li><a href="pages-login.html">App Login</a></li>
+                          <li><a href="pages-login-website.html">Website Login</a></li>
+                          <li><a href="pages-login-website-light.html"> Website Login Light</a></li>
+                      </ul>
+                  </li>
+                  <li class="xn-openable" #error>
+                      <a (click)="abrir(error)"><span class="fa fa-warning"></span> Error Pages</a>
+                      <ul>
+                          <li><a href="pages-error-404.html">Error 404 Sample 1</a></li>
+                          <li><a href="pages-error-404-2.html">Error 404 Sample 2</a></li>
+                          <li><a href="pages-error-500.html"> Error 500</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+          <li class="xn-openable" #boxed>
+              <a (click)="abrir(boxed)"><span class="fa fa-file-text-o"></span> <span class="xn-text">Layouts</span></a>
+              <ul>
+                  <li><a href="layout-boxed.html">Boxed</a></li>
+                  <li><a href="layout-nav-toggled.html">Navigation Toggled</a></li>
+                  <li><a href="layout-nav-top.html">Navigation Top</a></li>
+                  <li><a href="layout-nav-right.html">Navigation Right</a></li>
+                  <li><a href="layout-nav-top-fixed.html">Top Navigation Fixed</a></li>
+                  <li><a href="layout-nav-custom.html">Custom Navigation</a></li>
+                  <li><a href="layout-frame-left.html">Frame Left Column</a></li>
+                  <li><a href="layout-frame-right.html">Frame Right Column</a></li>
+                  <li><a href="layout-search-left.html">Search Left Side</a></li>
+                  <li><a href="blank.html">Blank Page</a></li>
+              </ul>
+          </li>
+          <li class="xn-title">Components</li>
+          <li class="xn-openable" #ui>
+              <a (click)="abrir(ui)"><span class="fa fa-cogs"></span> <span class="xn-text">UI Kits</span></a>
+              <ul>
+                  <li><a href="ui-widgets.html"><span class="fa fa-heart"></span> Widgets</a></li>
+                  <li><a href="ui-elements.html"><span class="fa fa-cogs"></span> Elements</a></li>
+                  <li><a href="ui-buttons.html"><span class="fa fa-square-o"></span> Buttons</a></li>
+                  <li><a href="ui-panels.html"><span class="fa fa-pencil-square-o"></span> Panels</a></li>
+                  <li><a href="ui-icons.html"><span class="fa fa-magic"></span> Icons</a><div class="informer informer-warning">+679</div></li>
+                  <li><a href="ui-typography.html"><span class="fa fa-pencil"></span> Typography</a></li>
+                  <li><a href="ui-portlet.html"><span class="fa fa-th"></span> Portlet</a></li>
+                  <li><a href="ui-sliders.html"><span class="fa fa-arrows-h"></span> Sliders</a></li>
+                  <li class="active"><a href="ui-alerts-popups.html"><span class="fa fa-warning"></span> Alerts & Popups</a></li>
+                  <li><a href="ui-lists.html"><span class="fa fa-list-ul"></span> Lists</a></li>
+                  <li><a href="ui-tour.html"><span class="fa fa-random"></span> Tour</a></li>
+              </ul>
+          </li>
+          <li class="xn-openable" #layouts>
+              <a (click)="abrir(layouts)"><span class="fa fa-pencil"></span> <span class="xn-text">Forms</span></a>
+              <ul>
+                  <li>
+                      <a href="form-layouts-two-column.html"><span class="fa fa-tasks"></span> Form Layouts</a>
+                      <div class="informer informer-danger">New</div>
+                      <ul>
+                          <li><a href="form-layouts-one-column.html"><span class="fa fa-align-justify"></span> One Column</a></li>
+                          <li><a href="form-layouts-two-column.html"><span class="fa fa-th-large"></span> Two Column</a></li>
+                          <li><a href="form-layouts-tabbed.html"><span class="fa fa-table"></span> Tabbed</a></li>
+                          <li><a href="form-layouts-separated.html"><span class="fa fa-th-list"></span> Separated Rows</a></li>
+                      </ul>
+                  </li>
+                  <li><a href="form-elements.html"><span class="fa fa-file-text-o"></span> Elements</a></li>
+                  <li><a href="form-validation.html"><span class="fa fa-list-alt"></span> Validation</a></li>
+                  <li><a href="form-wizards.html"><span class="fa fa-arrow-right"></span> Wizards</a></li>
+                  <li><a href="form-editors.html"><span class="fa fa-text-width"></span> WYSIWYG Editors</a></li>
+                  <li><a href="form-file-handling.html"><span class="fa fa-floppy-o"></span> File Handling</a></li>
+              </ul>
+          </li>
+          <li class="xn-openable" #tables>
+              <a  (click)="abrir(tables)"><span class="fa fa-table"></span> <span class="xn-text">Tables</span></a>
+              <ul>
+                  <li><a href="table-basic.html"><span class="fa fa-align-justify"></span> Basic</a></li>
+                  <li><a href="table-datatables.html"><span class="fa fa-sort-alpha-desc"></span> Data Tables</a></li>
+                  <li><a href="table-export.html"><span class="fa fa-download"></span> Export Tables</a></li>
+              </ul>
+          </li>
+          <li class="xn-openable">
+              <a><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Charts</span></a>
+              <ul>
+                  <li><a href="charts-morris.html"><span class="xn-text">Morris</span></a></li>
+                  <li><a href="charts-nvd3.html"><span class="xn-text">NVD3</span></a></li>
+                  <li><a href="charts-rickshaw.html"><span class="xn-text">Rickshaw</span></a></li>
+                  <li><a href="charts-other.html"><span class="xn-text">Other</span></a></li>
+              </ul>
+          </li>
+          <li>
+              <a href="maps.html"><span class="fa fa-map-marker"></span> <span class="xn-text">Maps</span></a>
+          </li>
+          <li class="xn-openable">
+              <a><span class="fa fa-sitemap"></span> <span class="xn-text">Navigation Levels</span></a>
+              <ul>
+                  <li class="xn-openable">
+                      <a>Second Level</a>
+                      <ul>
+                          <li class="xn-openable">
+                              <a>Third Level</a>
+                              <ul>
+                                  <li class="xn-openable">
+                                      <a>Fourth Level</a>
+                                      <ul>
+                                          <li><a>Fifth Level</a></li>
+                                      </ul>
+                                  </li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+      <!-- END X-NAVIGATION -->
+  </div>
+  <!-- END PAGE SIDEBAR -->
 
-  <div class="navbar-default sidebar nicescroll" role="navigation">
-    <div class="sidebar-nav navbar-collapse collapse">
-    <!-- inicia menu empresa -->
-      <ul *ngIf="type=='empresa'" class="nav" id="side-menu">
-        <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-            <div class="input-group custom-search-form">
-                <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
-<button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
-</span> </div>
-            <!-- /input-group -->
+  <div class="page-content">
+
+    <!-- START X-NAVIGATION VERTICAL -->
+    <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+        <!-- TOGGLE NAVIGATION -->
+        <li class="xn-icon-button">
+            <a class="x-navigation-minimize" (click)="colapsse()"><span class="fa fa-dedent"></span></a>
         </li>
-        <li  class="nav-small-cap">Empresa</li>
-        <li> <a routerLinkActive="active"
-          [routerLink]="[ './empresa/dashboard' ]" class="waves-effect"><i class="icon-speedometer fa-fw"></i> Dashboard</a>
+        <!-- END TOGGLE NAVIGATION -->
+        <!-- SEARCH -->
+        <li class="xn-search">
+            <form role="form">
+                <input type="text" name="search" placeholder="Search..."/>
+            </form>
         </li>
-        <li> <a routerLinkActive="active"
-          [routerLink]="[ './empresa/alumnos' , 1 ]" class="waves-effect"><i class="fa fa-user fa-fw"></i> Alumnos</a>
+        <!-- END SEARCH -->
+        <!-- SIGN OUT -->
+        <li class="xn-icon-button pull-right">
+            <a class="mb-control" data-toggle="modal" data-target="#mb-signout"><span class="fa fa-sign-out"></span></a>
         </li>
-        <li> <a routerLinkActive="active"
-          [routerLink]="[ './empresa/notas']" class="waves-effect"><i class="fa fa-file-pdf-o fa-fw"></i> Reporte Notas</a>
+        <!-- END SIGN OUT -->
+        <!-- MESSAGES -->
+        <li class="xn-icon-button pull-right">
+            <a><span class="fa fa-comments"></span></a>
+            <div class="informer informer-danger">4</div>
+            <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="fa fa-comments"></span> Messages</h3>
+                    <div class="pull-right">
+                        <span class="label label-danger">4 new</span>
+                    </div>
+                </div>
+                <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+                    <a class="list-group-item">
+                        <div class="list-group-status status-online"></div>
+                        <img src="assets/images/users/user2.jpg" class="pull-left" alt="John Doe"/>
+                        <span class="contacts-title">John Doe</span>
+                        <p>Praesent placerat tellus id augue condimentum</p>
+                    </a>
+                    <a class="list-group-item">
+                        <div class="list-group-status status-away"></div>
+                        <img src="assets/images/users/user.jpg" class="pull-left" alt="Dmitry Ivaniuk"/>
+                        <span class="contacts-title">Dmitry Ivaniuk</span>
+                        <p>Donec risus sapien, sagittis et magna quis</p>
+                    </a>
+                    <a class="list-group-item">
+                        <div class="list-group-status status-away"></div>
+                        <img src="assets/images/users/user3.jpg" class="pull-left" alt="Nadia Ali"/>
+                        <span class="contacts-title">Nadia Ali</span>
+                        <p>Mauris vel eros ut nunc rhoncus cursus sed</p>
+                    </a>
+                    <a class="list-group-item">
+                        <div class="list-group-status status-offline"></div>
+                        <img src="assets/images/users/user6.jpg" class="pull-left" alt="Darth Vader"/>
+                        <span class="contacts-title">Darth Vader</span>
+                        <p>I want my money back!</p>
+                    </a>
+                </div>
+                <div class="panel-footer text-center">
+                    <a href="pages-messages.html">Show all messages</a>
+                </div>
+            </div>
         </li>
+        <!-- END MESSAGES -->
+        <!-- TASKS -->
+        <li class="xn-icon-button pull-right">
+            <a><span class="fa fa-tasks"></span></a>
+            <div class="informer informer-warning">3</div>
+            <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="fa fa-tasks"></span> Tasks</h3>
+                    <div class="pull-right">
+                        <span class="label label-warning">3 active</span>
+                    </div>
+                </div>
+                <div class="panel-body list-group scroll" style="height: 200px;">
+                    <a class="list-group-item">
+                        <strong>Phasellus augue arcu, elementum</strong>
+                        <div class="progress progress-small progress-striped active">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">50%</div>
+                        </div>
+                        <small class="text-muted">John Doe, 25 Sep 2014 / 50%</small>
+                    </a>
+                    <a class="list-group-item">
+                        <strong>Aenean ac cursus</strong>
+                        <div class="progress progress-small progress-striped active">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">80%</div>
+                        </div>
+                        <small class="text-muted">Dmitry Ivaniuk, 24 Sep 2014 / 80%</small>
+                    </a>
+                    <a class="list-group-item">
+                        <strong>Lorem ipsum dolor</strong>
+                        <div class="progress progress-small progress-striped active">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%;">95%</div>
+                        </div>
+                        <small class="text-muted">John Doe, 23 Sep 2014 / 95%</small>
+                    </a>
+                    <a class="list-group-item">
+                        <strong>Cras suscipit ac quam at tincidunt.</strong>
+                        <div class="progress progress-small">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
+                        </div>
+                        <small class="text-muted">John Doe, 21 Sep 2014 /</small><small class="text-success"> Done</small>
+                    </a>
+                </div>
+                <div class="panel-footer text-center">
+                    <a href="pages-tasks.html">Show all tasks</a>
+                </div>
+            </div>
+        </li>
+        <!-- END TASKS -->
     </ul>
-<!-- fin menu empresa -->
-<!-- inicia menu clientes -->
-    <ul *ngIf="type=='cliente'" class="nav" id="side-menu">
-      <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-        <div class="input-group custom-search-form">
-            <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
-        <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
-        </span> </div>
-        <!-- /input-group -->
-    </li>
-    <li  class="nav-small-cap">Cliente</li>
-    <li> <a routerLinkActive="active"
-      [routerLink]="[ './cliente/dashboard' ]" class="waves-effect"><i class="icon-speedometer fa-fw"></i> Dashboard</a>
-    </li>
-    <li> <a routerLinkActive="active"
-      [routerLink]="[ './cliente/cursos' , 1 ]" class="waves-effect"><i class="fa fa-user fa-fw"></i> Alumnos</a>
-    </li>
-    <li> <a routerLinkActive="active"
-      [routerLink]="[ './cliente/cursos' , 2 ]" class="waves-effect"><i class="fa fa-edit fa-fw"></i> Tareas</a>
-    </li>
-    <li> <a routerLinkActive="active"
-      [routerLink]="[ './cliente/cursos' , 3 ]" class="waves-effect"><i class="fa fa-check fa-fw"></i> Asistencia</a>
-    </li>
-    <li> <a routerLinkActive="active"
-      [routerLink]="[ './cliente/cursos' , 4 ]" class="waves-effect"><i class="fa fa-file-pdf-o fa-fw"></i> Reportar</a>
-    </li>
+    <!-- END X-NAVIGATION VERTICAL -->
+
+    <router-outlet></router-outlet>
+  </div>
 
 
-    </ul>
-       <!-- fin menu clientes -->
-<!-- inicia menu usuario -->
-    <ul *ngIf="type=='usuario'" class="nav" id="side-menu">
-      <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-        <div class="input-group custom-search-form">
-            <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
-        <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
-        </span> </div>
-        <!-- /input-group -->
-    </li>
-    <li  class="nav-small-cap">Usuario</li>
-    <li> <a routerLinkActive="active"
-      [routerLink]="[ './usuario/dashboard' ]" class="waves-effect"><i class="icon-speedometer fa-fw"></i> Dashboard</a>
-    </li>
-     <li> <a routerLinkActive="active"
-          [routerLink]="[ './usuario/eventos' ]" class="waves-effect"><i class="fa fa-calendar fa-fw"></i> Eventos</a>
-      </li>
-
-      <li data-toggle="collapse" href="#Products"> <a  class="waves-effect"><i class=" fa fa-briefcase fa-fw"></i> Productos<span class="fa arrow"></span>  </a>
-      </li><ul class="collapse nav nav-second-level" id="Products">
-          <li> <a routerLinkActive="active"
-            [routerLink]="[ './usuario/productos' ]" class="waves-effect"><i class="fa fa-cube fa-fw"></i> Productos</a>
-          </li>
-          <li> <a routerLinkActive="active"
-            [routerLink]="[ './usuario/categorias' ]" class="waves-effect"><i class="fa  fa-cubes fa-fw"></i> Categorias</a>
-          </li>
-          <li> <a routerLinkActive="active"
-            [routerLink]="[ './usuario/pedidos' ]" class="waves-effect"><i class="fa  fa-external-link-square fa-fw"></i> Pedidos</a>
-          </li>
-        </ul>
-
-    </ul>
-   <!-- fin menu usuarios -->
-<!-- inicia menu administrador -->
-    <ul *ngIf="type=='admin'" class="nav" id="side-menu">
-      <li class="sidebar-search hidden-sm hidden-md hidden-lg">
-          <div class="input-group custom-search-form">
-              <input type="text" class="form-control" placeholder="Search..."> <span class="input-group-btn">
-          <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
-          </span> </div>
-          <!-- /input-group -->
-      </li>
-      <li  class="nav-small-cap">Administrador</li>
-      <li> <a routerLinkActive="active"
-        [routerLink]="[ './admin/dashboard' ]" class="waves-effect"><i class="icon-speedometer fa-fw"></i> Dashboard</a>
-      </li>
-      <li data-toggle="collapse" href="#Users"> <a  class="waves-effect"><i class=" fa fa-user fa-fw"></i> Usuarios<span class="fa arrow"></span>  </a>
-      </li><ul class="collapse nav nav-second-level" id="Users">
-          <li> <a routerLinkActive="active"
-            [routerLink]="[ './admin/usuarios' ]" class="waves-effect"><i class="fa fa-user fa-fw"></i> Usuarios</a>
-          </li>
-          <li> <a routerLinkActive="active"
-            [routerLink]="[ './admin/usuarios-tipo' ]" class="waves-effect"><i class="fa fa-users fa-fw"></i> Tipos de Usuarios</a>
-          </li>
-        </ul>
-       <li> <a routerLinkActive="active"
-            [routerLink]="[ './admin/eventos' ]" class="waves-effect"><i class="fa fa-calendar fa-fw"></i> Eventos</a>
-        </li>
-
-        <li data-toggle="collapse" href="#Products"> <a  class="waves-effect"><i class=" fa fa-briefcase fa-fw"></i> Productos<span class="fa arrow"></span>  </a>
-        </li><ul class="collapse nav nav-second-level" id="Products">
-            <li> <a routerLinkActive="active"
-              [routerLink]="[ './admin/productos' ]" class="waves-effect"><i class="fa fa-cube fa-fw"></i> Productos</a>
-            </li>
-            <li> <a routerLinkActive="active"
-              [routerLink]="[ './admin/categorias' ]" class="waves-effect"><i class="fa  fa-cubes fa-fw"></i> Categorias</a>
-            </li>
-            <li> <a routerLinkActive="active"
-              [routerLink]="[ './admin/pedidos' ]" class="waves-effect"><i class="fa  fa-external-link-square fa-fw"></i> Pedidos</a>
-            </li>
-          </ul>
-
-
-
-
-
-
-    </ul>
-<!-- fin menu administrador -->
+  <!-- MESSAGE BOX-->
+  <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+    <div class="mb-container">
+        <div class="mb-middle">
+            <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+            <div class="mb-content">
+                <p>Are you sure you want to log out?</p>
+                <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
+            </div>
+            <div class="mb-footer">
+                <div class="pull-right">
+                    <a (click)="logout()" class="btn btn-success btn-lg">Yes</a>
+                    <button class="btn btn-default btn-lg mb-control-close" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.sidebar-collapse -->
 </div>
-<div id="page-wrapper">
-  <div class="container-fluid">
-<router-outlet></router-outlet>
-  </div>
-</div>
+<!-- END MESSAGE BOX-->
 
-<div id="ChangePass"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h4 class="modal-title">Cambio de contraseña</h4>
-          </div>
-          <div class="modal-body">
-            <form id="passChange-form"  #passChange="ngForm" (ngSubmit)="updatePass(passChange.value)">
-              <div class="form-group col-xs-12 m-b-15">
-                    <label for="old_pass">Contraseña Actual</label>
-                    <input type="password" class="form-control" id="old_pass" name="old_pass" required
-                            ngModel #old_pass="ngModel" >
-                      <div *ngIf="old_pass.invalid && (old_pass.dirty || old_pass.touched)"
-                            class="alert alert-danger" role="alert">
-                          <small *ngIf="old_pass.errors.required">
-                              La Contraseña Actual es invalida
-                          </small>
-                      </div>
-              </div>
-
-              <div class="form-group col-xs-12 m-b-15">
-                    <label for="new_pass">Contraseña Nueva</label>
-                    <input type="password" class="form-control" id="new_pass" name="new_pass" required
-                            ngModel #new_pass="ngModel">
-                      <div *ngIf="new_pass.invalid && (new_pass.dirty || new_pass.touched)"
-                            class="alert alert-danger" role="alert">
-                          <small *ngIf="new_pass.errors.required">
-                              La Contraseña Nueva es invalida
-                          </small>
-                      </div>
-              </div>
-              <div class="form-group col-xs-12 m-b-15">
-                    <label for="new_pass2">Repita la Contraseña Nueva</label>
-                    <input type="password" class="form-control" id="new_pass2" name="new_pass2" required
-                            ngModel #new_pass2="ngModel">
-                      <div *ngIf="new_pass2.value != new_pass.value"
-                            class="alert alert-danger" role="alert">
-                          <small>
-                              Las contraseñas deben ser Iguales
-                          </small>
-                      </div>
-              </div>
-              <div class="form-group col-xs-12 text-right m-b-15">
-                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Cambiar Contraseña</button>
-              </div>
-          </form>
-
-          </div>
-          <div class="modal-footer" style="border:none;">
-
-          </div>
-      </div>
-  </div>
-
-
-
-</div>
-
-<div class="modal fade" id="Loading">
-  <div class="modal-dialog">
-    <div class="text-center" style="margin-top:50%;">
-<loaders-css [loader]="'line-scale'" [loaderClass]="'loader1'" ></loaders-css>
-
-
-    </div>
-  </div>
-</div>

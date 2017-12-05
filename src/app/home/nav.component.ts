@@ -36,6 +36,34 @@ export class NavComponent implements OnInit {
       this.cargarNotifications();
     }
   }
+  abrir(obj){
+    if(obj.classList[1]=='active'){
+      obj.classList.remove("active");
+    }else{
+      obj.classList.add("active");
+      if($('.page-container').hasClass('page-navigation-toggled')){
+        $('.page-container').removeClass('page-navigation-toggled page-container-wide')
+        $('#navigations').removeClass('x-navigation-minimized')
+        $('.fa-indent').addClass('fa-dedent')
+        $('.fa-dedent').removeClass('fa-indent')
+      }
+    }
+  }
+  colapsse(){
+    if($('.page-container').hasClass('page-navigation-toggled')){
+      $('.page-container').removeClass('page-navigation-toggled page-container-wide')
+      $('#navigations').removeClass('x-navigation-minimized')
+      $('.fa-indent').addClass('fa-dedent')
+      $('.fa-dedent').removeClass('fa-indent')
+    }else{
+      $('.page-container').addClass('page-navigation-toggled page-container-wide')
+      $('#navigations').addClass('x-navigation-minimized')
+      $('.fa-dedent').addClass('fa-indent')
+      $('.fa-indent').removeClass('fa-dedent')
+      $('.xn-openable').removeClass("active");
+    }
+  }
+
   cargarNotifications()
   {
     this.nNotifications=0;
@@ -94,22 +122,6 @@ export class NavComponent implements OnInit {
     //                     })
   }
 
-  hideNav(){
-    if(!this.click){
-      $('#page-wrapper').css('margin-left','0px')
-      $('.nicescroll').css('width','0px')
-      $('#apple-admin').css('display','none')
-      $('.top-left-part').css('width','70px')
-      this.click = !this.click
-    }else{
-      $('#page-wrapper').css('margin-left','')
-      $('.nicescroll').css('width','')
-      $('#apple-admin').css('display','')
-      $('.top-left-part').css('width','')
-      this.click = !this.click
-    }
-
-  }
   updatePass(formValue:any){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')

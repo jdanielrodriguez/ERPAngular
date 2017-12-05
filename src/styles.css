@@ -6,3 +6,7 @@
   width: 20px;
   height: 100px;
 }
+
+.xn-openable{
+  cursor: pointer;
+}
