@@ -1,0 +1,292 @@
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Tables</a></li>
+    <li class="active">{{title}}</li>
+  </ul>
+  <!-- END BREADCRUMB -->
+
+  <!-- PAGE TITLE -->
+  <div class="page-title">
+    <h2>{{title}}</h2>
+  </div>
+  <!-- END PAGE TITLE -->
+
+  <!-- PAGE CONTENT WRAPPER -->
+  <div class="page-content-wrap">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <button type="button" class="btn btn-info form-control" data-toggle="modal" data-target="#insertModal" style="cursor:pointer;"><i class="fa fa-plus"></i>Nuevo</button>
+                    </h3>
+                    <ul class="panel-controls">
+                        <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable table-hover table-responsive"  [mfData]="Table | filter : search" #mf="mfDataTable"
+                    [mfRowsOnPage]="rowsOnPage">
+                        <thead>
+                            <tr>
+                                <th style="width:20%;">
+                                  <mfDefaultSorter by="username">Usuario</mfDefaultSorter></th>
+                                <th style="width:20%;">
+                                  <mfDefaultSorter by="email">Email</mfDefaultSorter></th>
+                                <th style="width:20%;">
+                                  <mfDefaultSorter by="rol">Rol</mfDefaultSorter></th>
+                                <th style="width:20%;">
+                                  <mfDefaultSorter by="empleados.nombre">Empleado</mfDefaultSorter></th>
+                                <th style="width:20%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of mf.data">
+                                <td>{{((data.username!=null)?data.username:'')}}</td>
+                                <td>{{((data.email!=null)?data.email:'')}}</td>
+                                <td>{{((data.rol!=null)?data.rol:'')}}</td>
+                                <td>{{((data.empleados!=null)?data.empleados.nombre:'')}}</td>
+                                <td>
+
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
+                                  <button type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                              <td colspan="5">
+                                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                              </td>
+                          </tr>
+                          </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+
+            <!-- Inicio Modal Ingreso -->
+              <div id="insertModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Ingreso de datos</h4>
+                        </div>
+                        <div>
+                            <form id="insert-form"  #InsertForm="ngForm" (ngSubmit)="insert(InsertForm.value)">
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="username">Usuario</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="text" class="form-control" id="username" name="username" required
+                                          ngModel #username="ngModel" placeholder="username">
+                                </div>
+                                  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="username.errors.required">
+                                          El Usuario es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="text" class="form-control" id="email" name="email" required
+                                          ngModel #email="ngModel" placeholder="email">
+                                </div>
+                                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="email.errors.required">
+                                          El Email es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="privileges">Privilegios</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="privileges" name="privileges"
+                                          ngModel #privileges="ngModel">
+                                    <option value="0"></option>
+                                    <option value="1" selected>Acceso Total</option>
+                                    <option value="2">Acceso Limitado</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="privileges.invalid && (privileges.dirty || privileges.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="privileges.errors.required">
+                                          El Privilegios es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="rol">Rol</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="rol" name="rol" required
+                                          ngModel #rol="ngModel">
+                                    <option value=""></option>
+                                    <option *ngFor="let data of secondParentCombo" value="{{data.id}}">{{data.descripcion}}</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="rol.invalid && (rol.dirty || rol.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="rol.errors.required">
+                                          El Rol es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="empleado">Empleado</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="empleado" name="empleado"
+                                          ngModel #empleado="ngModel">
+                                    <option value=""></option>
+                                    <option *ngFor="let data of parentCombo" value="{{data.id}}">{{data.nombre+' '+data.apellido}}</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="empleado.invalid && (empleado.dirty || empleado.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="empleado.errors.required">
+                                          El Empleado es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-12 text-right m-b-15">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> Cancel</button>
+                                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                              </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer" style="border:none;">
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <!-- Final Modal Ingreso -->
+
+            <!-- Inicio Modal Ingreso -->
+              <div id="editModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Edicion de datos</h4>
+                        </div>
+                        <div>
+                            <form *ngIf="selectedData" id="edit-form"  #EditForm="ngForm" (ngSubmit)="update(EditForm.value)">
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="username">Usuario</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="text" class="form-control" id="username" name="username" required
+                                          ngModel #username="ngModel" placeholder="username" [(ngModel)]="selectedData.username">
+                                </div>
+                                  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="username.errors.required">
+                                          El Usuario es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="email" class="form-control" id="email" name="email" required
+                                          ngModel #email="ngModel" placeholder="email" [(ngModel)]="selectedData.email">
+                                </div>
+                                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="email.errors.required">
+                                          El Email es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="privileges">Privilegios</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="privileges" name="privileges"
+                                          ngModel #privileges="ngModel" [(ngModel)]="selectedData.privileges">
+                                    <option value="0"></option>
+                                    <option value="1" selected>Acceso Total</option>
+                                    <option value="2">Acceso Limitado</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="privileges.invalid && (privileges.dirty || privileges.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="privileges.errors.required">
+                                          El Privilegios es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="rol">Rol</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="rol" name="rol" required
+                                          ngModel #rol="ngModel" [(ngModel)]="selectedData.rol">
+                                    <option value=""></option>
+                                    <option *ngFor="let data of secondParentCombo" value="{{data.id}}">{{data.descripcion}}</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="rol.invalid && (rol.dirty || rol.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="rol.errors.required">
+                                          El Rol es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="empleado">Empleado</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="empleado" name="empleado"
+                                          ngModel #empleado="ngModel" [(ngModel)]="selectedData.empleado">
+                                    <option value=""></option>
+                                    <option *ngFor="let data of parentCombo" value="{{data.id}}">{{data.nombre+' '+data.apellido}}</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="empleado.invalid && (empleado.dirty || empleado.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="empleado.errors.required">
+                                          El Empleado es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <input type="hidden" class="form-control" id="user_created" name="user_created" required
+                                          ngModel #user_created="ngModel" [(ngModel)]="selectedData.id">
+                              <div class="form-group col-xs-12 text-right m-b-15">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> Cancel</button>
+                                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                              </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer" style="border:none;">
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <!-- Final Modal Ingreso -->
+
+  <!-- Inicio Notificaciones -->
+    <simple-notifications [options]="options"></simple-notifications>
+  <!-- Fin Notificaciones -->
+  <!-- Inicio Loader Modal -->
+    <div class="modal fade" id="Loading">
+      <div class="modal-dialog">
+        <div class="text-center" style="margin-top:50%;">
+          <app-loader></app-loader>
+        </div>
+      </div>
+    </div>
+  <!-- Fin Loader Modal -->
