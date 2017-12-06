@@ -25,6 +25,7 @@ import { UsersService } from "./_services/users.service";
 import { EmployeesService } from "./_services/employees.service";
 import { RolesService } from "./_services/roles.service";
 import { LoaderComponent } from './loader/loader.component';
+import { RolesComponent } from './roles/roles.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { LoaderComponent } from './loader/loader.component';
     ClientesComponent,
     ProveedoresComponent,
     EmpleadosComponent,
-    LoaderComponent
+    LoaderComponent,
+    RolesComponent
   ],
   providers: [
     UsersService,
