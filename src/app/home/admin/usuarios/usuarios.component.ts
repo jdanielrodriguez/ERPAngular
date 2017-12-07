@@ -46,6 +46,7 @@ export class UsuariosComponent implements OnInit {
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
   }
 
@@ -87,13 +88,14 @@ export class UsuariosComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Evento Ingresado')
+                        this.create('Usuario Ingresado')
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
 
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
 
 
@@ -108,7 +110,26 @@ export class UsuariosComponent implements OnInit {
                         this.createError(error)
                       })
   }
-
+  deshabilitar(id:number,estado:any){
+    $('#Loading').css('display','block')
+    $('#Loading').addClass('in')
+    //console.log(data)
+    let formValue:any = {
+      estado:estado,
+      id:id
+    }
+    this.mainService.update(formValue)
+                      .then(response => {
+                        this.cargarAll()
+                        console.clear
+                        this.create('Usuario Actualizado exitosamente')
+                        $('#Loading').css('display','none')
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+  }
   update(formValue:any){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
@@ -117,11 +138,12 @@ export class UsuariosComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Evento Actualizado exitosamente')
+                        this.create('Usuario Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
 
   }
@@ -129,16 +151,21 @@ export class UsuariosComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.delete(id)
-                      .then(response => {
-                        this.cargarAll()
-                        console.clear
-                        this.create('Evento Eliminado exitosamente')
-                        $('#Loading').css('display','none')
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                      })
+    if(confirm("¿Desea eliminar el Usuario?")){
+      this.mainService.delete(id)
+                        .then(response => {
+                          this.cargarAll()
+                          console.clear
+                          this.create('Usuario Eliminado exitosamente')
+                          $('#Loading').css('display','none')
+                        }).catch(error => {
+                          console.clear
+                          this.createError(error)
+                          $('#Loading').css('display','none')
+                        })
+    }else{
+      $('#Loading').css('display','none')
+    }
 
   }
 
