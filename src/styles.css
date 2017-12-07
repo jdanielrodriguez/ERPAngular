@@ -10,3 +10,11 @@
 .xn-openable{
   cursor: pointer;
 }
+
+.pagination {
+  width: 50%;
+}
+
+.pull-right{
+  width: 115px;
+}
