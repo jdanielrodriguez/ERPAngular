@@ -33,23 +33,14 @@
                     [mfRowsOnPage]="rowsOnPage">
                         <thead>
                             <tr>
-                                <th style="width:20%;">
-                                  <mfDefaultSorter by="username">Usuario</mfDefaultSorter></th>
-                                <th style="width:20%;">
-                                  <mfDefaultSorter by="email">Email</mfDefaultSorter></th>
-                                <th style="width:20%;">
-                                  <mfDefaultSorter by="rol">Rol</mfDefaultSorter></th>
-                                <th style="width:20%;">
-                                  <mfDefaultSorter by="empleados.nombre">Empleado</mfDefaultSorter></th>
+                                <th style="width:80%;">
+                                  <mfDefaultSorter by="descripcion">Descripcion</mfDefaultSorter></th>
                                 <th style="width:20%;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let data of mf.data">
-                                <td>{{((data.username!=null)?data.username:'')}}</td>
-                                <td>{{((data.email!=null)?data.email:'')}}</td>
-                                <td>{{((data.rol!=null)?data.rol:'')}}</td>
-                                <td>{{((data.empleados!=null)?data.empleados.nombre:'')}}</td>
+                                <td>{{((data.descripcion!=null)?data.descripcion:'')}}</td>
                                 <td>
 
                                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
@@ -60,7 +51,7 @@
                         </tbody>
                         <tfoot>
                           <tr>
-                              <td colspan="5">
+                              <td colspan="2" style="width:100%;">
                                   <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
                               </td>
                           </tr>
@@ -81,82 +72,16 @@
                         <div>
                             <form id="insert-form"  #InsertForm="ngForm" (ngSubmit)="insert(InsertForm.value)">
                               <div class="form-group col-xs-12 m-b-15">
-                                <label for="username">Usuario</label>
+                                <label for="descripcion">Descripcion</label>
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <input type="text" class="form-control" id="username" name="username" required
-                                          ngModel #username="ngModel" placeholder="username">
+                                  <input type="text" class="form-control" id="descripcion" name="descripcion" required
+                                          ngModel #descripcion="ngModel" placeholder="descripcion">
                                 </div>
-                                  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                  <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
                                         class="alert alert-danger" role="alert">
-                                      <small *ngIf="username.errors.required">
-                                          El Usuario es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <div class="form-group col-xs-12 m-b-15">
-                                <label for="email">Email</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <input type="text" class="form-control" id="email" name="email" required
-                                          ngModel #email="ngModel" placeholder="email">
-                                </div>
-                                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="email.errors.required">
-                                          El Email es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <div class="form-group col-xs-4 m-b-15">
-                                <label for="privileges">Privilegios</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <select class="form-control" id="privileges" name="privileges"
-                                          ngModel #privileges="ngModel">
-                                    <option value="0"></option>
-                                    <option value="1" selected>Acceso Total</option>
-                                    <option value="2">Acceso Limitado</option>
-                                  </select>
-                                </div>
-                                  <div *ngIf="privileges.invalid && (privileges.dirty || privileges.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="privileges.errors.required">
-                                          El Privilegios es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <div class="form-group col-xs-4 m-b-15">
-                                <label for="rol">Rol</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <select class="form-control" id="rol" name="rol" required
-                                          ngModel #rol="ngModel">
-                                    <option value=""></option>
-                                    <option *ngFor="let data of secondParentCombo" value="{{data.id}}">{{data.descripcion}}</option>
-                                  </select>
-                                </div>
-                                  <div *ngIf="rol.invalid && (rol.dirty || rol.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="rol.errors.required">
-                                          El Rol es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <div class="form-group col-xs-4 m-b-15">
-                                <label for="empleado">Empleado</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <select class="form-control" id="empleado" name="empleado"
-                                          ngModel #empleado="ngModel">
-                                    <option value=""></option>
-                                    <option *ngFor="let data of parentCombo" value="{{data.id}}">{{data.nombre+' '+data.apellido}}</option>
-                                  </select>
-                                </div>
-                                  <div *ngIf="empleado.invalid && (empleado.dirty || empleado.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="empleado.errors.required">
-                                          El Empleado es invalido
+                                      <small *ngIf="descripcion.errors.required">
+                                          El Descripcion es invalido
                                       </small>
                                   </div>
                               </div>
@@ -184,87 +109,21 @@
                         <div>
                             <form *ngIf="selectedData" id="edit-form"  #EditForm="ngForm" (ngSubmit)="update(EditForm.value)">
                               <div class="form-group col-xs-12 m-b-15">
-                                <label for="username">Usuario</label>
+                                <label for="descripcion">Descripcion</label>
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <input type="text" class="form-control" id="username" name="username" required
-                                          ngModel #username="ngModel" placeholder="username" [(ngModel)]="selectedData.username">
+                                  <input type="text" class="form-control" id="descripcion" name="descripcion" required
+                                          ngModel #descripcion="ngModel" placeholder="descripcion" [(ngModel)]="selectedData.descripcion">
                                 </div>
-                                  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                  <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
                                         class="alert alert-danger" role="alert">
-                                      <small *ngIf="username.errors.required">
-                                          El Usuario es invalido
+                                      <small *ngIf="descripcion.errors.required">
+                                          El Descripcion es invalido
                                       </small>
                                   </div>
                               </div>
-                              <div class="form-group col-xs-12 m-b-15">
-                                <label for="email">Email</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <input type="email" class="form-control" id="email" name="email" required
-                                          ngModel #email="ngModel" placeholder="email" [(ngModel)]="selectedData.email">
-                                </div>
-                                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="email.errors.required">
-                                          El Email es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <div class="form-group col-xs-4 m-b-15">
-                                <label for="privileges">Privilegios</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <select class="form-control" id="privileges" name="privileges"
-                                          ngModel #privileges="ngModel" [(ngModel)]="selectedData.privileges">
-                                    <option value="0"></option>
-                                    <option value="1" selected>Acceso Total</option>
-                                    <option value="2">Acceso Limitado</option>
-                                  </select>
-                                </div>
-                                  <div *ngIf="privileges.invalid && (privileges.dirty || privileges.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="privileges.errors.required">
-                                          El Privilegios es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <div class="form-group col-xs-4 m-b-15">
-                                <label for="rol">Rol</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <select class="form-control" id="rol" name="rol" required
-                                          ngModel #rol="ngModel" [(ngModel)]="selectedData.rol">
-                                    <option value=""></option>
-                                    <option *ngFor="let data of secondParentCombo" value="{{data.id}}">{{data.descripcion}}</option>
-                                  </select>
-                                </div>
-                                  <div *ngIf="rol.invalid && (rol.dirty || rol.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="rol.errors.required">
-                                          El Rol es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <div class="form-group col-xs-4 m-b-15">
-                                <label for="empleado">Empleado</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                  <select class="form-control" id="empleado" name="empleado"
-                                          ngModel #empleado="ngModel" [(ngModel)]="selectedData.empleado">
-                                    <option value=""></option>
-                                    <option *ngFor="let data of parentCombo" value="{{data.id}}">{{data.nombre+' '+data.apellido}}</option>
-                                  </select>
-                                </div>
-                                  <div *ngIf="empleado.invalid && (empleado.dirty || empleado.touched)"
-                                        class="alert alert-danger" role="alert">
-                                      <small *ngIf="empleado.errors.required">
-                                          El Empleado es invalido
-                                      </small>
-                                  </div>
-                              </div>
-                              <input type="hidden" class="form-control" id="user_created" name="user_created" required
-                                          ngModel #user_created="ngModel" [(ngModel)]="selectedData.id">
+                              <input type="hidden" class="form-control" id="id" name="id" required
+                                          ngModel #id="ngModel" [(ngModel)]="selectedData.id">
                               <div class="form-group col-xs-12 text-right m-b-15">
                                   <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> Cancel</button>
                                   <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>

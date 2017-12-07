@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from "./../_services/users.service";
-import { EmployeesService } from "./../_services/employees.service";
 import { RolesService } from "./../_services/roles.service";
 
 import { NotificationsService } from 'angular2-notifications';
@@ -13,24 +11,18 @@ declare var $: any
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent implements OnInit {
-  title:string="Usuarios"
+  title:string="Roles"
   Table:any
   selectedData:any
-  parentCombo:any
-  secondParentCombo:any
   public rowsOnPage = 5;
   public search:any
   constructor(
     private _service: NotificationsService,
-    private mainService: UsersService,
-    private parentService: EmployeesService,
-    private secondParentService: RolesService
+    private mainService: RolesService
   ) { }
 
   ngOnInit() {
     this.cargarAll()
-    this.cargarParentCombo()
-    this.cargarSecondParentCombo()
   }
 
   cargarAll(){
@@ -49,51 +41,20 @@ export class RolesComponent implements OnInit {
                       })
   }
 
-  cargarParentCombo(){
-    this.parentService.getAll()
-                      .then(response => {
-                        this.parentCombo = response
-                        console.clear
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                      })
-  }
-
-  cargarSecondParentCombo(){
-    this.secondParentService.getAll()
-                      .then(response => {
-                        this.secondParentCombo = response
-                        console.clear
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                      })
-  }
-
   insert(formValue:any){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    let pass = this.generar(25)
-    let data = {
-      username: formValue.username,
-      email: formValue.email,
-      rol: formValue.rol,
-      empleado: formValue.empleado,
-      privileges: formValue.privileges,
-      password: pass,
-    }
-    this.mainService.create(data)
+    this.mainService.create(formValue)
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Evento Ingresado')
+                        this.create('Rol Ingresado')
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
-
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
 
 
@@ -117,11 +78,12 @@ export class RolesComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Evento Actualizado exitosamente')
+                        this.create('Rol Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
 
   }
@@ -129,26 +91,22 @@ export class RolesComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.delete(id)
-                      .then(response => {
-                        this.cargarAll()
-                        console.clear
-                        this.create('Evento Eliminado exitosamente')
-                        $('#Loading').css('display','none')
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                      })
+    if(confirm("¿Desea eliminar el Rol?")){
+      this.mainService.delete(id)
+                        .then(response => {
+                          this.cargarAll()
+                          console.clear
+                          this.create('Rol Eliminado exitosamente')
+                          $('#Loading').css('display','none')
+                        }).catch(error => {
+                          console.clear
+                          this.createError(error)
+                          $('#Loading').css('display','none')
+                        })
+    }else{
+      $('#Loading').css('display','none')
+    }
 
-  }
-
-  generar(longitud)
-  {
-    let i:number
-    var caracteres = "123456789+/-*abcdefghijkmnpqrtuvwxyz123456789+/-*ABCDEFGHIJKLMNPQRTUVWXYZ12346789+/-*";
-    var contraseña = "";
-    for (i=0; i<longitud; i++) contraseña += caracteres.charAt(Math.floor(Math.random()*caracteres.length));
-    return contraseña;
   }
 
   public options = {
