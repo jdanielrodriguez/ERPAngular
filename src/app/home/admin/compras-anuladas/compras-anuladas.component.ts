@@ -6,12 +6,12 @@ import { NotificationsService } from 'angular2-notifications';
 declare var $: any
 
 @Component({
-  selector: 'app-compras',
-  templateUrl: './compras.component.html',
-  styleUrls: ['./compras.component.css']
+  selector: 'app-compras-anuladas',
+  templateUrl: './compras-anuladas.component.html',
+  styleUrls: ['./compras-anuladas.component.css']
 })
-export class ComprasComponent implements OnInit {
-  title:string="Compras"
+export class ComprasAnuladasComponent implements OnInit {
+  title:string="Compras Anuladas"
   Table:any
   selectedData:any
   public rowsOnPage = 5;
