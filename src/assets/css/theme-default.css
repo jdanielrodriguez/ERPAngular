@@ -58,7 +58,6 @@ body {
   height: 100%;
 }
 .row {
-  margin-left: 0px;
   margin-right: 0px;
 }
 .row [class^='col-xs-'],
@@ -949,6 +948,7 @@ body.page-container-boxed .page-container {
 .x-navigation > li.xn-profile .profile-mini img {
   width: 36px;
   border: 2px solid #FFF;
+  background-color: #FFFFFF;
   -moz-border-radius: 20%;
   -webkit-border-radius: 20%;
   border-radius: 20%;
@@ -1093,6 +1093,7 @@ body.page-container-boxed .page-container {
 .profile .profile-image img {
   width: 100px;
   border: 3px solid #FFF;
+  background-color: #FFF;
   -moz-border-radius: 20%;
   -webkit-border-radius: 20%;
   border-radius: 20%;
