@@ -34,6 +34,11 @@ import { PuestosService } from "./_services/puestos.service";
 import { SucursalesService } from "./_services/sucursales.service";
 import { ClientesService } from "./_services/clientes.service";
 import { ProveedoresService } from "./_services/proveedores.service";
+import { GenerarCompraComponent } from './generar-compra/generar-compra.component';
+import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
+import { VentasAnuladasComponent } from './ventas-anuladas/ventas-anuladas.component';
+import { ComprasAnuladasComponent } from './compras-anuladas/compras-anuladas.component';
+import { CotizacionComponent } from './cotizacion/cotizacion.component';
 
 @NgModule({
   imports: [
@@ -63,7 +68,12 @@ import { ProveedoresService } from "./_services/proveedores.service";
     RolesComponent,
     PuestosComponent,
     SucursalesComponent,
-    PerfilComponent
+    PerfilComponent,
+    GenerarCompraComponent,
+    GenerarVentaComponent,
+    VentasAnuladasComponent,
+    ComprasAnuladasComponent,
+    CotizacionComponent
   ],
   providers: [
     UsersService,

@@ -67,10 +67,18 @@
               <a (click)="abrir(contInt)"><span class="fa fa-edit"></span> <span class="xn-text">Control Interno</span></a>
               <ul>
                   <li><a routerLinkActive="active"
-                    [routerLink]="[ './admin/clientes' ]"><span class="fa fa-user"></span> Clientes</a></li>
+                    [routerLink]="[ './admin/clientes' ]"><span class="fa fa-ticket"></span> Clientes</a></li>
                   <li><a routerLinkActive="active"
-                    [routerLink]="[ './admin/proveedores' ]"><span class="fa fa-user"></span> Proveedores</a></li>
+                    [routerLink]="[ './admin/proveedores' ]"><span class="fa fa-truck"></span> Proveedores</a></li>
               </ul>
+          </li>
+          <li>
+              <a routerLinkActive="active"
+              [routerLink]="[ './admin/compras' ]"><span class="fa fa-shopping-cart"></span> <span class="xn-text">Compras</span></a>
+          </li>
+          <li>
+              <a routerLinkActive="active"
+              [routerLink]="[ './admin/ventas' ]"><span class="fa fa-tags"></span> <span class="xn-text">Ventas</span></a>
           </li>
       </ul>
       <!-- END X-NAVIGATION -->
@@ -95,7 +103,7 @@
         <!-- END SEARCH -->
         <!-- SIGN OUT -->
         <li class="xn-icon-button pull-right">
-            <a class="mb-control" data-toggle="modal" data-target="#mb-signout"><span class="fa fa-sign-out"></span></a>
+            <a class="mb-control" data-toggle="modal" data-target="#mb-signout"><span class="fa fa-sign-out" style="cursor:pointer;"></span></a>
         </li>
         <!-- END SIGN OUT -->
         <!-- MESSAGES -->
