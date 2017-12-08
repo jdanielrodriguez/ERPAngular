@@ -34,7 +34,8 @@
         "./assets/js/plugins/noty/layouts/topCenter.js",
         "./assets/js/plugins/noty/layouts/topLeft.js",
         "./assets/js/plugins/noty/layouts/topRight.js",
-        "./assets/js/plugins/noty/themes/default.js"
+        "./assets/js/plugins/noty/themes/default.js",
+        "./assets/js/upload.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

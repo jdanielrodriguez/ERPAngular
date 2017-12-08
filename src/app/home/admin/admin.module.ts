@@ -26,6 +26,13 @@ import { RolesComponent } from './roles/roles.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { SucursalesComponent } from './sucursales/sucursales.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { GenerarCompraComponent } from './generar-compra/generar-compra.component';
+import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
+import { VentasAnuladasComponent } from './ventas-anuladas/ventas-anuladas.component';
+import { ComprasAnuladasComponent } from './compras-anuladas/compras-anuladas.component';
+import { CotizacionComponent } from './cotizacion/cotizacion.component';
+import { ModulosComponent } from './modulos/modulos.component';
+
 
 import { UsersService } from "./_services/users.service";
 import { EmployeesService } from "./_services/employees.service";
@@ -34,12 +41,8 @@ import { PuestosService } from "./_services/puestos.service";
 import { SucursalesService } from "./_services/sucursales.service";
 import { ClientesService } from "./_services/clientes.service";
 import { ProveedoresService } from "./_services/proveedores.service";
-import { GenerarCompraComponent } from './generar-compra/generar-compra.component';
-import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
-import { VentasAnuladasComponent } from './ventas-anuladas/ventas-anuladas.component';
-import { ComprasAnuladasComponent } from './compras-anuladas/compras-anuladas.component';
-import { CotizacionComponent } from './cotizacion/cotizacion.component';
-
+import { ModulosService } from "./_services/modulos.service";
+import { AccesosService } from "./_services/accesos.service";
 @NgModule({
   imports: [
     CommonModule,
@@ -73,7 +76,8 @@ import { CotizacionComponent } from './cotizacion/cotizacion.component';
     GenerarVentaComponent,
     VentasAnuladasComponent,
     ComprasAnuladasComponent,
-    CotizacionComponent
+    CotizacionComponent,
+    ModulosComponent
   ],
   providers: [
     UsersService,
@@ -82,7 +86,9 @@ import { CotizacionComponent } from './cotizacion/cotizacion.component';
     SucursalesService,
     PuestosService,
     ClientesService,
-    ProveedoresService
+    ProveedoresService,
+    ModulosService,
+    AccesosService
   ]
 })
 export class AdminModule { }

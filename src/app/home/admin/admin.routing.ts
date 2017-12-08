@@ -17,6 +17,7 @@ import { VentasComponent } from './ventas/ventas.component';
 import { VentasAnuladasComponent } from './ventas-anuladas/ventas-anuladas.component';
 import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
 import { CotizacionComponent } from './cotizacion/cotizacion.component';
+import { ModulosComponent } from './modulos/modulos.component';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '', component: AdminComponent, children: [
@@ -32,6 +33,7 @@ const routes: Routes = [
     { path: 'compras', component: ComprasComponent },
     { path: 'ventas', component: VentasComponent },
     { path: 'cotizacion', component: CotizacionComponent },
+    { path: 'modulos', component: ModulosComponent },
   ]},
   { path: 'compras-anuladas', component: ComprasAnuladasComponent },
   { path: 'generar-compra', component: GenerarCompraComponent },
