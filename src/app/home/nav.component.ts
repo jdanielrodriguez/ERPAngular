@@ -19,6 +19,8 @@ export class NavComponent implements OnInit {
   id=localStorage.getItem('currentId');
   type=localStorage.getItem('currentType');
   state=localStorage.getItem('currentState');
+  rol=localStorage.getItem('currentRol');
+  idRol=localStorage.getItem('currentRolId');
   click:boolean
   notifications:any = []
   nNotifications:number = 0;
@@ -35,6 +37,8 @@ export class NavComponent implements OnInit {
     if(this.type=="tutor"){
       this.cargarNotifications();
     }
+    // console.log(this.idRol);
+
   }
   abrir(obj){
     if(obj.classList[1]=='active'){

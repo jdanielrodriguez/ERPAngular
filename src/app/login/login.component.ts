@@ -52,27 +52,25 @@ closeResult: string;
         let type:string = null;
         localStorage.setItem('currentUser', response.username);
         localStorage.setItem('currentEmail', response.email);
-        localStorage.setItem('currentFirstName', response.firstname);
-        localStorage.setItem('currentLastName', response.lastname);
+        localStorage.setItem('currentFirstName', ((response.empleados?response.empleados.nombre:'')));
+        localStorage.setItem('currentLastName', ((response.empleados?response.empleados.apellido:'')));
         localStorage.setItem('currentId', response.id);
         localStorage.setItem('currentPicture', response.picture);
-        localStorage.setItem('currentState', response.state);
+        localStorage.setItem('currentState', response.estado);
+        localStorage.setItem('currentRol', response.roles.descripcion);
+        localStorage.setItem('currentRolId', response.rol);
 
         switch(response.rol){
-          case 1:{
-            type = 'usuario';
-            break;
-          }
-          case 2:{
-            type = 'usuario';
-            break;
-          }
           case 3:{
             type = 'admin';
             break;
           }
-          case 4:{
+          case 1:{
             type = 'admin';
+            break;
+          }
+          default:{
+            type = 'usuario';
             break;
           }
         }
