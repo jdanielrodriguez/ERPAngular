@@ -70,6 +70,18 @@ export class UsersService {
                           .catch(this.handleError)
       }
 
+      updatePass(form):Promise<any> {
+        let url = `${this.basePath}/api/usuarios/${form.id}/changepassword`
+
+          return this.http.post(url,form)
+                          .toPromise()
+                            .then(response => {
+                              //console.log(response.json())
+                              return response.json()
+                            })
+                            .catch(this.handleError)
+      }
+
       getSingle(id:number):Promise<any> {
       let url = `${this.basePath}/api/usuarios/${id}`
         return this.http.get(url)
