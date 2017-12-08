@@ -48,7 +48,7 @@ export class PuestosComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Rol Ingresado')
+                        this.create('Puesto Ingresado')
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
                       }).catch(error => {
@@ -78,7 +78,7 @@ export class PuestosComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Rol Actualizado exitosamente')
+                        this.create('Puesto Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
@@ -91,12 +91,12 @@ export class PuestosComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    if(confirm("¿Desea eliminar el Rol?")){
+    if(confirm("¿Desea eliminar el Puesto?")){
       this.mainService.delete(id)
                         .then(response => {
                           this.cargarAll()
                           console.clear
-                          this.create('Rol Eliminado exitosamente')
+                          this.create('Puesto Eliminado exitosamente')
                           $('#Loading').css('display','none')
                         }).catch(error => {
                           console.clear

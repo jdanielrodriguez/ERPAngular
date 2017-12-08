@@ -31,7 +31,7 @@ export class SucursalesComponent implements OnInit {
     this.mainService.getAll()
                       .then(response => {
                         this.Table = response
-                        console.log(response);
+                        // console.log(response);
 
                         $("#editModal .close").click();
                         $("#insertModal .close").click();
@@ -50,7 +50,7 @@ export class SucursalesComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Rol Ingresado')
+                        this.create('Sucursal Ingresado')
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
                       }).catch(error => {
@@ -80,7 +80,7 @@ export class SucursalesComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Rol Actualizado exitosamente')
+                        this.create('Sucursal Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
@@ -93,12 +93,12 @@ export class SucursalesComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    if(confirm("¿Desea eliminar el Rol?")){
+    if(confirm("¿Desea eliminar el Sucursal?")){
       this.mainService.delete(id)
                         .then(response => {
                           this.cargarAll()
                           console.clear
-                          this.create('Rol Eliminado exitosamente')
+                          this.create('Sucursal Eliminado exitosamente')
                           $('#Loading').css('display','none')
                         }).catch(error => {
                           console.clear
