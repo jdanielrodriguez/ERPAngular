@@ -9,18 +9,18 @@
               <a class="x-navigation-control"></a>
           </li>
           <li class="xn-profile">
-              <a *ngIf="idRol==3 || idRol==1" class="profile-mini" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
-                  <img src="{{(picture!=''?picture:'')}}" alt="{{(firstname!=''?firstname+' '+lastname:user)}}"/>
+             <a *ngIf="idRol=='3' || idRol=='1'" class="profile-mini" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
+                  <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
               </a>
-              <a *ngIf="idRol!=3 && idRol!=1" class="profile-mini" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
-                  <img src="{{(picture!=''?picture:'')}}" alt="{{(firstname!=''?firstname+' '+lastname:user)}}"/>
+              <a *ngIf="idRol!='3' && idRol!='1'" class="profile-mini" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
+                  <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
               </a>
               <div class="profile">
-                  <div *ngIf="idRol==3 || idRol==1" class="profile-image" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
-                      <img src="{{(picture!=''?picture:'')}}" alt="{{(firstname!=''?firstname+' '+lastname:user)}}"/>
+                  <div *ngIf="idRol=='3' || idRol=='1'" class="profile-image" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
+                      <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
                   </div>
-                  <div *ngIf="idRol!=3 && idRol!=1" class="profile-image" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
-                      <img src="{{(picture!=''?picture:'')}}" alt="{{(firstname!=''?firstname+' '+lastname:user)}}"/>
+                  <div *ngIf="idRol!='3' && idRol!='1'" class="profile-image" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
+                      <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
                   </div>
                   <div class="profile-data">
                       <div class="profile-data-name">{{(firstname!=''?firstname+' '+lastname:user)}}</div>
@@ -104,8 +104,8 @@
         </li>
         <!-- END SEARCH -->
         <!-- SIGN OUT -->
-        <li class="xn-icon-button pull-right">
-            <a class="mb-control" data-toggle="modal" data-target="#mb-signout"><span class="fa fa-sign-out" style="cursor:pointer;"></span></a>
+        <li class="xn-icon-button pull-right" style="cursor:pointer;">
+            <a class="mb-control" data-toggle="modal" data-target="#mb-signout"><span class="fa fa-sign-out"></span></a>
         </li>
         <!-- END SIGN OUT -->
         <!-- MESSAGES -->
