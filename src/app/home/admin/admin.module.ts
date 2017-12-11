@@ -6,6 +6,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoadersCssModule } from 'angular2-loaders-css';
 import { ChartsModule } from 'ng2-charts';
+import { AngularMultiSelectModule } from 'angular2-multiselect-checkbox-dropdown/angular2-multiselect-dropdown';
 
 import { AdminRoutingModule } from './admin.routing';
 
@@ -52,6 +53,7 @@ import { AccesosService } from "./_services/accesos.service";
     SimpleNotificationsModule.forRoot(),
     Ng2SearchPipeModule,
     LoadersCssModule,
+    AngularMultiSelectModule,
     AdminRoutingModule
   ],
   declarations: [

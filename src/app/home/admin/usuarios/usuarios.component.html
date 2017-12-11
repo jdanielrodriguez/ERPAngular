@@ -283,22 +283,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-xs-6 m-b-15">
-                              <label for="empleado">Empleado</label>
-                              <div class="input-group">
-                                <select multiple class="form-control" id="empleado" name="empleado"
-                                        ngModel #empleado="ngModel" [(ngModel)]="selectedData.empleado">
-                                  <option value=""></option>
-                                  <option *ngFor="let data of parentCombo" value="{{data.id}}">{{data.nombre+' '+data.apellido}}</option>
-                                </select>
-                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                              </div>
-                                <div *ngIf="empleado.invalid && (empleado.dirty || empleado.touched)"
-                                      class="alert alert-danger" role="alert">
-                                    <small *ngIf="empleado.errors.required">
-                                        El Empleado es invalido
-                                    </small>
-                                </div>
+                            <div class="form-group col-xs-6 m-b-15" *ngFor="let data of modulos">
+                                <label>{{data.nombre}}</label>
+                                <angular2-multiselect [data]="dropdownList" [(ngModel)]="data.accesos" [ngModelOptions]="{standalone: true}"
+                                [settings]="dropdownSettings[data.id]"
+                                (onSelect)="onItemSelect(data.id,$event)"
+                                (onDeSelect)="OnItemDeSelect(data.id,$event)"
+                                [selectedItems]="data.accesos"
+                                (onSelectAll)="onSelectAll($event)"
+                                (onDeSelectAll)="onDeSelectAll(data.id)"></angular2-multiselect>
                             </div>
 
                             <input type="hidden" class="form-control" id="id" name="id" required

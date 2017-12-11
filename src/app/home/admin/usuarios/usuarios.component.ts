@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from "./../_services/users.service";
 import { EmployeesService } from "./../_services/employees.service";
 import { RolesService } from "./../_services/roles.service";
+import { AccesosService } from "./../_services/accesos.service";
+import { ModulosService } from '../_services/modulos.service';
 
 import { NotificationsService } from 'angular2-notifications';
 
@@ -20,23 +22,139 @@ export class UsuariosComponent implements OnInit {
   selectedData:any
   parentCombo:any
   secondParentCombo:any
+  modulos:any = []
   public rowsOnPage = 5;
   public search:any
   private basePath:string = path.path
   dateToday:any
+  dropdownList = [];
+  selectedItem = [];
+  selectedItems = [];
+  dropdownSettings = [];
   constructor(
     private _service: NotificationsService,
     private mainService: UsersService,
     private parentService: EmployeesService,
-    private secondParentService: RolesService
+    private secondParentService: RolesService,
+    private secondChildService: ModulosService,
+    private childService: AccesosService
   ) { }
 
   ngOnInit() {
     this.cargarAll()
     this.cargarParentCombo()
     this.cargarSecondParentCombo()
+    this.dropdownList = [
+      {"id":1,"itemName":"Mostrar"},
+      {"id":2,"itemName":"Agregar"},
+      {"id":3,"itemName":"Modificar"},
+      {"id":4,"itemName":"Eliminar"}
+    ];
   }
+    onItemSelect(id:any,event){
+      let data:any;
+      switch(event.itemName){
+        case 'Agregar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            agregar : 1
+          }
+          break;
+        }
+        case 'Modificar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            modificar : 1
+          }
+          break;
+        }
+        case 'Eliminar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            eliminar : 1
+          }
+          break;
+        }
+        case 'Mostrar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            mostrar : 1
+          }
+          break;
+        }
+      }
+      $('#Loading').css('display','block')
+      $('#Loading').addClass('in')
+      this.childService.create(data)
+                      .then(response => {
+                        $('#Loading').css('display','none')
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+      // console.log(data);
 
+    }
+    OnItemDeSelect(id:any,event){
+      let data:any;
+      switch(event.itemName){
+        case 'Agregar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            agregar : 0
+          }
+          break;
+        }
+        case 'Modificar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            modificar : 0
+          }
+          break;
+        }
+        case 'Eliminar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            eliminar : 0
+          }
+          break;
+        }
+        case 'Mostrar' : {
+          data = {
+            usuario : this.selectedData.id,
+            modulo : id,
+            mostrar : 0
+          }
+          break;
+        }
+      }
+      $('#Loading').css('display','block')
+      $('#Loading').addClass('in')
+      this.childService.create(data)
+                      .then(response => {
+                        $('#Loading').css('display','none')
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+      // console.log(data);
+    }
+    onSelectAll(items: any){
+    }
+    onDeSelectAll(id: any){
+
+    }
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
@@ -45,6 +163,60 @@ export class UsuariosComponent implements OnInit {
                         this.Table = response
                         $("#editModal .close").click();
                         $("#insertModal .close").click();
+                        $('#Loading').css('display','none')
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+  }
+
+  cargarAccesos(id){
+    $('#Loading').css('display','block')
+    $('#Loading').addClass('in')
+    this.secondChildService.getAll()
+                      .then(response => {
+                        this.modulos.length =0;
+                        response.forEach(element => {
+                          element.accesos = []
+                          this.childService.getModuleAccess(id,element.id)
+                                            .then(response1 => {
+                                              this.selectedItem.length=0;
+                                              let cont=1;
+                                              if(response1.mostrar=='1'){(element.accesos.push({"id":1,"itemName":"Mostrar"})); cont++}
+                                              if(response1.agregar=='1'){(element.accesos.push({"id":2,"itemName":"Agregar"})); cont++}
+                                              if(response1.modificar=='1'){(element.accesos.push({"id":3,"itemName":"Modificar"})); cont++}
+                                              if(response1.eliminar=='1'){(element.accesos.push({"id":4,"itemName":"Eliminar"})); cont++}
+                                              // console.log(element.accesos);
+                                              this.dropdownSettings[element.id] = {
+                                                singleSelection: false,
+                                                text: element.nombre,
+                                                selectAllText:'Seleccionar Todos',
+                                                unSelectAllText:'Deseleccionar Todos',
+                                                enableSearchFilter: false,
+                                                classes:"myclass custom-class"
+                                              };
+                                              this.modulos.push(element)
+                                              // console.log(element.accesos);
+                                            }).catch(error => {
+                                              this.dropdownSettings[element.id] = {
+                                                singleSelection: false,
+                                                text: element.nombre,
+                                                selectAllText:'Seleccionar Todos',
+                                                unSelectAllText:'Deseleccionar Todos',
+                                                enableSearchFilter: false,
+                                                classes:"myclass custom-class"
+                                              };
+                                              this.modulos.push(element)
+                                              $('#Loading').css('display','none')
+                                            })
+
+
+                        });
+                        // console.log(response);
+                        // console.log(this.modulos);
+
                         $('#Loading').css('display','none')
                         console.clear
                       }).catch(error => {
@@ -149,6 +321,7 @@ export class UsuariosComponent implements OnInit {
     this.mainService.getSingle(id)
                       .then(response => {
                         this.selectedData = response;
+                        this.cargarAccesos(id)
                       }).catch(error => {
                         console.clear
                         this.createError(error)
