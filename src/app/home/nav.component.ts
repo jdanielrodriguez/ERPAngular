@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 
 import { NotificationsService } from 'angular2-notifications';
+import { AccesosService } from "./admin/_services/accesos.service";
 
 declare var $: any
 
@@ -20,14 +21,16 @@ export class NavComponent implements OnInit {
   type=localStorage.getItem('currentType');
   state=localStorage.getItem('currentState');
   rol=localStorage.getItem('currentRol');
-  idRol=localStorage.getItem('currentRolId');
+  idRol=+localStorage.getItem('currentRolId');
   click:boolean
   notifications:any = []
   nNotifications:number = 0;
+  modulos:any
   constructor(
     private _service: NotificationsService,
     private route: ActivatedRoute,
     private router: Router,
+    private mainService: AccesosService,
   ) { }
 
   ngOnInit() {
@@ -37,6 +40,7 @@ export class NavComponent implements OnInit {
     if(this.type=="tutor"){
       this.cargarNotifications();
     }
+    this.cargarModulos();
     // console.log(this.idRol);
 
   }
@@ -67,7 +71,23 @@ export class NavComponent implements OnInit {
       $('.xn-openable').removeClass("active");
     }
   }
+  cargarModulos(){
+    this.mainService.getAccess(+this.id)
+                      .then(response => {
+                        this.modulos = response
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                      })
+  }
+  permiso(obj:any){
+    localStorage.setItem('permisoAgregar',obj.agregar);
+    localStorage.setItem('permisoEliminar',obj.eliminar);
+    localStorage.setItem('permisoModificar',obj.modificar);
+    localStorage.setItem('permisoMostrar',obj.mostrar);
 
+  }
   cargarNotifications()
   {
     this.nNotifications=0;
