@@ -9,17 +9,17 @@
               <a class="x-navigation-control"></a>
           </li>
           <li class="xn-profile">
-             <a *ngIf="idRol=='3' || idRol=='1'" class="profile-mini" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
+             <a *ngIf="idRol<3" class="profile-mini" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
                   <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
               </a>
-              <a *ngIf="idRol!='3' && idRol!='1'" class="profile-mini" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
+              <a *ngIf="idRol>=3" class="profile-mini" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
                   <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
               </a>
               <div class="profile">
-                  <div *ngIf="idRol=='3' || idRol=='1'" class="profile-image" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
+                  <div *ngIf="idRol<3" class="profile-image" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
                       <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
                   </div>
-                  <div *ngIf="idRol!='3' && idRol!='1'" class="profile-image" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
+                  <div *ngIf="idRol>=3" class="profile-image" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
                       <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
                   </div>
                   <div class="profile-data">
@@ -31,57 +31,15 @@
               </div>
           </li>
           <li class="xn-title">Menu {{rol}}</li>
-          <li>
+          <li *ngIf="idRol==2">
               <a routerLinkActive="active"
-              [routerLink]="[ './admin/dashboard' ]"><span class="fa fa-tachometer"></span> <span class="xn-text">Dashboard</span></a>
+              [routerLink]="[ './admin/modulos' ]"><span class="fa fa-pencil"></span> <span class="xn-text">Modulos</span></a>
           </li>
-          <li>
-              <a routerLinkActive="active"
-              [routerLink]="[ './admin/sucursales' ]"><span class="fa fa-sitemap"></span> <span class="xn-text">Sucursales</span></a>
+          <li *ngFor="let data of modulos">
+              <a *ngIf="data.mostrar==1" (click)="permiso(data)" routerLinkActive="active"
+              [routerLink]="[ './admin/'+data.link ]"><span class="fa fa-{{data.icono}}"></span> <span class="xn-text">{{data.nombre}}</span></a>
           </li>
-          <li class="xn-openable" #usuarios >
-              <a (click)="abrir(usuarios)"><span class="fa fa-user"></span> <span class="xn-text">Usuarios</span></a>
-              <ul>
-                  <li class="xn-openable" #empleados1>
-                      <a (click)="abrir(empleados1)"><span class="fa fa-list"></span> Empleados</a>
-                      <ul>
-                          <li><a routerLinkActive="active"
-                            [routerLink]="[ './admin/empleados' ]"><span class="fa fa-users"></span> Empleados</a></li>
-                          <li><a routerLinkActive="active"
-                            [routerLink]="[ './admin/puestos' ]"><span class="fa fa-pencil"></span> Puestos</a></li>
-                      </ul>
-                  </li>
-                  <li class="xn-openable" #ususarios1>
-                      <a (click)="abrir(ususarios1)"><span class="fa fa-list"></span> Usuarios</a>
-                      <ul>
-                          <li><a routerLinkActive="active"
-                            [routerLink]="[ './admin/usuarios' ]"><span class="fa fa-users"></span> Usuarios</a></li>
-                          <li><a routerLinkActive="active"
-                            [routerLink]="[ './admin/roles' ]"><span class="fa fa-pencil"></span> Roles de Usuarios</a></li>
-                          <li><a routerLinkActive="active"
-                            [routerLink]="[ './admin/modulos' ]"><span class="fa fa-book"></span> Modulos</a></li>
-                      </ul>
-                  </li>
 
-              </ul>
-          </li>
-          <li class="xn-openable" #contInt >
-              <a (click)="abrir(contInt)"><span class="fa fa-edit"></span> <span class="xn-text">Control Interno</span></a>
-              <ul>
-                  <li><a routerLinkActive="active"
-                    [routerLink]="[ './admin/clientes' ]"><span class="fa fa-ticket"></span> Clientes</a></li>
-                  <li><a routerLinkActive="active"
-                    [routerLink]="[ './admin/proveedores' ]"><span class="fa fa-truck"></span> Proveedores</a></li>
-              </ul>
-          </li>
-          <li>
-              <a routerLinkActive="active"
-              [routerLink]="[ './admin/compras' ]"><span class="fa fa-shopping-cart"></span> <span class="xn-text">Compras</span></a>
-          </li>
-          <li>
-              <a routerLinkActive="active"
-              [routerLink]="[ './admin/ventas' ]"><span class="fa fa-tags"></span> <span class="xn-text">Ventas</span></a>
-          </li>
       </ul>
       <!-- END X-NAVIGATION -->
   </div>

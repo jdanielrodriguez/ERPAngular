@@ -17,16 +17,24 @@
 
   <div class="row">
       <div class="col-md-12">
+          <!-- Nav -->
+          <div *ngIf="Agregar==1" class="col-md-6">
+              <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../generar-compra' ]" class="btn btn-warning"><i class="fa fa-plus"></i>Generar Compra</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../compras-anuladas' ]" class="btn btn-danger"><i class="fa fa-ban"></i>Compras Anuladas</a>
+              </div>
 
+          </div>
+          <div *ngIf="Agregar==0" class="col-md-3">
+              <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../compras-anuladas' ]" class="btn btn-danger"><i class="fa fa-ban"></i>Compras Anuladas</a>
+              </div>
+
+          </div>
+          <!-- End Nav -->
           <!-- START DEFAULT DATATABLE -->
           <div class="panel panel-default">
               <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <button type="button" class="btn btn-warning form-control" style="cursor:pointer;" [routerLink]="[ './../generar-compra' ]"><i class="fa fa-plus"></i>Generar Compra</button>
-                  </h3>
-                  <h3 class="panel-title col-xs-2 col-xs-offset-3">
-                    <button type="button" class="btn btn-danger form-control" style="cursor:pointer;" [routerLink]="[ './../compras-anuladas' ]"><i class="fa fa-ban"></i>Compras Anuladas</button>
-                  </h3>
                   <ul class="panel-controls">
                       <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
                   </ul>
@@ -56,7 +64,7 @@
                               <td>
 
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
-                                <button type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
+                                <button *ngIf="Eliminar==1" type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
 
                               </td>
                           </tr>

@@ -13,6 +13,11 @@ declare var $: any
 export class RolesComponent implements OnInit {
   title:string="Roles"
   Table:any
+  idRol=+localStorage.getItem('currentRolId');
+  Agregar = localStorage.getItem('permisoAgregar')
+  Modificar = localStorage.getItem('permisoModificar')
+  Eliminar = localStorage.getItem('permisoEliminar')
+  Mostrar = localStorage.getItem('permisoMostrar')
   selectedData:any
   public rowsOnPage = 5;
   public search:any
@@ -38,6 +43,7 @@ export class RolesComponent implements OnInit {
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
   }
 

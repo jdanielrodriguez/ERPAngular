@@ -22,7 +22,7 @@
           <div class="panel panel-default">
               <div class="panel-heading">
                   <h3 class="panel-title">
-                    <button type="button" class="btn btn-info form-control" data-toggle="modal" data-target="#insertModal" style="cursor:pointer;"><i class="fa fa-plus"></i>Nuevo</button>
+                    <button *ngIf="Agregar==1" type="button" class="btn btn-info form-control" data-toggle="modal" data-target="#insertModal" style="cursor:pointer;"><i class="fa fa-plus"></i>Nuevo</button>
                   </h3>
                   <ul class="panel-controls">
                       <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
@@ -52,8 +52,8 @@
                               <td>{{((data.telefono!=null)?data.telefono:'')}}</td>
                               <td>
 
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
-                                <button type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
+                                <button *ngIf="Modificar==1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
+                                <button *ngIf="Eliminar==1" type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
 
                               </td>
                           </tr>

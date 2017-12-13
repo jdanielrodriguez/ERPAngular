@@ -18,6 +18,11 @@ export class EmpleadosComponent implements OnInit {
   selectedData:any
   parentCombo:any
   secondParentCombo:any
+  idRol=+localStorage.getItem('currentRolId');
+  Agregar = localStorage.getItem('permisoAgregar')
+  Modificar = localStorage.getItem('permisoModificar')
+  Eliminar = localStorage.getItem('permisoEliminar')
+  Mostrar = localStorage.getItem('permisoMostrar')
   public rowsOnPage = 5;
   public search:any
   constructor(
