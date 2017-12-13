@@ -61,11 +61,11 @@ closeResult: string;
         localStorage.setItem('currentRolId', response.rol);
 
         switch(response.rol){
-          case 3:{
+          case 1:{
             type = 'admin';
             break;
           }
-          case 1:{
+          case 2:{
             type = 'admin';
             break;
           }
