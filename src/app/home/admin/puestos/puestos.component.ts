@@ -14,6 +14,11 @@ export class PuestosComponent implements OnInit {
   title:string="Puestos"
   Table:any
   selectedData:any
+  idRol=+localStorage.getItem('currentRolId');
+  Agregar = localStorage.getItem('permisoAgregar')
+  Modificar = localStorage.getItem('permisoModificar')
+  Eliminar = localStorage.getItem('permisoEliminar')
+  Mostrar = localStorage.getItem('permisoMostrar')
   public rowsOnPage = 5;
   public search:any
   constructor(
@@ -38,6 +43,7 @@ export class PuestosComponent implements OnInit {
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
   }
 
