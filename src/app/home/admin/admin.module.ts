@@ -47,6 +47,7 @@ import { AccesosService } from "./_services/accesos.service";
 import { ComprasService } from "./_services/compras.service";
 import { VentasService } from "./_services/ventas.service";
 import { InventarioService } from "./_services/inventario.service";
+import { ProductosService } from "./_services/productos.service";
 @NgModule({
   imports: [
     CommonModule,
@@ -96,7 +97,8 @@ import { InventarioService } from "./_services/inventario.service";
     AccesosService,
     ComprasService,
     VentasService,
-    InventarioService
+    InventarioService,
+    ProductosService
   ]
 })
 export class AdminModule { }
