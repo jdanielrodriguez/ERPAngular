@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SucursalesService } from "./../_services/sucursales.service";
+import { ProveedoresService } from "./../_services/proveedores.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
@@ -11,45 +11,73 @@ declare var $: any
   styleUrls: ['./generar-compra.component.css']
 })
 export class GenerarCompraComponent implements OnInit {
-  title:string="Compras"
+  title:string="Compra"
   Table:any
   selectedData:any
+  idRol=+localStorage.getItem('currentRolId');
+  Agregar = localStorage.getItem('permisoAgregar')
+  Modificar = localStorage.getItem('permisoModificar')
+  Eliminar = localStorage.getItem('permisoEliminar')
+  Mostrar = localStorage.getItem('permisoMostrar')
   public rowsOnPage = 5;
   public search:any
   constructor(
     private _service: NotificationsService,
-    private mainService: SucursalesService
+    private secondService: ProveedoresService
   ) { }
 
   ngOnInit() {
     this.cargarAll()
   }
+  abrir(event:any){
+    if(event.keyCode==13){
+      if($('#nit').val()=='' && $('#nombre').val()==''){
+        $('#secondModal').modal()
+      }else{
+        if($('#nit').val()!=''){
+          this.buscar($('#nit').val())
+        }else
+        if($('#nombre').val()!=''){
+          this.buscar($('#nombre').val())
+        }
+      }
+    }
+
+  }
+  buscar(text){
+
+  }
+
+  seleccionar(data){
+
+  }
 
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.getAll()
+    this.secondService.getAll()
                       .then(response => {
                         this.Table = response
-                        // console.log(response);
-                        $("#editModal .close").click();
-                        $("#insertModal .close").click();
                         $('#Loading').css('display','none')
                         console.clear
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
   }
 
   insert(formValue:any){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.create(formValue)
+
+    this.secondService.create(formValue)
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Sucursal Ingresado')
+                        this.create('Proveedor Ingresado')
+                        $("#editModal .close").click();
+                        $("#insertModal .close").click();
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
                       }).catch(error => {
@@ -62,7 +90,7 @@ export class GenerarCompraComponent implements OnInit {
   }
 
   cargarSingle(id:number){
-    this.mainService.getSingle(id)
+    this.secondService.getSingle(id)
                       .then(response => {
                         this.selectedData = response;
                       }).catch(error => {
@@ -75,11 +103,11 @@ export class GenerarCompraComponent implements OnInit {
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
     //console.log(data)
-    this.mainService.update(formValue)
+    this.secondService.update(formValue)
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Sucursal Actualizado exitosamente')
+                        this.create('Proveedor Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
@@ -92,12 +120,12 @@ export class GenerarCompraComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    if(confirm("¿Desea eliminar el Sucursal?")){
-      this.mainService.delete(id)
+    if(confirm("¿Desea eliminar el Proveedor?")){
+      this.secondService.delete(id)
                         .then(response => {
                           this.cargarAll()
                           console.clear
-                          this.create('Sucursal Eliminado exitosamente')
+                          this.create('Proveedor Eliminado exitosamente')
                           $('#Loading').css('display','none')
                         }).catch(error => {
                           console.clear

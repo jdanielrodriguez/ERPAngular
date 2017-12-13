@@ -17,16 +17,25 @@
 
   <div class="row">
       <div class="col-md-12">
+           <!-- Nav -->
+          <div *ngIf="Agregar==1" class="col-md-6">
+              <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../generar-compra' ]" class="btn btn-warning"><i class="fa fa-plus"></i>Generar Compra</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../compras' ]" class="btn btn-success"><i class="fa fa-shopping-cart"></i>Compras</a>
+              </div>
 
+          </div>
+          <div *ngIf="Agregar==0" class="col-md-3">
+              <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../compras' ]" class="btn btn-success"><i class="fa fa-shopping-cart"></i>Compras</a>
+              </div>
+
+          </div>
+          <!-- End Nav -->
           <!-- START DEFAULT DATATABLE -->
           <div class="panel panel-default">
               <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <button type="button" class="btn btn-warning form-control" style="cursor:pointer;" [routerLink]="[ './../generar-compra' ]"><i class="fa fa-plus"></i>Generar Compra</button>
-                  </h3>
-                  <h3 class="panel-title col-xs-2 col-xs-offset-3">
-                    <button type="button" class="btn btn-success form-control" style="cursor:pointer;" [routerLink]="[ './../compras' ]"><i class="fa fa-shopping-cart"></i>Compras</button>
-                  </h3>
+
                   <ul class="panel-controls">
                       <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
                   </ul>

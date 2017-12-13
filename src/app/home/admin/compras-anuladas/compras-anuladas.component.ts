@@ -13,6 +13,11 @@ declare var $: any
 export class ComprasAnuladasComponent implements OnInit {
   title:string="Compras Anuladas"
   Table:any
+  idRol=+localStorage.getItem('currentRolId');
+  Agregar = localStorage.getItem('permisoAgregar')
+  Modificar = localStorage.getItem('permisoModificar')
+  Eliminar = localStorage.getItem('permisoEliminar')
+  Mostrar = localStorage.getItem('permisoMostrar')
   selectedData:any
   public rowsOnPage = 5;
   public search:any

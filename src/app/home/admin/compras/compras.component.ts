@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SucursalesService } from "./../_services/sucursales.service";
+import { ComprasService } from "./../_services/compras.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
@@ -14,11 +14,16 @@ export class ComprasComponent implements OnInit {
   title:string="Compras"
   Table:any
   selectedData:any
+  idRol=+localStorage.getItem('currentRolId');
+  Agregar = localStorage.getItem('permisoAgregar')
+  Modificar = localStorage.getItem('permisoModificar')
+  Eliminar = localStorage.getItem('permisoEliminar')
+  Mostrar = localStorage.getItem('permisoMostrar')
   public rowsOnPage = 5;
   public search:any
   constructor(
     private _service: NotificationsService,
-    private mainService: SucursalesService
+    private mainService: ComprasService
   ) { }
 
   ngOnInit() {
