@@ -5,6 +5,7 @@ import { LoadersCssModule } from 'angular2-loaders-css';
 
 import { HomeRoutingModule } from './home.routing';
 import { NavComponent } from './nav.component';
+import { AccesosService } from './admin/_services/accesos.service';
 
 import { UsuarioGuard } from "./../_guards/usuario.guard";
 import { AdminGuard } from "./../_guards/admin.guard";
@@ -18,7 +19,8 @@ import { AdminGuard } from "./../_guards/admin.guard";
   declarations: [NavComponent],
   providers: [
     UsuarioGuard,
-    AdminGuard
+    AdminGuard,
+    AccesosService
   ]
 })
 export class HomeModule { }
