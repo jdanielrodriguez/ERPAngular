@@ -36,6 +36,17 @@ return Promise.reject(error.message || error)
                         .catch(this.handleError)
     }
 
+    getAnuladas():Promise<any> {
+      let url = `${this.basePath}/api/anuladas/compras`
+        return this.http.get(url)
+                        .toPromise()
+                          .then(response => {
+                            //console.log(response.json())
+                            return response.json()
+                          })
+                          .catch(this.handleError)
+      }
+
 
     create(form):Promise<any> {
     let url = `${this.basePath}/api/compras`
