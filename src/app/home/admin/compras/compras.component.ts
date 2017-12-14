@@ -69,6 +69,7 @@ export class ComprasComponent implements OnInit {
   cargarSingle(id:number){
     this.mainService.getSingle(id)
                       .then(response => {
+                        console.log(response);
                         this.selectedData = response;
                       }).catch(error => {
                         console.clear
@@ -80,17 +81,25 @@ export class ComprasComponent implements OnInit {
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
     //console.log(data)
-    this.mainService.update(formValue)
-                      .then(response => {
-                        this.cargarAll()
-                        console.clear
-                        this.create('Sucursal Actualizado exitosamente')
-                        $('#Loading').css('display','none')
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                        $('#Loading').css('display','none')
-                      })
+    formValue = {
+      estado:0,
+      id:formValue
+    }
+    if(confirm("¿Desea Anular la Venta?")){
+      this.mainService.update(formValue)
+                        .then(response => {
+                          this.cargarAll()
+                          console.clear
+                          this.create('Venta Anulada Exitosamente')
+                          $('#Loading').css('display','none')
+                        }).catch(error => {
+                          console.clear
+                          this.createError(error)
+                          $('#Loading').css('display','none')
+                        })
+    }else{
+      $('#Loading').css('display','none')
+    }
 
   }
 
