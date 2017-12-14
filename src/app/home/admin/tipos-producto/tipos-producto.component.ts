@@ -1,29 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { ComprasService } from "./../_services/compras.service";
+import { TiposProductoService } from "./../_services/tipos-producto.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any
 
 @Component({
-  selector: 'app-compras-anuladas',
-  templateUrl: './compras-anuladas.component.html',
-  styleUrls: ['./compras-anuladas.component.css']
+  selector: 'app-tipos-producto',
+  templateUrl: './tipos-producto.component.html',
+  styleUrls: ['./tipos-producto.component.css']
 })
-export class ComprasAnuladasComponent implements OnInit {
-  title:string="Compras Anuladas"
+export class TiposProductoComponent implements OnInit {
+  title:string="Tipos de Producto"
   Table:any
-  selectedData:any
   idRol=+localStorage.getItem('currentRolId');
   Agregar = localStorage.getItem('permisoAgregar')
   Modificar = localStorage.getItem('permisoModificar')
   Eliminar = localStorage.getItem('permisoEliminar')
   Mostrar = localStorage.getItem('permisoMostrar')
+  selectedData:any
   public rowsOnPage = 5;
   public search:any
   constructor(
     private _service: NotificationsService,
-    private mainService: ComprasService
+    private mainService: TiposProductoService
   ) { }
 
   ngOnInit() {
@@ -33,10 +33,9 @@ export class ComprasAnuladasComponent implements OnInit {
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.getAnuladas()
+    this.mainService.getAll()
                       .then(response => {
                         this.Table = response
-                        // console.log(response);
                         $("#editModal .close").click();
                         $("#insertModal .close").click();
                         $('#Loading').css('display','none')
@@ -44,6 +43,7 @@ export class ComprasAnuladasComponent implements OnInit {
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                        $('#Loading').css('display','none')
                       })
   }
 
@@ -54,7 +54,7 @@ export class ComprasAnuladasComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Sucursal Ingresado')
+                        this.create('Rol Ingresado')
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
                       }).catch(error => {
@@ -69,7 +69,6 @@ export class ComprasAnuladasComponent implements OnInit {
   cargarSingle(id:number){
     this.mainService.getSingle(id)
                       .then(response => {
-                        console.log(response);
                         this.selectedData = response;
                       }).catch(error => {
                         console.clear
@@ -85,7 +84,7 @@ export class ComprasAnuladasComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Sucursal Actualizado exitosamente')
+                        this.create('Rol Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
@@ -98,12 +97,12 @@ export class ComprasAnuladasComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    if(confirm("¿Desea eliminar el Sucursal?")){
+    if(confirm("¿Desea eliminar el Rol?")){
       this.mainService.delete(id)
                         .then(response => {
                           this.cargarAll()
                           console.clear
-                          this.create('Sucursal Eliminado exitosamente')
+                          this.create('Rol Eliminado exitosamente')
                           $('#Loading').css('display','none')
                         }).catch(error => {
                           console.clear
@@ -125,14 +124,14 @@ export class ComprasAnuladasComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
     maxLength: 200
-  };
+};
 
-  create(success) {
-      this._service.success('¡Éxito!',success)
+create(success) {
+     this._service.success('¡Éxito!',success)
 
-  }
-  createError(error) {
-      this._service.error('¡Error!',error)
+}
+createError(error) {
+     this._service.error('¡Error!',error)
 
-  }
+}
 }

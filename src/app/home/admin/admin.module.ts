@@ -33,7 +33,7 @@ import { VentasAnuladasComponent } from './ventas-anuladas/ventas-anuladas.compo
 import { ComprasAnuladasComponent } from './compras-anuladas/compras-anuladas.component';
 import { CotizacionComponent } from './cotizacion/cotizacion.component';
 import { ModulosComponent } from './modulos/modulos.component';
-
+import { TiposProductoComponent } from './tipos-producto/tipos-producto.component';
 
 import { UsersService } from "./_services/users.service";
 import { EmployeesService } from "./_services/employees.service";
@@ -48,6 +48,10 @@ import { ComprasService } from "./_services/compras.service";
 import { VentasService } from "./_services/ventas.service";
 import { InventarioService } from "./_services/inventario.service";
 import { ProductosService } from "./_services/productos.service";
+import { TiposProductoService } from "./_services/tipos-producto.service";
+import { TiposVentaService } from "./_services/tipos-venta.service";
+import { TiposCompraService } from "./_services/tipos-compra.service";
+
 @NgModule({
   imports: [
     CommonModule,
@@ -83,7 +87,8 @@ import { ProductosService } from "./_services/productos.service";
     VentasAnuladasComponent,
     ComprasAnuladasComponent,
     CotizacionComponent,
-    ModulosComponent
+    ModulosComponent,
+    TiposProductoComponent
   ],
   providers: [
     UsersService,
@@ -98,7 +103,10 @@ import { ProductosService } from "./_services/productos.service";
     ComprasService,
     VentasService,
     InventarioService,
-    ProductosService
+    ProductosService,
+    TiposProductoService,
+    TiposVentaService,
+    TiposCompraService
   ]
 })
 export class AdminModule { }
