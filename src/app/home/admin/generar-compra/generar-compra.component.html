@@ -219,8 +219,8 @@
                           </div>
                       </div>
                   </div>
-                  <div *ngIf="prov.id>0" class="form-group col-xs-12 text-right m-b-15">
-                      <button type="button" class="btn btn-danger" [routerLink]="[ './../compras' ]"><i class="fa fa-close" ></i> Cancel</button>
+                  <div *ngIf="TableDet.length>0" class="form-group col-xs-12 text-right m-b-15">
+                      <button type="button" class="btn btn-danger" [routerLink]="[ './../compras' ]"><i class="fa fa-times-circle" ></i> Cancel</button>
                       <button type="button" class="btn btn-success" (click)="agregarInventario(CompraForm.value)"><i class="fa fa-save"></i> Guardar</button>
                   </div>
                 </form>
@@ -317,7 +317,7 @@
                               <input type="hidden" class="form-control" id="producto" name="producto" required
                                         ngModel #producto="ngModel" [(ngModel)]="prod.id">
                               <div *ngIf="prod.id<=0" class="form-group col-xs-12 text-right m-b-15">
-                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> Cancel</button>
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
                                   <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
                               </div>
                               <div *ngIf="prod.id>0" class="form-group col-xs-12 m-b-15">
@@ -394,7 +394,7 @@
                                   <input type="hidden" class="form-control" id="id" name="id" required
                                         ngModel #id="ngModel" [(ngModel)]="prod.inventario.id">
                                   <div class="form-group col-xs-12 text-right m-b-15">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> Cancel</button>
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
                                       <button type="button" class="btn btn-success" (click)="agregarVenta(ProdForm.value)"><i class="fa fa-save"></i> Guardar</button>
                                   </div>
                               </div>
@@ -555,7 +555,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-12 text-right m-b-15">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> Cancel</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
                             </div>
                           </form>
@@ -650,7 +650,7 @@
                             <input type="hidden" class="form-control" id="id" name="id" required
                                         ngModel #id="ngModel" [(ngModel)]="selectedData.id">
                             <div class="form-group col-xs-12 text-right m-b-15">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close" ></i> Cancel</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
                             </div>
                           </form>
