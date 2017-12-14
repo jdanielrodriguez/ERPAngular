@@ -116,6 +116,39 @@
                           </small>
                       </div>
                   </div>
+                  <div *ngIf="prov.tipo==2" class="form-group col-xs-6 m-b-15">
+                    <label for="tipoPlazo">Tipo de Plazo</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                      <select class="form-control" id="tipoPlazo" name="tipoPlazo" required
+                              ngModel #tipoPlazo="ngModel" >
+                        <option value=""></option>
+                        <option value="1">Dia</option>
+                        <option value="2">Mes</option>
+                        <option value="3">Año</option>
+                      </select>
+                    </div>
+                      <div *ngIf="(tipoPlazo.invalid && (tipoPlazo.dirty || tipoPlazo.touched))"
+                            class="alert alert-danger" role="alert">
+                          <small *ngIf="tipoPlazo.errors.required">
+                              El Tipo de Plazo es invalido
+                          </small>
+                      </div>
+                  </div>
+                  <div *ngIf="prov.tipo==2" class="form-group col-xs-6 m-b-15">
+                    <label for="plazo">Plazo</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                      <input type="number" class="form-control" id="plazo" name="plazo" required
+                              ngModel #plazo="ngModel" placeholder="Plazo">
+                    </div>
+                      <div *ngIf="plazo.invalid && (plazo.dirty || plazo.touched)"
+                            class="alert alert-danger" role="alert">
+                          <small *ngIf="plazo.errors.required">
+                              El Plazo es invalido
+                          </small>
+                      </div>
+                  </div>
                   <input type="hidden" class="form-control" id="proveedor" name="proveedor" required
                                         ngModel #proveedor="ngModel" [(ngModel)]="prov.id">
                   <input type="hidden" class="form-control" id="usuario" name="usuario" required

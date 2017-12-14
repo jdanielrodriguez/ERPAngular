@@ -85,6 +85,7 @@ export class GenerarCompraComponent implements OnInit {
   abrir(event:any){
     if(event.keyCode==13){
       if($('#nit').val()=='' && $('#nombre').val()==''){
+        this.prov={};
         $('#secondModal').modal()
       }else{
         if($('#nit').val()!=''){
@@ -98,7 +99,21 @@ export class GenerarCompraComponent implements OnInit {
 
   }
   buscar(text){
-
+    let data:any = {
+      nit:text
+    }
+    this.secondService.getSingleFind(data)
+                      .then(response => {
+                        this.prov=response
+                        this.prov.tipo = 1
+                        // console.log(response);
+                        $("#secondModal .close").click();
+                        $('#tipo').focus();
+                      }).catch(error => {
+                        console.clear
+                        this.prov={};
+                        $('#secondModal').modal()
+                      })
   }
 
   seleccionar(data){
