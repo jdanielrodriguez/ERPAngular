@@ -81,6 +81,18 @@ export class GenerarCompraComponent implements OnInit {
     this.cargarAll()
     this.cargarProds()
     this.cargarCombos()
+    this.colapsse()
+  }
+  colapsse(){
+    if($('.page-container').hasClass('page-navigation-toggled')){
+
+    }else{
+      $('.page-container').addClass('page-navigation-toggled page-container-wide')
+      $('#navigations').addClass('x-navigation-minimized')
+      $('.fa-dedent').addClass('fa-indent')
+      $('.fa-indent').removeClass('fa-dedent')
+      $('.xn-openable').removeClass("active");
+    }
   }
   abrir(event:any){
     if(event.keyCode==13){

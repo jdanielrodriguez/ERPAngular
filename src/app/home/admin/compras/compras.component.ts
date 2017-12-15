@@ -28,8 +28,16 @@ export class ComprasComponent implements OnInit {
 
   ngOnInit() {
     this.cargarAll()
+    this.colapsse()
   }
-
+  colapsse(){
+    if($('.page-container').hasClass('page-navigation-toggled')){
+      $('.page-container').removeClass('page-navigation-toggled page-container-wide')
+      $('#navigations').removeClass('x-navigation-minimized')
+      $('.fa-indent').addClass('fa-dedent')
+      $('.fa-dedent').removeClass('fa-indent')
+    }
+  }
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
