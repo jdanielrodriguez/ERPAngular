@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComprasService } from "./../_services/compras.service";
+import { VentasService } from "./../_services/ventas.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
@@ -23,7 +23,7 @@ export class VentasAnuladasComponent implements OnInit {
   public search:any
   constructor(
     private _service: NotificationsService,
-    private mainService: ComprasService
+    private mainService: VentasService
   ) { }
 
   ngOnInit() {
@@ -69,8 +69,9 @@ export class VentasAnuladasComponent implements OnInit {
   cargarSingle(id:number){
     this.mainService.getSingle(id)
                       .then(response => {
-                        console.log(response);
+                        // console.log(response);
                         this.selectedData = response;
+                        this.selectedData.clientes.nombre = response.clientes.nombre+' '+response.clientes.apellido;
                       }).catch(error => {
                         console.clear
                         this.createError(error)
@@ -81,17 +82,25 @@ export class VentasAnuladasComponent implements OnInit {
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
     //console.log(data)
-    this.mainService.update(formValue)
-                      .then(response => {
-                        this.cargarAll()
-                        console.clear
-                        this.create('Sucursal Actualizado exitosamente')
-                        $('#Loading').css('display','none')
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                        $('#Loading').css('display','none')
-                      })
+    formValue = {
+      estado:0,
+      id:formValue
+    }
+    if(confirm("¿Desea Anular la Venta?")){
+      this.mainService.update(formValue)
+                        .then(response => {
+                          this.cargarAll()
+                          console.clear
+                          this.create('Venta Anulada Exitosamente')
+                          $('#Loading').css('display','none')
+                        }).catch(error => {
+                          console.clear
+                          this.createError(error)
+                          $('#Loading').css('display','none')
+                        })
+    }else{
+      $('#Loading').css('display','none')
+    }
 
   }
 

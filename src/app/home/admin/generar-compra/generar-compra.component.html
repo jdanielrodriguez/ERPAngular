@@ -237,7 +237,7 @@
                       </div>
                       <div>
                         <ul class="list-group border-bottom col-xs-6 m-b-15">
-                            <li class="list-group-item" *ngFor = "let data of productos |filter:searchterm" (click)="seleccionarProd(data)">{{data.nombre}}<span class="badge">{{data.codigo}}</span></li>
+                            <li class="list-group-item" *ngFor = "let data of productos |filter:searchterm" (click)="seleccionarProd(data)">{{data.productos.codigo}} - {{data.productos.nombre}}<span class="badge">{{data.cantidad}}</span></li>
                         </ul>
                         <div class="form-group col-xs-6 m-b-15">
                             <form id="prod-form"  #ProdForm="ngForm" (ngSubmit)="insertProd(ProdForm.value)">
@@ -451,7 +451,7 @@
 
                                                 <button type="button" class="btn btn-default" (click)="seleccionar(data)" style="cursor:pointer;"><i class="fa fa-hand-o-up"></i></button>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i></button>
-                                                <button type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i></button>
+                                                <!-- <button type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i></button> -->
 
                                               </td>
                                           </tr>

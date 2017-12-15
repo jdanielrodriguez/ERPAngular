@@ -51,7 +51,7 @@
                               <th style="width:10%;">
                                 <mfDefaultSorter by="nit">Nit</mfDefaultSorter></th>
                               <th style="width:20%;">
-                                <mfDefaultSorter by="telefono">Proveedor</mfDefaultSorter></th>
+                                <mfDefaultSorter by="telefono">Cliente</mfDefaultSorter></th>
                               <th style="width:20%;">
                                 <mfDefaultSorter by="telefono">Total</mfDefaultSorter></th>
                               <th style="width:10%;">
@@ -63,13 +63,13 @@
                           <tr *ngFor="let data of mf.data">
                               <td>{{((data.fecha!=null)?data.fecha.substring(0,10):'')}}</td>
                               <td>{{((data.comprobante!=null)?data.comprobante:'')}}</td>
-                              <td>{{((data.proveedores.nit!=null)?data.proveedores.nit:'')}}</td>
-                              <td>{{((data.proveedores.nombre!=null)?data.proveedores.nombre:'')}}</td>
+                              <td>{{((data.clientes.nit!=null)?data.clientes.nit:'')}}</td>
+                              <td>{{((data.clientes.nombre!=null)?data.clientes.nombre+' ':'')+((data.clientes.apellido!=null)?data.clientes.apellido:'')}}</td>
                               <td>{{((data.total!=null)?data.total:'')}}</td>
                               <td>{{((data.tipos.descripcion!=null)?data.tipos.descripcion:'')}}</td>
                               <td>
 
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-eye"></i> Ver</button>
 
                               </td>
                           </tr>
@@ -208,7 +208,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                   <input autofocus type="text" class="form-control" id="nit" name="nit" required disabled
-                                          ngModel #nit="ngModel" placeholder="Nit" [(ngModel)]="selectedData.proveedores.nit">
+                                          ngModel #nit="ngModel" placeholder="Nit" [(ngModel)]="selectedData.clientes.nit">
                                 </div>
                                   <div *ngIf="nit.invalid && (nit.dirty || nit.touched)"
                                         class="alert alert-danger" role="alert">
@@ -222,7 +222,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                   <input type="text" class="form-control" id="nombre" name="nombre" required disabled
-                                          ngModel #nombre="ngModel" placeholder="Nombre" [(ngModel)]="selectedData.proveedores.nombre">
+                                          ngModel #nombre="ngModel" placeholder="Nombre" [(ngModel)]="selectedData.clientes.nombre">
                                 </div>
                                   <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
                                         class="alert alert-danger" role="alert">
@@ -236,7 +236,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                   <input type="text" class="form-control" id="direccion" name="direccion" required disabled
-                                          ngModel #direccion="ngModel" placeholder="Direccion" [(ngModel)]="selectedData.proveedores.direccion">
+                                          ngModel #direccion="ngModel" placeholder="Direccion" [(ngModel)]="selectedData.clientes.direccion">
                                 </div>
                                   <div *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)"
                                         class="alert alert-danger" role="alert">
@@ -306,8 +306,6 @@
                                                       <th style="width:20%;">
                                                         <mfDefaultSorter by="cantidad">Cantidad</mfDefaultSorter></th>
                                                       <th style="width:20%;">
-                                                        <mfDefaultSorter by="precioCosto">Costo</mfDefaultSorter></th>
-                                                      <th style="width:20%;">
                                                         <mfDefaultSorter by="precioVenta">Venta</mfDefaultSorter></th>
                                                       <th style="width:20%;">
                                                         <mfDefaultSorter by="precioCosto">Total</mfDefaultSorter></th>
@@ -318,7 +316,6 @@
                                                       <td>{{((data.productos.codigo!=null)?data.productos.codigo:'')}}</td>
                                                       <td>{{((data.productos.nombre!=null)?data.productos.nombre:'')}}</td>
                                                       <td>{{((data.cantidad!=null)?data.cantidad:'')}}</td>
-                                                      <td>{{((data.costo!=null)?data.costo:'')}}</td>
                                                       <td>{{((data.precio!=null)?data.precio:'')}}</td>
                                                       <td>{{((data.subtotal!=null)?data.subtotal:'')}}</td>
                                                   </tr>

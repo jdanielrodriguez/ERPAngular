@@ -18,6 +18,10 @@ import { VentasAnuladasComponent } from './ventas-anuladas/ventas-anuladas.compo
 import { GenerarVentaComponent } from './generar-venta/generar-venta.component';
 import { CotizacionComponent } from './cotizacion/cotizacion.component';
 import { ModulosComponent } from './modulos/modulos.component';
+import { CuentasCobrarComponent } from './cuentas-cobrar/cuentas-cobrar.component';
+import { CuentasCobrarPagadasComponent } from './cuentas-cobrar-pagadas/cuentas-cobrar-pagadas.component';
+import { CuentasPagarComponent } from './cuentas-pagar/cuentas-pagar.component';
+import { CuentasPagarPagadasComponent } from './cuentas-pagar-pagadas/cuentas-pagar-pagadas.component';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '', component: AdminComponent, children: [
@@ -33,6 +37,10 @@ const routes: Routes = [
     { path: 'compras', component: ComprasComponent },
     { path: 'ventas', component: VentasComponent },
     { path: 'cotizacion', component: CotizacionComponent },
+    { path: 'cuentas-cobrar', component: CuentasCobrarComponent },
+    { path: 'cuentas-cobrar-pagadas', component: CuentasCobrarPagadasComponent },
+    { path: 'cuentas-pagar', component: CuentasPagarComponent },
+    { path: 'cuentas-pagar-pagadas', component: CuentasPagarPagadasComponent },
     { path: 'modulos', component: ModulosComponent },
   ]},
   { path: 'compras-anuladas', component: ComprasAnuladasComponent },

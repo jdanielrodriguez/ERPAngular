@@ -6,8 +6,7 @@ import { path } from "../../../config.module";
 import "rxjs/add/operator/toPromise";
 
 @Injectable()
-export class VentasService {
-
+export class MovimientosCobrarService {
 	headers = new Headers({'Access-Control-Allow-Origin':'*',
   'cache-control':'no-cache',
   'server':'Apache/2.4.18 (Ubuntu)',
@@ -26,7 +25,7 @@ return Promise.reject(error.message || error)
 }
 
     getAll():Promise<any> {
-    let url = `${this.basePath}/api/ventas`
+    let url = `${this.basePath}/api/movimientosc`
       return this.http.get(url)
                       .toPromise()
                         .then(response => {
@@ -36,19 +35,9 @@ return Promise.reject(error.message || error)
                         .catch(this.handleError)
     }
 
-    getAnuladas():Promise<any> {
-      let url = `${this.basePath}/api/anuladas/ventas`
-        return this.http.get(url)
-                        .toPromise()
-                          .then(response => {
-                            //console.log(response.json())
-                            return response.json()
-                          })
-                          .catch(this.handleError)
-      }
 
     create(form):Promise<any> {
-    let url = `${this.basePath}/api/ventas`
+    let url = `${this.basePath}/api/movimientosc`
       return this.http.post(url,form)
                       .toPromise()
                         .then(response => {
@@ -59,7 +48,7 @@ return Promise.reject(error.message || error)
     }
 
     delete(id):Promise<any> {
-    let url = `${this.basePath}/api/ventas/${id}`
+    let url = `${this.basePath}/api/movimientosc/${id}`
       return this.http.delete(url)
                       .toPromise()
                         .then(response => {
@@ -70,7 +59,7 @@ return Promise.reject(error.message || error)
     }
 
     update(form):Promise<any> {
-    let url = `${this.basePath}/api/ventas/${form.id}`
+    let url = `${this.basePath}/api/movimientosc/${form.id}`
       return this.http.put(url,form)
                       .toPromise()
                         .then(response => {
@@ -81,7 +70,7 @@ return Promise.reject(error.message || error)
     }
 
     getSingle(id:number):Promise<any> {
-    let url = `${this.basePath}/api/ventas/${id}`
+    let url = `${this.basePath}/api/movimientosc/${id}`
       return this.http.get(url)
                       .toPromise()
                         .then(response => {

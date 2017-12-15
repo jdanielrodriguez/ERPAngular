@@ -1,0 +1,459 @@
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Tables</a></li>
+  <li class="active">{{title}}</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- PAGE TITLE -->
+<div class="page-title">
+  <h2>{{title}}</h2>
+</div>
+<!-- END PAGE TITLE -->
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+  <div class="row">
+      <div class="col-md-12">
+          <!-- Nav -->
+          <div class="col-md-6">
+              <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../cuentas-cobrar' ]" class="btn btn-warning"><i class="fa fa-download"></i>Cuentas Cobrar</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../cuentas-pagar' ]" class="btn btn-warning"><i class="fa fa-upload"></i>Cuentas Pagar</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../cuentas-pagar-pagadas' ]" class="btn btn-danger"><i class="fa fa-ban"></i>Cuentas Pagar Pagadas</a>
+              </div>
+
+          </div>
+          <!-- End Nav -->
+          <!-- START DEFAULT DATATABLE -->
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <ul class="panel-controls">
+                      <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                  </ul>
+              </div>
+              <div class="panel-body">
+                  <table class="table datatable table-hover table-responsive"  [mfData]="Table | filter : search" #mf="mfDataTable"
+                  [mfRowsOnPage]="rowsOnPage">
+                      <thead>
+                          <tr>
+                              <th style="width:10%;">
+                                <mfDefaultSorter by="fecha">Fecha</mfDefaultSorter></th>
+                              <th style="width:10%;">
+                                <mfDefaultSorter by="diasTrans">Dias Transcurridos</mfDefaultSorter></th>
+                              <th style="width:10%;">
+                                <mfDefaultSorter by="compras.proveedores.nit">Nit</mfDefaultSorter></th>
+                              <th style="width:20%;">
+                                <mfDefaultSorter by="compras.proveedores.nombre">Proveedor</mfDefaultSorter></th>
+                              <th style="width:20%;">
+                                <mfDefaultSorter by="creditoDado">Total</mfDefaultSorter></th>
+                              <th style="width:10%;">
+                                <mfDefaultSorter by="total">Saldo</mfDefaultSorter></th>
+                              <th style="width:20%;"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let data of mf.data">
+                              <td>{{((data.fecha!=null)?data.fecha.substring(0,10):'')}}</td>
+                              <td>{{((data.diasTrans!=null)?data.diasTrans:'')}}</td>
+                              <td>{{((data.compras.proveedores.nit!=null)?data.compras.proveedores.nit:'')}}</td>
+                              <td>{{((data.compras.proveedores.nombre!=null)?data.compras.proveedores.nombre:'')}}</td>
+                              <td>{{((data.creditoDado!=null)?data.creditoDado:'')}}</td>
+                              <td>{{((data.total!=null)?data.total:'')}}</td>
+                              <td>
+
+                                <button *ngIf="Modificar==1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#viewModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-eye"></i> Ver</button>
+
+                              </td>
+                          </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                            <td colspan="2" style="width:100%;">
+                                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                        </tfoot>
+                  </table>
+              </div>
+          </div>
+          <!-- END DEFAULT DATATABLE -->
+
+          <!-- Inicio Modal Ingreso -->
+            <div id="editModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Edicion de datos</h4>
+                      </div>
+                      <div>
+                            <form *ngIf="selectedData" id="compra-form"  #CompraForm="ngForm">
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="nombre">Proveedor</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="nombre" name="nombre" required disabled
+                                          ngModel #nombre="ngModel" placeholder="nombre" [(ngModel)]="selectedData.compras.proveedores.nombre">
+                                </div>
+                                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="nombre.errors.required">
+                                          El Proveedor es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="creditoDado">Total Credito</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="creditoDado" name="creditoDado" required disabled
+                                          ngModel #creditoDado="ngModel" placeholder="Total Credito" [(ngModel)]="selectedData.creditoDado">
+                                </div>
+                                  <div *ngIf="creditoDado.invalid && (creditoDado.dirty || creditoDado.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="creditoDado.errors.required">
+                                          El Total Credito es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="fecha">Fecha y Hora de Inicio</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="fecha" name="fecha" required disabled
+                                          ngModel #fecha="ngModel" [(ngModel)]="selectedData.fecha">
+                                </div>
+                                  <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="fecha.errors.required">
+                                          El Fecha y Hora de Inicio es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="total">Saldo</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="total" name="total" required disabled
+                                          ngModel #total="ngModel" placeholder="Saldo" [(ngModel)]="selectedData.total">
+                                </div>
+                                  <div *ngIf="total.invalid && (total.dirty || total.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="total.errors.required">
+                                          El Saldo es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="tipoPlazo">Tipo Plazo</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="tipoPlazo" name="tipoPlazo" required disabled
+                                          ngModel #tipoPlazo="ngModel" [(ngModel)]="selectedData.tipoPlazo">
+                                    <option value=""></option>
+                                    <option value="1">Dia</option>
+                                    <option value="2">Mes</option>
+                                    <option value="3">Año</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="tipoPlazo.invalid && (tipoPlazo.dirty || tipoPlazo.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="tipoPlazo.errors.required">
+                                          El Tipo Plazo es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="plazo">Plazo</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="number" class="form-control" id="plazo" name="plazo" required disabled
+                                          ngModel #plazo="ngModel" placeholder="Plazo" [(ngModel)]="selectedData.plazo">
+                                </div>
+                                  <div *ngIf="plazo.invalid && (plazo.dirty || plazo.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="plazo.errors.required">
+                                          El Plazo es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                            </form>
+                            <form id="movimiento-form" class="col-xs-12 m-b-15"  #MovimientoForm="ngForm" (ngSubmit)="insertMov(MovimientoForm.value)">
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="fecha">Fecha</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="date" class="form-control" id="fecha" name="fecha" required
+                                          ngModel #fecha="ngModel" placeholder="fecha" [(ngModel)]="fechaHoy">
+                                </div>
+                                  <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="fecha.errors.required">
+                                          El Fecha es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="monto">Monto</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="number" class="form-control" id="monto" name="monto" required
+                                          ngModel #monto="ngModel" placeholder="Monto" [(ngModel)]="montoTotal">
+                                </div>
+                                  <div *ngIf="monto.invalid && (monto.dirty || monto.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="monto.errors.required">
+                                          El Monto es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="descripcion">Descripcion</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="descripcion" name="descripcion" required
+                                          ngModel #descripcion="ngModel" placeholder="Descripcion">
+                                </div>
+                                  <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="descripcion.errors.required">
+                                          El Descripcion es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <input *ngIf="selectedData" type="hidden" class="form-control" id="cuentapagar" name="cuentapagar" required
+                                        ngModel #cuentapagar="ngModel" [(ngModel)]="selectedData.id">
+                              <input *ngIf="selectedData" type="hidden" class="form-control" id="credito" name="credito" required
+                                        ngModel #credito="ngModel" [(ngModel)]="selectedData.total">
+                              <div *ngIf="montoTotal>0" class="form-group col-xs-12 text-right m-b-15">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                              </div>
+                            </form>
+                            <div *ngIf="selectedData" class="form-group col-xs-12 m-b-15">
+                                  <div class="panel panel-default">
+                                      <div class="panel-heading">
+                                          <ul class="panel-controls">
+                                              <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                                          </ul>
+                                      </div>
+                                      <div class="panel-body">
+                                          <table class="table datatable table-hover table-responsive"  [mfData]="selectedData.movimientos | filter : search" #mf="mfDataTable"
+                                          [mfRowsOnPage]="rowsOnPage">
+                                              <thead>
+                                                  <tr>
+                                                      <th style="width:30%;">
+                                                        <mfDefaultSorter by="codigo">Fecha</mfDefaultSorter></th>
+                                                      <th style="width:40%;">
+                                                        <mfDefaultSorter by="nombre">Descripcion</mfDefaultSorter></th>
+                                                      <th style="width:30%;">
+                                                        <mfDefaultSorter by="precioCosto">Abono</mfDefaultSorter></th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr *ngFor="let data of mf.data">
+                                                      <td>{{((data.fecha!=null)?data.fecha.substring(0,10):'')}}</td>
+                                                      <td>{{((data.descripcion!=null)?data.descripcion:'')}}</td>
+                                                      <td>{{((data.abono!=null)?data.abono:'')}}</td>
+                                                  </tr>
+                                              </tbody>
+                                              <tfoot>
+                                                <tr>
+                                                    <td colspan="2" style="width:100%;">
+                                                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                          </table>
+                                      </div>
+                                      <div class="panel-heading">
+                                          <ul class="panel-controls col-xs-2 col-xs-offset-10 m-b-15">
+                                            <label for="total">Total</label>
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+                                              <input type="text" class="form-control" id="total" name="total" disabled
+                                                      ngModel #total="ngModel" placeholder="Total" [(ngModel)]="selectedData.total">
+                                            </div>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                      </div>
+                      <div class="modal-footer" style="border:none;">
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <!-- Final Modal Ingreso -->
+          <!-- Inicio Modal Ver -->
+            <div id="viewModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Vista de datos</h4>
+                      </div>
+                      <div>
+                            <form *ngIf="selectedData" id="compra-form"  #CompraForm="ngForm">
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="nombre">Proveedor</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="nombre" name="nombre" required disabled
+                                          ngModel #nombre="ngModel" placeholder="nombre" [(ngModel)]="selectedData.compras.proveedores.nombre">
+                                </div>
+                                  <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="nombre.errors.required">
+                                          El Proveedor es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="creditoDado">Total Credito</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="creditoDado" name="creditoDado" required disabled
+                                          ngModel #creditoDado="ngModel" placeholder="Total Credito" [(ngModel)]="selectedData.creditoDado">
+                                </div>
+                                  <div *ngIf="creditoDado.invalid && (creditoDado.dirty || creditoDado.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="creditoDado.errors.required">
+                                          El Total Credito es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="fecha">Fecha y Hora de Inicio</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="fecha" name="fecha" required disabled
+                                          ngModel #fecha="ngModel" [(ngModel)]="selectedData.fecha">
+                                </div>
+                                  <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="fecha.errors.required">
+                                          El Fecha y Hora de Inicio es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="total">Saldo</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="text" class="form-control" id="total" name="total" required disabled
+                                          ngModel #total="ngModel" placeholder="Saldo" [(ngModel)]="selectedData.total">
+                                </div>
+                                  <div *ngIf="total.invalid && (total.dirty || total.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="total.errors.required">
+                                          El Saldo es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="tipoPlazo">Tipo Plazo</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="tipoPlazo" name="tipoPlazo" required disabled
+                                          ngModel #tipoPlazo="ngModel" [(ngModel)]="selectedData.tipoPlazo">
+                                    <option value=""></option>
+                                    <option value="1">Dia</option>
+                                    <option value="2">Mes</option>
+                                    <option value="3">Año</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="tipoPlazo.invalid && (tipoPlazo.dirty || tipoPlazo.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="tipoPlazo.errors.required">
+                                          El Tipo Plazo es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-6 m-b-15">
+                                <label for="plazo">Plazo</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input autofocus type="number" class="form-control" id="plazo" name="plazo" required disabled
+                                          ngModel #plazo="ngModel" placeholder="Plazo" [(ngModel)]="selectedData.plazo">
+                                </div>
+                                  <div *ngIf="plazo.invalid && (plazo.dirty || plazo.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="plazo.errors.required">
+                                          El Plazo es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                            </form>
+                            <div *ngIf="selectedData" class="form-group col-xs-12 m-b-15">
+                                  <div class="panel panel-default">
+                                      <div class="panel-heading">
+                                          <ul class="panel-controls">
+                                              <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                                          </ul>
+                                      </div>
+                                      <div class="panel-body">
+                                          <table class="table datatable table-hover table-responsive"  [mfData]="selectedData.movimientos | filter : search" #mf="mfDataTable"
+                                          [mfRowsOnPage]="rowsOnPage">
+                                              <thead>
+                                                  <tr>
+                                                      <th style="width:30%;">
+                                                        <mfDefaultSorter by="codigo">Fecha</mfDefaultSorter></th>
+                                                      <th style="width:40%;">
+                                                        <mfDefaultSorter by="nombre">Descripcion</mfDefaultSorter></th>
+                                                      <th style="width:30%;">
+                                                        <mfDefaultSorter by="precioCosto">Abono</mfDefaultSorter></th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr *ngFor="let data of mf.data">
+                                                      <td>{{((data.fecha!=null)?data.fecha.substring(0,10):'')}}</td>
+                                                      <td>{{((data.descripcion!=null)?data.descripcion:'')}}</td>
+                                                      <td>{{((data.abono!=null)?data.abono:'')}}</td>
+                                                  </tr>
+                                              </tbody>
+                                              <tfoot>
+                                                <tr>
+                                                    <td colspan="2" style="width:100%;">
+                                                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                          </table>
+                                      </div>
+                                      <div class="panel-heading">
+                                          <ul class="panel-controls col-xs-2 col-xs-offset-10 m-b-15">
+                                            <label for="total">Total</label>
+                                            <div class="input-group">
+                                              <span class="input-group-addon"><span class="fa fa-dollar"></span></span>
+                                              <input type="text" class="form-control" id="total" name="total" disabled
+                                                      ngModel #total="ngModel" placeholder="Total" [(ngModel)]="selectedData.total">
+                                            </div>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                      </div>
+                      <div class="modal-footer" style="border:none;">
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <!-- Final Modal Ver -->
+
+<!-- Inicio Notificaciones -->
+  <simple-notifications [options]="options"></simple-notifications>
+<!-- Fin Notificaciones -->
+<!-- Inicio Loader Modal -->
+  <div class="modal fade" id="Loading">
+    <div class="modal-dialog">
+      <div class="text-center" style="margin-top:50%;">
+        <app-loader></app-loader>
+      </div>
+    </div>
+  </div>
+<!-- Fin Loader Modal -->
