@@ -37,6 +37,8 @@ import { CuentasCobrarComponent } from './cuentas-cobrar/cuentas-cobrar.componen
 import { CuentasPagarComponent } from './cuentas-pagar/cuentas-pagar.component';
 import { CuentasCobrarPagadasComponent } from './cuentas-cobrar-pagadas/cuentas-cobrar-pagadas.component';
 import { CuentasPagarPagadasComponent } from './cuentas-pagar-pagadas/cuentas-pagar-pagadas.component';
+import { InventarioAdminComponent } from './inventario-admin/inventario-admin.component';
+import { InventarioInicialComponent } from './inventario-inicial/inventario-inicial.component';
 
 import { UsersService } from "./_services/users.service";
 import { EmployeesService } from "./_services/employees.service";
@@ -98,7 +100,9 @@ import { MovimientosCobrarService } from "./_services/movimientos-cobrar.service
     CuentasCobrarComponent,
     CuentasPagarComponent,
     CuentasCobrarPagadasComponent,
-    CuentasPagarPagadasComponent
+    CuentasPagarPagadasComponent,
+    InventarioAdminComponent,
+    InventarioInicialComponent
   ],
   providers: [
     UsersService,

@@ -22,6 +22,9 @@ import { CuentasCobrarComponent } from './cuentas-cobrar/cuentas-cobrar.componen
 import { CuentasCobrarPagadasComponent } from './cuentas-cobrar-pagadas/cuentas-cobrar-pagadas.component';
 import { CuentasPagarComponent } from './cuentas-pagar/cuentas-pagar.component';
 import { CuentasPagarPagadasComponent } from './cuentas-pagar-pagadas/cuentas-pagar-pagadas.component';
+import { InventarioComponent } from './inventario/inventario.component';
+import { InventarioAdminComponent } from './inventario-admin/inventario-admin.component';
+import { InventarioInicialComponent } from './inventario-inicial/inventario-inicial.component';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '', component: AdminComponent, children: [
@@ -42,6 +45,9 @@ const routes: Routes = [
     { path: 'cuentas-pagar', component: CuentasPagarComponent },
     { path: 'cuentas-pagar-pagadas', component: CuentasPagarPagadasComponent },
     { path: 'modulos', component: ModulosComponent },
+    { path: 'inventario', component: InventarioComponent },
+    { path: 'inventario-admin', component: InventarioAdminComponent },
+    { path: 'inventario-inicial', component: InventarioInicialComponent },
   ]},
   { path: 'compras-anuladas', component: ComprasAnuladasComponent },
   { path: 'generar-compra', component: GenerarCompraComponent },

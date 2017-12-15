@@ -237,7 +237,7 @@
                       </div>
                       <div>
                         <ul class="list-group border-bottom col-xs-6 m-b-15">
-                            <li class="list-group-item" *ngFor = "let data of productos |filter:searchterm" (click)="seleccionarProd(data)">{{data.productos.codigo}} - {{data.productos.nombre}}<span class="badge">{{data.cantidad}}</span></li>
+                            <li class="list-group-item" *ngFor = "let data of productos |filter:searchterm" (click)="seleccionarProd(data)">{{data.codigo}} - {{data.nombre}}<span class="badge">{{data.inventario.cantidad}}</span></li>
                         </ul>
                         <div class="form-group col-xs-6 m-b-15">
                             <form id="prod-form"  #ProdForm="ngForm" (ngSubmit)="insertProd(ProdForm.value)">
