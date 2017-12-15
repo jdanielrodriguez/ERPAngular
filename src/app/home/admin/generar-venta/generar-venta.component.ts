@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { ProveedoresService } from "./../_services/proveedores.service";
+import { ClientesService } from "./../_services/clientes.service";
 import { ProductosService } from "./../_services/productos.service";
-import { TiposCompraService } from "./../_services/tipos-compra.service";
-import { ComprasService } from "./../_services/compras.service";
+import { TiposVentaService } from "./../_services/tipos-venta.service";
+import { VentasService } from "./../_services/ventas.service";
 import { TiposProductoService } from "./../_services/tipos-producto.service";
 
 import { NotificationsService } from 'angular2-notifications';
@@ -39,12 +39,14 @@ export class GenerarVentaComponent implements OnInit {
     telefono:''
   }
   prod:any = {
-    codigo:"",
-    id:0,
-    descripcion:"",
-    nombre:"",
-    tipo:'',
-    marcaDes:''
+    productos:{
+      codigo:"",
+      id:0,
+      descripcion:"",
+      nombre:"",
+      tipo:'',
+      marcaDes:''
+    }
   }
   fechaHoy:any
   public rowsOnPage = 5;
@@ -55,10 +57,10 @@ export class GenerarVentaComponent implements OnInit {
     private router: Router,
     private _service: NotificationsService,
     private mainService: ProductosService,
-    private parentService: TiposCompraService,
+    private parentService: TiposVentaService,
     private secondParentService: TiposProductoService,
-    private secondService: ProveedoresService,
-    private firstMainService: ComprasService
+    private secondService: ClientesService,
+    private firstMainService: VentasService
   ) { }
 
   ngOnInit() {
@@ -77,7 +79,7 @@ export class GenerarVentaComponent implements OnInit {
     }else{
       dia2=dia
     }
-    this.fechaHoy= date.getFullYear()+'-'+month2+'-'+dia
+    this.fechaHoy= date.getFullYear()+'-'+month2+'-'+dia2
     this.cargarAll()
     this.cargarProds()
     this.cargarCombos()
@@ -106,6 +108,7 @@ export class GenerarVentaComponent implements OnInit {
                       .then(response => {
                         this.prov=response
                         this.prov.tipo = 1
+                        this.prov.nombre = this.prov.nombre+' '+this.prov.apellido
                         // console.log(response);
                         $("#secondModal .close").click();
                         $('#tipo').focus();
@@ -119,20 +122,21 @@ export class GenerarVentaComponent implements OnInit {
   seleccionar(data){
     this.prov=data
     this.prov.tipo = 1
+    this.prov.nombre = this.prov.nombre+' '+this.prov.apellido
     $("#secondModal .close").click();
   }
   seleccionarProd(data){
     this.prod=data
-    this.prod.inventario.cantidad = 0
-    this.searchterm=data.codigo
+    this.prod.cantidad = 0
+    this.searchterm=data.productos.codigo
   }
   agregarVenta(formValue:any){
     // console.log(formValue);
     $("#prodModal .close").click();
     this.contFila++
-    this.Total+= (formValue.cantidad*formValue.precioCosto)
+    this.Total+= (formValue.cantidad*formValue.precioVenta)
     formValue.rId = this.contFila
-    formValue.subtotal = (formValue.cantidad*formValue.precioCosto)
+    formValue.subtotal = (formValue.cantidad*formValue.precioVenta)
     this.TableDet.push(formValue)
     $('#prod-form')[0].reset()
     this.searchterm = ""
@@ -149,7 +153,7 @@ export class GenerarVentaComponent implements OnInit {
                         console.clear
                         this.create('Proveedor Ingresado')
                         $('#Loading').css('display','none')
-                        this.router.navigate([`home/admin/compras`])
+                        this.router.navigate([`home/admin/ventas`])
                       }).catch(error => {
                         console.clear
                         this.createError(error)
@@ -199,7 +203,7 @@ export class GenerarVentaComponent implements OnInit {
   cargarProds(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.getAll()
+    this.mainService.getAllExistencia()
                       .then(response => {
                         this.productos = response
                         $('#Loading').css('display','none')
@@ -282,7 +286,7 @@ export class GenerarVentaComponent implements OnInit {
 
   }
   deleteDet(e:any){
-    this.Total-= (e.cantidad*e.precioCosto)
+    this.Total-= (e.cantidad*e.precioVenta)
     this.TableDet.splice(this.TableDet.findIndex(dat=>{
       return dat.rId==e.rId
     }),1)
