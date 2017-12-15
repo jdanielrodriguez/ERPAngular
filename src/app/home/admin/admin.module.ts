@@ -15,7 +15,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ComprasComponent } from './compras/compras.component';
 import { VentasComponent } from './ventas/ventas.component';
-import { CuentasComponent } from './cuentas/cuentas.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { PagosComponent } from './pagos/pagos.component';
@@ -34,6 +33,10 @@ import { ComprasAnuladasComponent } from './compras-anuladas/compras-anuladas.co
 import { CotizacionComponent } from './cotizacion/cotizacion.component';
 import { ModulosComponent } from './modulos/modulos.component';
 import { TiposProductoComponent } from './tipos-producto/tipos-producto.component';
+import { CuentasCobrarComponent } from './cuentas-cobrar/cuentas-cobrar.component';
+import { CuentasPagarComponent } from './cuentas-pagar/cuentas-pagar.component';
+import { CuentasCobrarPagadasComponent } from './cuentas-cobrar-pagadas/cuentas-cobrar-pagadas.component';
+import { CuentasPagarPagadasComponent } from './cuentas-pagar-pagadas/cuentas-pagar-pagadas.component';
 
 import { UsersService } from "./_services/users.service";
 import { EmployeesService } from "./_services/employees.service";
@@ -51,6 +54,10 @@ import { ProductosService } from "./_services/productos.service";
 import { TiposProductoService } from "./_services/tipos-producto.service";
 import { TiposVentaService } from "./_services/tipos-venta.service";
 import { TiposCompraService } from "./_services/tipos-compra.service";
+import { CuentasCobrarService } from "./_services/cuentas-cobrar.service";
+import { CuentasPagarService } from "./_services/cuentas-pagar.service";
+import { MovimientosPagarService } from "./_services/movimientos-pagar.service";
+import { MovimientosCobrarService } from "./_services/movimientos-cobrar.service";
 
 @NgModule({
   imports: [
@@ -70,7 +77,6 @@ import { TiposCompraService } from "./_services/tipos-compra.service";
     UsuariosComponent,
     ComprasComponent,
     VentasComponent,
-    CuentasComponent,
     EstadisticasComponent,
     InventarioComponent,
     PagosComponent,
@@ -88,7 +94,11 @@ import { TiposCompraService } from "./_services/tipos-compra.service";
     ComprasAnuladasComponent,
     CotizacionComponent,
     ModulosComponent,
-    TiposProductoComponent
+    TiposProductoComponent,
+    CuentasCobrarComponent,
+    CuentasPagarComponent,
+    CuentasCobrarPagadasComponent,
+    CuentasPagarPagadasComponent
   ],
   providers: [
     UsersService,
@@ -106,7 +116,11 @@ import { TiposCompraService } from "./_services/tipos-compra.service";
     ProductosService,
     TiposProductoService,
     TiposVentaService,
-    TiposCompraService
+    TiposCompraService,
+    CuentasCobrarService,
+    CuentasPagarService,
+    MovimientosPagarService,
+    MovimientosCobrarService
   ]
 })
 export class AdminModule { }
