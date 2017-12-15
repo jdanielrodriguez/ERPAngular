@@ -81,4 +81,15 @@ export class ClientesService {
                          .catch(this.handleError)
      }
 
+     getSingleFind(form:any):Promise<any> {
+      let url = `${this.basePath}/api/buscar/clientes?nit=${form.nit}`
+        return this.http.get(url)
+                        .toPromise()
+                          .then(response => {
+                            //console.log(response.json())
+                            return response.json()
+                          })
+                          .catch(this.handleError)
+      }
+
 }
