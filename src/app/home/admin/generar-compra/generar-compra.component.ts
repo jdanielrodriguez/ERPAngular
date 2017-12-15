@@ -77,7 +77,7 @@ export class GenerarCompraComponent implements OnInit {
     }else{
       dia2=dia
     }
-    this.fechaHoy= date.getFullYear()+'-'+month2+'-'+dia
+    this.fechaHoy= date.getFullYear()+'-'+month2+'-'+dia2
     this.cargarAll()
     this.cargarProds()
     this.cargarCombos()
