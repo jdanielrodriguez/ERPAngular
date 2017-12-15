@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { TiposProductoService } from "./../_services/tipos-producto.service";
 
 import { NotificationsService } from 'angular2-notifications';
@@ -14,22 +15,34 @@ export class TiposProductoComponent implements OnInit {
   title:string="Tipos de Producto"
   Table:any
   idRol=+localStorage.getItem('currentRolId');
-  Agregar = localStorage.getItem('permisoAgregar')
-  Modificar = localStorage.getItem('permisoModificar')
-  Eliminar = localStorage.getItem('permisoEliminar')
-  Mostrar = localStorage.getItem('permisoMostrar')
+  Agregar = +localStorage.getItem('permisoAgregar')
+  Modificar = +localStorage.getItem('permisoModificar')
+  Eliminar = +localStorage.getItem('permisoEliminar')
+  Mostrar = +localStorage.getItem('permisoMostrar')
   selectedData:any
   public rowsOnPage = 5;
   public search:any
   constructor(
     private _service: NotificationsService,
+    private location:Location,
     private mainService: TiposProductoService
   ) { }
 
   ngOnInit() {
     this.cargarAll()
+    this.colapsse()
   }
-
+  colapsse(){
+    if($('.page-container').hasClass('page-navigation-toggled')){
+      $('.page-container').removeClass('page-navigation-toggled page-container-wide')
+      $('#navigations').removeClass('x-navigation-minimized')
+      $('.fa-indent').addClass('fa-dedent')
+      $('.fa-dedent').removeClass('fa-indent')
+    }
+  }
+  goBack(): void {
+    this.location.back();
+  }
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
@@ -54,7 +67,7 @@ export class TiposProductoComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Rol Ingresado')
+                        this.create('Tipo Producto Ingresado')
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
                       }).catch(error => {
@@ -84,7 +97,7 @@ export class TiposProductoComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Rol Actualizado exitosamente')
+                        this.create('Tipo Producto Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
@@ -97,12 +110,12 @@ export class TiposProductoComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    if(confirm("¿Desea eliminar el Rol?")){
+    if(confirm("¿Desea eliminar el Tipo Producto?")){
       this.mainService.delete(id)
                         .then(response => {
                           this.cargarAll()
                           console.clear
-                          this.create('Rol Eliminado exitosamente')
+                          this.create('Tipo Producto Eliminado exitosamente')
                           $('#Loading').css('display','none')
                         }).catch(error => {
                           console.clear

@@ -26,6 +26,7 @@ export class NavComponent implements OnInit {
   notifications:any = []
   nNotifications:number = 0;
   modulos:any
+  modulosOcultos:any
   constructor(
     private _service: NotificationsService,
     private route: ActivatedRoute,
@@ -74,7 +75,13 @@ export class NavComponent implements OnInit {
   cargarModulos(){
     this.mainService.getAccess(+this.id)
                       .then(response => {
-                        this.modulos = response
+                        if(response.permitidos.length>0){
+                          this.modulos = response.permitidos
+                        }
+                        if(response.ocultos.length>0){
+                          this.modulosOcultos = response.ocultos
+                        }
+                        // console.log(response);
                         console.clear
                       }).catch(error => {
                         console.clear

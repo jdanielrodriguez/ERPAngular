@@ -36,6 +36,16 @@ export class InventarioService {
                          .catch(this.handleError)
      }
 
+     getAllAdmin():Promise<any> {
+      let url = `${this.basePath}/api/admin/inventario`
+        return this.http.get(url)
+                        .toPromise()
+                          .then(response => {
+                            //console.log(response.json())
+                            return response.json()
+                          })
+                          .catch(this.handleError)
+      }
 
      create(form):Promise<any> {
      let url = `${this.basePath}/api/inventario`

@@ -1,3 +1,358 @@
-<p>
-  inventario-admin works!
-</p>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Tables</a></li>
+  <li class="active">{{title}}</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- PAGE TITLE -->
+<div class="page-title">
+  <h2>{{title}}</h2>
+</div>
+<!-- END PAGE TITLE -->
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+  <div class="row">
+      <div class="col-md-12">
+          <!-- Nav -->
+          <div *ngIf="idRol==1" class="col-md-4">
+              <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario-admin' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario Administrador</a>
+              </div>
+
+          </div>
+          <div *ngIf="idRol==2" class="col-md-6">
+              <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario-admin' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario Administrador</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario-inicial' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario Inicial</a>
+              </div>
+
+          </div>
+          <!-- End Nav -->
+          <!-- START DEFAULT DATATABLE -->
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">
+                      <button *ngIf="idRol<=2" type="button" class="btn btn-primary form-control" routerLinkActive="active" [routerLink]="[ './../tipos-producto' ]" style="cursor:pointer;"><i class="fa fa-list"></i>Tipo Producto</button>
+                  </h3>
+                  <ul class="panel-controls">
+                      <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                  </ul>
+              </div>
+              <div class="panel-body">
+                  <table class="table datatable table-hover table-responsive text-center"  [mfData]="Table | filter : search" #mf="mfDataTable"
+                  [mfRowsOnPage]="rowsOnPage">
+                      <thead>
+                          <tr>
+                              <th style="width:1%;text-align:center;">
+                                  <mfDefaultSorter by="correl">Correlativo</mfDefaultSorter></th>
+                              <th style="width:6%;text-align:center;">
+                                <mfDefaultSorter by="productos.codigo">Codigo</mfDefaultSorter></th>
+                              <th style="width:15%;text-align:center;">
+                                <mfDefaultSorter by="productos.nombre">Producto</mfDefaultSorter></th>
+                              <th style="width:8%;text-align:center;">
+                                <mfDefaultSorter by="productos.tipos.descripcion">Tipo</mfDefaultSorter></th>
+                              <th style="width:6%;text-align:center;">
+                                <mfDefaultSorter by="cantidad">Costo</mfDefaultSorter></th>
+                              <th style="width:6%;text-align:center;">
+                                <mfDefaultSorter by="cantidad">Cantidad</mfDefaultSorter></th>
+                              <th style="width:8%;text-align:center;">
+                                <mfDefaultSorter by="precioVenta">Precio General</mfDefaultSorter></th>
+                              <th style="width:8%;text-align:center;">
+                                <mfDefaultSorter by="precioVenta">Precio Especial</mfDefaultSorter></th>
+                              <th style="width:8%;text-align:center;">
+                                <mfDefaultSorter by="precioVenta">Precio Mayoreo</mfDefaultSorter></th>
+                              <th style="width:9%;text-align:center;">
+                                <mfDefaultSorter by="precioVenta">Proveedor U. Compra</mfDefaultSorter></th>
+                              <th style="width:8%;text-align:center;">
+                                <mfDefaultSorter by="precioVenta">Fecha U. Compra</mfDefaultSorter></th>
+                              <th style="width:7%;text-align:center;">
+                                <mfDefaultSorter by="precioVenta">No. Comprobante U. Compra</mfDefaultSorter></th>
+                              <th style="width:10%;"></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let data of mf.data">
+                              <td>{{((data.correl!=null)?data.correl:'')}}</td>
+                              <td>{{((data.productoscodigo!=null)?data.productoscodigo:'')}}</td>
+                              <td>{{((data.productosnombre!=null)?data.productosnombre:'')}}</td>
+                              <td>{{((data.productostipodescripcion!=null)?data.productostipodescripcion:'')}}</td>
+                              <td>{{((data.precioCosto!=null)?data.precioCosto:'')}}</td>
+                              <td>{{((data.cantidad!=null)?data.cantidad:'')}}</td>
+                              <td>{{((data.precioVenta!=null)?data.precioVenta:'')}}</td>
+                              <td>{{((data.precioClienteEs!=null)?data.precioClienteEs:'')}}</td>
+                              <td>{{((data.precioDistribuidor!=null)?data.precioDistribuidor:'')}}</td>
+                              <td>{{((data.proveedor!=null)?data.proveedor:'')}}</td>
+                              <td>{{((data.fecha!=null)?data.fecha:'')}}</td>
+                              <td>{{((data.comprobante!=null)?data.comprobante:'')}}</td>
+                              <td>
+
+                                <button *ngIf="Modificar==1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
+
+                              </td>
+                          </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                            <td colspan="2" style="width:100%;">
+                                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                        </tfoot>
+                  </table>
+              </div>
+          </div>
+          <!-- END DEFAULT DATATABLE -->
+
+          <!-- Inicio Modal Ingreso -->
+            <div id="insertModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Ingreso de datos</h4>
+                      </div>
+                      <div>
+                          <form id="insert-form"  #InsertForm="ngForm" (ngSubmit)="insert(InsertForm.value)">
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="descripcion">Descripcion</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion" required
+                                        ngModel #descripcion="ngModel" placeholder="descripcion">
+                              </div>
+                                <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="descripcion.errors.required">
+                                        El Descripcion es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 text-right m-b-15">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                            </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer" style="border:none;">
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <!-- Final Modal Ingreso -->
+
+          <!-- Inicio Modal Ingreso -->
+            <div id="editModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Edicion de datos</h4>
+                      </div>
+                      <div>
+                          <form *ngIf="selectedData" id="edit-form"  #EditForm="ngForm" (ngSubmit)="update(EditForm.value)">
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="codigo">Codigo</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="codigo" name="codigo" required
+                                        ngModel #codigo="ngModel" placeholder="Codigo" [(ngModel)]="selectedData.productos.codigo">
+                              </div>
+                                <div *ngIf="codigo.invalid && (codigo.dirty || codigo.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="codigo.errors.required">
+                                        El Codigo es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="nombre">Nombre</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required
+                                        ngModel #nombre="ngModel" placeholder="Nombre" [(ngModel)]="selectedData.productos.nombre">
+                              </div>
+                                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="nombre.errors.required">
+                                        El Nombre es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="descripcion">Descripcion</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion"
+                                        ngModel #descripcion="ngModel" placeholder="Descripcion" [(ngModel)]="selectedData.productos.descripcion">
+                              </div>
+                                <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="descripcion.errors.required">
+                                        El Descripcion es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="marcaDes">Marca</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="marcaDes" name="marcaDes" required
+                                        ngModel #marcaDes="ngModel" placeholder="Marca" [(ngModel)]="selectedData.productos.marcaDes">
+                              </div>
+                                <div *ngIf="marcaDes.invalid && (marcaDes.dirty || marcaDes.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="marcaDes.errors.required">
+                                        El Marca es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="tipo">Tipo</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <select class="form-control" id="tipo" name="tipo" required
+                                        ngModel #tipo="ngModel" [(ngModel)]="selectedData.productos.tipo">
+                                  <option value=""></option>
+                                  <option *ngFor="let data of comboTiposProducto" value="{{data.id}}">{{data.descripcion}}</option>
+                                </select>
+                              </div>
+                                <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="tipo.errors.required">
+                                        El Tipo es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="minimo">Minimo</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="minimo" name="minimo" required
+                                        ngModel #minimo="ngModel" placeholder="Minimo" [(ngModel)]="selectedData.minimo">
+                              </div>
+                                <div *ngIf="minimo.invalid && (minimo.dirty || minimo.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="minimo.errors.required">
+                                        El Minimo es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="descuento">Descuento</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="descuento" name="descuento" required
+                                        ngModel #descuento="ngModel" placeholder="Descuento" [(ngModel)]="selectedData.descuento">
+                              </div>
+                                <div *ngIf="descuento.invalid && (descuento.dirty || descuento.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="descuento.errors.required">
+                                        El Descuento es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" id="producto" name="producto" required
+                                      ngModel #producto="ngModel" [(ngModel)]="selectedData.productos.id">
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="precioCosto">precioCosto</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="number" class="form-control" id="precioCosto" name="precioCosto" required
+                                        ngModel #precioCosto="ngModel" placeholder="precioCosto" [(ngModel)]="selectedData.precioCosto">
+                              </div>
+                                <div *ngIf="precioCosto.invalid && (precioCosto.dirty || precioCosto.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="precioCosto.errors.required">
+                                        El precioCosto es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="cantidad">cantidad</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" required autofocus
+                                        ngModel #cantidad="ngModel" placeholder="cantidad" [(ngModel)]="selectedData.cantidad">
+                              </div>
+                                <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="cantidad.errors.required">
+                                        El cantidad es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-4 m-b-15">
+                              <label for="precioVenta">precioVenta</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="number" class="form-control" id="precioVenta" name="precioVenta" required (change)="changeCalc()" (keyup)="changeCalc()"
+                                        ngModel #precioVenta="ngModel" placeholder="precioVenta" [(ngModel)]="selectedData.precioVenta">
+                              </div>
+                                <div *ngIf="precioVenta.invalid && (precioVenta.dirty || precioVenta.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="precioVenta.errors.required">
+                                        El precioVenta es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-4 m-b-15">
+                              <label for="precioClienteEs">precioClienteEs</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="number" class="form-control" id="precioClienteEs" name="precioClienteEs"
+                                        ngModel #precioClienteEs="ngModel" placeholder="precioClienteEs" [(ngModel)]="selectedData.precioClienteEs">
+                              </div>
+                                <div *ngIf="precioClienteEs.invalid && (precioClienteEs.dirty || precioClienteEs.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="precioClienteEs.errors.required">
+                                        El precioClienteEs es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-4 m-b-15">
+                              <label for="precioDistribuidor">precioDistribuidor</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="number" class="form-control" id="precioDistribuidor" name="precioDistribuidor"
+                                        ngModel #precioDistribuidor="ngModel" placeholder="precioDistribuidor" [(ngModel)]="selectedData.precioDistribuidor">
+                              </div>
+                                <div *ngIf="precioDistribuidor.invalid && (precioDistribuidor.dirty || precioDistribuidor.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="precioDistribuidor.errors.required">
+                                        El precioDistribuidor es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" id="id" name="id" required
+                                        ngModel #id="ngModel" [(ngModel)]="selectedData.id">
+                            <div class="form-group col-xs-12 text-right m-b-15">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                            </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer" style="border:none;">
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <!-- Final Modal Ingreso -->
+
+<!-- Inicio Notificaciones -->
+  <simple-notifications [options]="options"></simple-notifications>
+<!-- Fin Notificaciones -->
+<!-- Inicio Loader Modal -->
+  <div class="modal fade" id="Loading">
+    <div class="modal-dialog">
+      <div class="text-center" style="margin-top:50%;">
+        <app-loader></app-loader>
+      </div>
+    </div>
+  </div>
+<!-- Fin Loader Modal -->

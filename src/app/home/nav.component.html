@@ -39,6 +39,15 @@
               <a *ngIf="data.mostrar==1" (click)="permiso(data)" routerLinkActive="active"
               [routerLink]="[ './admin/'+data.link ]"><span class="fa fa-{{data.icono}}"></span> <span class="xn-text">{{data.nombre}}</span></a>
           </li>
+          <li class="xn-openable" #mas *ngIf="modulosOcultos">
+              <a (click)="abrir(mas)"><span class="fa fa-plus"></span> <span class="xn-text">Mas</span></a>
+              <ul>
+                  <li *ngFor="let data of modulosOcultos">
+                      <a *ngIf="data.mostrar==1" (click)="permiso(data)" routerLinkActive="active"
+                      [routerLink]="[ './admin/'+data.link ]"><span class="fa fa-{{data.icono}}"></span> <span class="xn-text">{{data.nombre}}</span></a>
+                  </li>
+              </ul>
+          </li>
 
       </ul>
       <!-- END X-NAVIGATION -->

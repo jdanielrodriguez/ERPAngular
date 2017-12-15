@@ -14,10 +14,10 @@ export class InventarioComponent implements OnInit {
   title:string="Inventario"
   Table:any = []
   idRol=+localStorage.getItem('currentRolId');
-  Agregar = localStorage.getItem('permisoAgregar')
-  Modificar = localStorage.getItem('permisoModificar')
-  Eliminar = localStorage.getItem('permisoEliminar')
-  Mostrar = localStorage.getItem('permisoMostrar')
+  Agregar = +localStorage.getItem('permisoAgregar')
+  Modificar = +localStorage.getItem('permisoModificar')
+  Eliminar = +localStorage.getItem('permisoEliminar')
+  Mostrar = +localStorage.getItem('permisoMostrar')
   selectedData:any
   public rowsOnPage = 5;
   public search:any
@@ -28,6 +28,15 @@ export class InventarioComponent implements OnInit {
 
   ngOnInit() {
     this.cargarAll()
+    this.colapsse()
+  }
+  colapsse(){
+    if($('.page-container').hasClass('page-navigation-toggled')){
+      $('.page-container').removeClass('page-navigation-toggled page-container-wide')
+      $('#navigations').removeClass('x-navigation-minimized')
+      $('.fa-indent').addClass('fa-dedent')
+      $('.fa-dedent').removeClass('fa-indent')
+    }
   }
 
   cargarAll(){

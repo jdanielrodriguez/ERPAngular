@@ -18,14 +18,16 @@
   <div class="row">
       <div class="col-md-12">
           <!-- Nav -->
-          <div *ngIf="idRol==1" class="col-md-3">
+          <div *ngIf="idRol==1" class="col-md-4">
               <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario</a>
                   <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario-admin' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario Administrador</a>
               </div>
 
           </div>
-          <div *ngIf="idRol==2" class="col-md-3">
+          <div *ngIf="idRol==2" class="col-md-6">
               <div class="btn-group btn-group-justified">
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario</a>
                   <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario-admin' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario Administrador</a>
                   <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../inventario-inicial' ]" class="btn btn-primary"><i class="fa fa-list"></i>Inventario Inicial</a>
               </div>
@@ -35,9 +37,6 @@
           <!-- START DEFAULT DATATABLE -->
           <div class="panel panel-default">
               <div class="panel-heading">
-                  <h3 class="panel-title">
-                    <button *ngIf="Agregar==1" type="button" class="btn btn-info form-control" data-toggle="modal" data-target="#insertModal" style="cursor:pointer;"><i class="fa fa-plus"></i>Nuevo</button>
-                  </h3>
                   <ul class="panel-controls">
                       <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
                   </ul>
@@ -61,7 +60,6 @@
                                 <mfDefaultSorter by="precioVenta">Precio Venta</mfDefaultSorter></th>
                               <th style="width:15%;text-align:center;">
                                 <mfDefaultSorter by="precioVenta">Precio Venta Especial</mfDefaultSorter></th>
-                              <!-- <th style="width:20%;"></th> -->
                           </tr>
                       </thead>
                       <tbody>
@@ -73,12 +71,6 @@
                               <td>{{((data.cantidad!=null)?data.cantidad:'')}}</td>
                               <td>{{((data.precioVenta!=null)?data.precioVenta:'')}}</td>
                               <td>{{((data.precioClienteEs!=null)?data.precioClienteEs:'')}}</td>
-                              <!-- <td>
-
-                                <button *ngIf="Modificar==1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
-                                <button *ngIf="Eliminar==1" type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
-
-                              </td> -->
                           </tr>
                       </tbody>
                       <tfoot>

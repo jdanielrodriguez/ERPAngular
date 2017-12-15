@@ -25,6 +25,7 @@ import { CuentasPagarPagadasComponent } from './cuentas-pagar-pagadas/cuentas-pa
 import { InventarioComponent } from './inventario/inventario.component';
 import { InventarioAdminComponent } from './inventario-admin/inventario-admin.component';
 import { InventarioInicialComponent } from './inventario-inicial/inventario-inicial.component';
+import { TiposProductoComponent } from './tipos-producto/tipos-producto.component';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '', component: AdminComponent, children: [
@@ -48,6 +49,7 @@ const routes: Routes = [
     { path: 'inventario', component: InventarioComponent },
     { path: 'inventario-admin', component: InventarioAdminComponent },
     { path: 'inventario-inicial', component: InventarioInicialComponent },
+    { path: 'tipos-producto', component: TiposProductoComponent },
   ]},
   { path: 'compras-anuladas', component: ComprasAnuladasComponent },
   { path: 'generar-compra', component: GenerarCompraComponent },

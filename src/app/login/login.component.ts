@@ -69,6 +69,10 @@ closeResult: string;
             type = 'admin';
             break;
           }
+          case 3:{
+            type = 'admin';
+            break;
+          }
           default:{
             type = 'usuario';
             break;

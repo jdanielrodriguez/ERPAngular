@@ -14,6 +14,11 @@ export class SucursalesComponent implements OnInit {
   title:string="Sucursales"
   Table:any
   selectedData:any
+  idRol=+localStorage.getItem('currentRolId');
+  Agregar = +localStorage.getItem('permisoAgregar')
+  Modificar = +localStorage.getItem('permisoModificar')
+  Eliminar = +localStorage.getItem('permisoEliminar')
+  Mostrar = +localStorage.getItem('permisoMostrar')
   public rowsOnPage = 5;
   public search:any
   constructor(

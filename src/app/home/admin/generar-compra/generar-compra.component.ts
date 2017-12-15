@@ -25,10 +25,10 @@ export class GenerarCompraComponent implements OnInit {
   selectedData:any
   idRol=+localStorage.getItem('currentRolId');
   idUser=+localStorage.getItem('currentId');
-  Agregar = localStorage.getItem('permisoAgregar')
-  Modificar = localStorage.getItem('permisoModificar')
-  Eliminar = localStorage.getItem('permisoEliminar')
-  Mostrar = localStorage.getItem('permisoMostrar')
+  Agregar = +localStorage.getItem('permisoAgregar')
+  Modificar = +localStorage.getItem('permisoModificar')
+  Eliminar = +localStorage.getItem('permisoEliminar')
+  Mostrar = +localStorage.getItem('permisoMostrar')
   contFila:number=0
   Total:number=0
   prov:any = {
@@ -93,6 +93,10 @@ export class GenerarCompraComponent implements OnInit {
       $('.fa-indent').removeClass('fa-dedent')
       $('.xn-openable').removeClass("active");
     }
+  }
+  changeCalc(){
+    this.prod.inventario.precioClienteEs    = this.prod.inventario.precioVenta-(this.prod.inventario.precioVenta*0.15)
+    this.prod.inventario.precioDistribuidor = this.prod.inventario.precioVenta-(this.prod.inventario.precioVenta*0.20)
   }
   abrir(event:any){
     if(event.keyCode==13){

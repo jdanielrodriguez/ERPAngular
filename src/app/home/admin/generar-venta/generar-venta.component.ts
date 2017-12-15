@@ -25,10 +25,10 @@ export class GenerarVentaComponent implements OnInit {
   selectedData:any
   idRol=+localStorage.getItem('currentRolId');
   idUser=+localStorage.getItem('currentId');
-  Agregar = localStorage.getItem('permisoAgregar')
-  Modificar = localStorage.getItem('permisoModificar')
-  Eliminar = localStorage.getItem('permisoEliminar')
-  Mostrar = localStorage.getItem('permisoMostrar')
+  Agregar = +localStorage.getItem('permisoAgregar')
+  Modificar = +localStorage.getItem('permisoModificar')
+  Eliminar = +localStorage.getItem('permisoEliminar')
+  Mostrar = +localStorage.getItem('permisoMostrar')
   contFila:number=0
   Total:number=0
   prov:any = {

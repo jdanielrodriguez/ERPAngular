@@ -353,7 +353,7 @@
                                     <label for="precioVenta">precioVenta</label>
                                     <div class="input-group">
                                       <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="precioVenta" name="precioVenta" required
+                                      <input type="number" class="form-control" id="precioVenta" name="precioVenta" required (change)="changeCalc()" (keyup)="changeCalc()"
                                               ngModel #precioVenta="ngModel" placeholder="precioVenta" [(ngModel)]="prod.inventario.precioVenta">
                                     </div>
                                       <div *ngIf="precioVenta.invalid && (precioVenta.dirty || precioVenta.touched)"
