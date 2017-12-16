@@ -47,42 +47,46 @@ closeResult: string;
     this.authenticationService.Authentication(formValue)
       .then(response => {
         this.auth = response
+        if(response.estado>0){
+          // console.log(response.username)
+          let type:string = null;
+          localStorage.setItem('currentUser', response.username);
+          localStorage.setItem('currentEmail', response.email);
+          localStorage.setItem('currentFirstName', ((response.empleados?response.empleados.nombre:'')));
+          localStorage.setItem('currentLastName', ((response.empleados?response.empleados.apellido:'')));
+          localStorage.setItem('currentId', response.id);
+          localStorage.setItem('currentPicture', response.picture);
+          localStorage.setItem('currentState', response.estado);
+          localStorage.setItem('currentRol', response.roles.descripcion);
+          localStorage.setItem('currentRolId', response.rol);
 
-        // console.log(response.username)
-        let type:string = null;
-        localStorage.setItem('currentUser', response.username);
-        localStorage.setItem('currentEmail', response.email);
-        localStorage.setItem('currentFirstName', ((response.empleados?response.empleados.nombre:'')));
-        localStorage.setItem('currentLastName', ((response.empleados?response.empleados.apellido:'')));
-        localStorage.setItem('currentId', response.id);
-        localStorage.setItem('currentPicture', response.picture);
-        localStorage.setItem('currentState', response.estado);
-        localStorage.setItem('currentRol', response.roles.descripcion);
-        localStorage.setItem('currentRolId', response.rol);
+          switch(response.rol){
+            case 1:{
+              type = 'admin';
+              break;
+            }
+            case 2:{
+              type = 'admin';
+              break;
+            }
+            case 3:{
+              type = 'admin';
+              break;
+            }
+            default:{
+              type = 'usuario';
+              break;
+            }
+          }
 
-        switch(response.rol){
-          case 1:{
-            type = 'admin';
-            break;
-          }
-          case 2:{
-            type = 'admin';
-            break;
-          }
-          case 3:{
-            type = 'admin';
-            break;
-          }
-          default:{
-            type = 'usuario';
-            break;
-          }
+          localStorage.setItem('currentType', type);
+          // console.log(type)
+          console.clear
+          this.router.navigate([`home/${type}`])
+        }else{
+          $('#Loading').css('display','none')
+          this.create("Su usuario se encuentra deshabilitado temporalmente")
         }
-
-        localStorage.setItem('currentType', type);
-        // console.log(type)
-        console.clear
-        this.router.navigate([`home/${type}`])
       }).catch(error => {
         console.clear
         $('#Loading').css('display','none')
