@@ -48,8 +48,10 @@ export class NavComponent implements OnInit {
   abrir(obj){
     if(obj.classList[1]=='active'){
       obj.classList.remove("active");
+      $('.page-sidebar').addClass('mCS_no_scrollbar')
     }else{
       obj.classList.add("active");
+      $('.page-sidebar').removeClass('mCS_no_scrollbar')
       if($('.page-container').hasClass('page-navigation-toggled')){
         $('.page-container').removeClass('page-navigation-toggled page-container-wide')
         $('#navigations').removeClass('x-navigation-minimized')

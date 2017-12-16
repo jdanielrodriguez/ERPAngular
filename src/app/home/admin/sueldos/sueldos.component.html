@@ -85,7 +85,10 @@
                           <h4 class="modal-title">Ingreso de datos</h4>
                       </div>
                       <div>
-                          <form id="insert-form"  #InsertForm="ngForm" (ngSubmit)="insert(InsertForm.value)">
+                          <ul class="list-group border-bottom col-xs-6 m-b-15">
+                              <li class="list-group-item" *ngFor = "let data of empleados |filter:searchterm" (click)="seleccionar(data)">{{data.nombre}} {{data.apellido}}<span class="badge"></span></li>
+                          </ul>
+                          <form id="insert-form" class="col-xs-6 m-b-15"  #InsertForm="ngForm" (ngSubmit)="insert(InsertForm.value)">
                             <div class="form-group col-xs-12 m-b-15">
                               <label for="fecha">Fecha</label>
                               <div class="input-group">
@@ -101,11 +104,25 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-12 m-b-15">
+                              <label for="empleadoNombre">Empleado</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="empleadoNombre" name="empleadoNombre" required
+                                        ngModel #empleadoNombre="ngModel" placeholder="EmpleadoNombre" [(ngModel)]="searchterm">
+                              </div>
+                                <div *ngIf="empleadoNombre.invalid && (empleadoNombre.dirty || empleadoNombre.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="empleadoNombre.errors.required">
+                                        El EmpleadoNombre es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
                               <label for="descripcion">Descripcion</label>
                               <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                <input type="text" class="form-control" id="descripcion" name="descripcion" required autofocus
-                                        ngModel #descripcion="ngModel" placeholder="descripcion">
+                                <input type="text" class="form-control" id="descripcion" name="descripcion" required
+                                        ngModel #descripcion="ngModel" placeholder="descripcion" [(ngModel)]="employ.descripcion">
                               </div>
                                 <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
                                       class="alert alert-danger" role="alert">
@@ -119,7 +136,7 @@
                               <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                 <input type="number" class="form-control" id="monto" name="monto" required
-                                        ngModel #monto="ngModel" placeholder="Monto" value="0">
+                                        ngModel #monto="ngModel" placeholder="Monto" [(ngModel)]="employ.sueldo">
                               </div>
                                 <div *ngIf="monto.invalid && (monto.dirty || monto.touched)"
                                       class="alert alert-danger" role="alert">
@@ -128,6 +145,8 @@
                                     </small>
                                 </div>
                             </div>
+                            <input type="hidden" class="form-control" id="empleado" name="empleado" required
+                                        ngModel #empleado="ngModel" [(ngModel)]="employ.id">
                             <div class="form-group col-xs-12 text-right m-b-15">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>

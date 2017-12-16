@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { GastosService } from "./../_services/gastos.service";
+import { SueldosService } from "./../_services/sueldos.service";
+import { EmployeesService } from "./../_services/employees.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any
 
 @Component({
-  selector: 'app-pagos',
-  templateUrl: './pagos.component.html',
-  styleUrls: ['./pagos.component.css']
+  selector: 'app-sueldos',
+  templateUrl: './sueldos.component.html',
+  styleUrls: ['./sueldos.component.css']
 })
-export class PagosComponent implements OnInit {
-  title:string="Gastos Generales"
+export class SueldosComponent implements OnInit {
+  title:string="Sueldos"
   Table:any
   idRol=+localStorage.getItem('currentRolId');
   Agregar = +localStorage.getItem('permisoAgregar')
@@ -22,14 +23,20 @@ export class PagosComponent implements OnInit {
   public rowsOnPage = 5;
   public search:any
   fechaHoy:any
+  searchterm:any
+  empleados:any = []
+  employ:any
+  meses:any = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
   constructor(
     private _service: NotificationsService,
-    private mainService: GastosService
+    private mainService: SueldosService,
+    private parentService: EmployeesService
   ) { }
 
   ngOnInit() {
     this.getDate();
     this.cargarAll()
+    this.cargarCombo()
   }
   getDate(){
     let date = new Date();
@@ -48,6 +55,18 @@ export class PagosComponent implements OnInit {
       dia2=dia
     }
     this.fechaHoy= date.getFullYear()+'-'+month2+'-'+dia2
+    this.employ = {
+      nombre:'',
+      descripcion:'',
+      sueldo:0,
+      id:0
+    }
+  }
+  seleccionar(data){
+    this.employ = data
+    this.searchterm = this.employ.nombre+' '+this.employ.apellido
+    let f=new Date();
+    this.employ.descripcion = 'Pago de sueldo del mes de '+this.meses[f.getMonth()]
   }
   cargarAll(){
     $('#Loading').css('display','block')
@@ -65,7 +84,20 @@ export class PagosComponent implements OnInit {
                         $('#Loading').css('display','none')
                       })
   }
-
+  cargarCombo(){
+    $('#Loading').css('display','block')
+    $('#Loading').addClass('in')
+    this.parentService.getAll()
+                      .then(response => {
+                        this.empleados = response
+                        $('#Loading').css('display','none')
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+  }
   insert(formValue:any){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
@@ -73,9 +105,11 @@ export class PagosComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Pago Ingresado')
+                        this.create('Sueldo Ingresado')
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
+                        this.getDate()
+                        this.searchterm=''
                       }).catch(error => {
                         console.clear
                         this.createError(error)
@@ -103,7 +137,7 @@ export class PagosComponent implements OnInit {
                       .then(response => {
                         this.cargarAll()
                         console.clear
-                        this.create('Pago Actualizado exitosamente')
+                        this.create('Sueldo Actualizado exitosamente')
                         $('#Loading').css('display','none')
                       }).catch(error => {
                         console.clear
@@ -116,12 +150,12 @@ export class PagosComponent implements OnInit {
   delete(id:string){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    if(confirm("¿Desea eliminar el Pago?")){
+    if(confirm("¿Desea eliminar el Sueldo?")){
       this.mainService.delete(id)
                         .then(response => {
                           this.cargarAll()
                           console.clear
-                          this.create('Pago Eliminado exitosamente')
+                          this.create('Sueldo Eliminado exitosamente')
                           $('#Loading').css('display','none')
                         }).catch(error => {
                           console.clear

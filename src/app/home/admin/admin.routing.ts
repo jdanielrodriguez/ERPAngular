@@ -26,6 +26,10 @@ import { InventarioComponent } from './inventario/inventario.component';
 import { InventarioAdminComponent } from './inventario-admin/inventario-admin.component';
 import { InventarioInicialComponent } from './inventario-inicial/inventario-inicial.component';
 import { TiposProductoComponent } from './tipos-producto/tipos-producto.component';
+import { PagosComponent } from './pagos/pagos.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { ComisionesComponent } from './comisiones/comisiones.component';
+import { SueldosComponent } from './sueldos/sueldos.component';
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '', component: AdminComponent, children: [
@@ -50,6 +54,10 @@ const routes: Routes = [
     { path: 'inventario-admin', component: InventarioAdminComponent },
     { path: 'inventario-inicial', component: InventarioInicialComponent },
     { path: 'tipos-producto', component: TiposProductoComponent },
+    { path: 'pagos', component: PagosComponent },
+    { path: 'estadistica', component: EstadisticasComponent },
+    { path: 'sueldos', component: SueldosComponent },
+    { path: 'comisiones', component: ComisionesComponent },
   ]},
   { path: 'compras-anuladas', component: ComprasAnuladasComponent },
   { path: 'generar-compra', component: GenerarCompraComponent },

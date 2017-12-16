@@ -66,8 +66,8 @@
 
                                 <button *ngIf="Modificar==1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
                                 <button *ngIf="Eliminar==1" type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
-                                <button *ngIf="data.estado==1 && idRol<=2" type="button" class="btn btn-warning" (click)="deshabilitar(data.id,0)" style="cursor:pointer;"><i class="fa fa-ban"></i> Deshabilitar</button>
-                                <button *ngIf="data.estado==0 && idRol<=2" type="button" class="btn btn-success" (click)="deshabilitar(data.id,1)" style="cursor:pointer;"><i class="fa fa-check"></i> Habilitar</button>
+                                <button *ngIf="data.estado==1 && idRol<=2" type="button" class="btn btn-warning" (click)="deshabilitar(data.id,0)" style="cursor:pointer;"><i class="fa fa-lock"></i> Deshabilitar</button>
+                                <button *ngIf="data.estado==0 && idRol<=2" type="button" class="btn btn-success" (click)="deshabilitar(data.id,1)" style="cursor:pointer;"><i class="fa fa-unlock"></i> Habilitar</button>
 
                               </td>
                           </tr>

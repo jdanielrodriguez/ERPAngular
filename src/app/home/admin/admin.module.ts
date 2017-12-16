@@ -39,6 +39,8 @@ import { CuentasCobrarPagadasComponent } from './cuentas-cobrar-pagadas/cuentas-
 import { CuentasPagarPagadasComponent } from './cuentas-pagar-pagadas/cuentas-pagar-pagadas.component';
 import { InventarioAdminComponent } from './inventario-admin/inventario-admin.component';
 import { InventarioInicialComponent } from './inventario-inicial/inventario-inicial.component';
+import { SueldosComponent } from './sueldos/sueldos.component';
+import { ComisionesComponent } from './comisiones/comisiones.component';
 
 import { UsersService } from "./_services/users.service";
 import { EmployeesService } from "./_services/employees.service";
@@ -60,6 +62,9 @@ import { CuentasCobrarService } from "./_services/cuentas-cobrar.service";
 import { CuentasPagarService } from "./_services/cuentas-pagar.service";
 import { MovimientosPagarService } from "./_services/movimientos-pagar.service";
 import { MovimientosCobrarService } from "./_services/movimientos-cobrar.service";
+import { GastosService } from "./_services/gastos.service";
+import { SueldosService } from "./_services/sueldos.service";
+import { ComisionesService } from "./_services/comisiones.service";
 
 @NgModule({
   imports: [
@@ -102,7 +107,9 @@ import { MovimientosCobrarService } from "./_services/movimientos-cobrar.service
     CuentasCobrarPagadasComponent,
     CuentasPagarPagadasComponent,
     InventarioAdminComponent,
-    InventarioInicialComponent
+    InventarioInicialComponent,
+    SueldosComponent,
+    ComisionesComponent
   ],
   providers: [
     UsersService,
@@ -124,7 +131,10 @@ import { MovimientosCobrarService } from "./_services/movimientos-cobrar.service
     CuentasCobrarService,
     CuentasPagarService,
     MovimientosPagarService,
-    MovimientosCobrarService
+    MovimientosCobrarService,
+    GastosService,
+    SueldosService,
+    ComisionesService
   ]
 })
 export class AdminModule { }
