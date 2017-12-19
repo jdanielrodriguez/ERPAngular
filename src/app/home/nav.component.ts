@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 
 import { NotificationsService } from 'angular2-notifications';
 import { AccesosService } from "./admin/_services/accesos.service";
+import { UsersService } from "./admin/_services/users.service";
 
 declare var $: any
 
@@ -32,15 +33,16 @@ export class NavComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private mainService: AccesosService,
+    private UsersService: UsersService
   ) { }
 
   ngOnInit() {
-    if(this.state=='2'){
-      $('#ChangePass').modal();
+    if(this.state=='21'){
+      $('#passwordModal').modal();
     }
-    if(this.type=="tutor"){
-      this.cargarNotifications();
-    }
+    // if(this.type=="tutor"){
+    //   this.cargarNotifications();
+    // }
     this.cargarModulos();
     // console.log(this.idRol);
 
@@ -165,23 +167,22 @@ export class NavComponent implements OnInit {
       id: this.id,
       old_pass: formValue.old_pass,
       new_pass: formValue.new_pass,
-      new_pass_rep: formValue.new_pass2
+      new_pass_rep: formValue.new_pass_rep
     }
-    //console.log(data)
-    // this.userService.updatePass(data)
-    //                   .then(response => {
-    //                     console.clear
-    //                     this.create('Usuario Actualizado exitosamente')
-    //                     $('#Loading').css('display','none')
-    //                     $("#ChangePass .close").click();
-    //                     $('#passChange-form')[0].reset()
-
-    //                   }).catch(error => {
-    //                     console.clear
-    //                     this.createError(error)
-
-    //                     $('#Loading').css('display','none')
-    //                   })
+    // console.log(data)
+    this.UsersService.updatePass(data)
+                      .then(response => {
+                        console.clear
+                        this.create('Usuario Actualizado exitosamente')
+                        $('#Loading').css('display','none')
+                        $("#passwordModal .close").click();
+                        $('#pass-form')[0].reset()
+                        localStorage.setItem('currentState',response.state);
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
 
   }
   logout() {
