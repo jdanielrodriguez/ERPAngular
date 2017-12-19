@@ -46,7 +46,16 @@ return Promise.reject(error.message || error)
                           })
                           .catch(this.handleError)
       }
-
+    getComprobante():Promise<any> {
+    let url = `${this.basePath}/api/comprobante/ventas`
+      return this.http.get(url)
+                      .toPromise()
+                        .then(response => {
+                          //console.log(response.json())
+                          return response.json()
+                        })
+                        .catch(this.handleError)
+    }
     create(form):Promise<any> {
     let url = `${this.basePath}/api/ventas`
       return this.http.post(url,form)

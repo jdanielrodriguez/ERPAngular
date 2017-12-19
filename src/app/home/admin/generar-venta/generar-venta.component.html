@@ -89,8 +89,8 @@
                     <label for="comprobante">No. Factura</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                      <input type="text" class="form-control" id="comprobante" name="comprobante"
-                              ngModel #comprobante="ngModel" placeholder="Comprobante">
+                      <input type="text" class="form-control" id="comprobante" name="comprobante" disabled
+                              ngModel #comprobante="ngModel" placeholder="Comprobante" [(ngModel)]="comprob">
                     </div>
                       <div *ngIf="comprobante.invalid && (comprobante.dirty || comprobante.touched)"
                             class="alert alert-danger" role="alert">
@@ -316,7 +316,7 @@
                                   <div class="form-group col-xs-6 m-b-15">
                                     <label for="precioVenta">precioVenta</label>
                                     <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <span class="input-group-addon"><input type="radio" name="precioAlt" checked (change)="verifica(precioVenta,'precioVenta')"></span>
                                       <input type="number" class="form-control" id="precioVenta" name="precioVenta" required
                                               ngModel #precioVenta="ngModel" placeholder="precioVenta" [(ngModel)]="prod.precioVenta">
                                     </div>
@@ -345,8 +345,8 @@
                                   <div class="form-group col-xs-6 m-b-15">
                                     <label for="precioClienteEs">precioClienteEs</label>
                                     <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="precioClienteEs" name="precioClienteEs"
+                                      <span class="input-group-addon"><input type="radio" name="precioAlt" (change)="verifica(precioClienteEs,'precioClienteEs')"></span>
+                                      <input type="number" class="form-control" id="precioClienteEs" name="precioClienteEs" disabled
                                               ngModel #precioClienteEs="ngModel" placeholder="precioClienteEs" [(ngModel)]="prod.precioClienteEs">
                                     </div>
                                       <div *ngIf="precioClienteEs.invalid && (precioClienteEs.dirty || precioClienteEs.touched)"
@@ -359,8 +359,8 @@
                                   <div class="form-group col-xs-6 m-b-15">
                                     <label for="precioDistribuidor">precioDistribuidor</label>
                                     <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="precioDistribuidor" name="precioDistribuidor"
+                                      <span class="input-group-addon"><input type="radio" name="precioAlt" (change)="verifica(precioDistribuidor,'precioDistribuidor')"></span>
+                                      <input type="number" class="form-control" id="precioDistribuidor" name="precioDistribuidor" disabled
                                               ngModel #precioDistribuidor="ngModel" placeholder="precioDistribuidor" [(ngModel)]="prod.precioDistribuidor">
                                     </div>
                                       <div *ngIf="precioDistribuidor.invalid && (precioDistribuidor.dirty || precioDistribuidor.touched)"

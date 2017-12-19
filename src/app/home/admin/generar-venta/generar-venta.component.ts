@@ -23,6 +23,7 @@ export class GenerarVentaComponent implements OnInit {
   comboTiposCompra:any
   comboTiposProducto:any
   selectedData:any
+  comprob:number
   idRol=+localStorage.getItem('currentRolId');
   idUser=+localStorage.getItem('currentId');
   Agregar = +localStorage.getItem('permisoAgregar')
@@ -84,6 +85,7 @@ export class GenerarVentaComponent implements OnInit {
     this.cargarProds()
     this.cargarCombos()
     this.colapsse()
+    this.comprobante()
   }
   colapsse(){
     if($('.page-container').hasClass('page-navigation-toggled')){
@@ -110,6 +112,16 @@ export class GenerarVentaComponent implements OnInit {
         }
       }
     }
+
+  }
+  verifica(data,name)
+  {
+
+    $( "#precioClienteEs" ).prop( "disabled", true );
+    $( "#precioVenta" ).prop( "disabled", true );
+    $( "#precioDistribuidor" ).prop( "disabled", true );
+    $( "#"+name ).prop( "disabled", false );
+    // console.log(data);
 
   }
   buscar(text){
@@ -145,6 +157,14 @@ export class GenerarVentaComponent implements OnInit {
   agregarVenta(formValue:any){
     // console.log(formValue);
     $("#prodModal .close").click();
+    if($( "#precioClienteEs" ).is(':enabled'))
+    {
+      formValue.precioVenta = $( "#precioClienteEs" ).val()
+    }
+    if($( "#precioDistribuidor" ).is(':enabled'))
+    {
+      formValue.precioVenta = $( "#precioDistribuidor").val()
+    }
     this.contFila++
     this.Total+= (formValue.cantidad*formValue.precioVenta)
     formValue.rId = this.contFila
@@ -155,6 +175,7 @@ export class GenerarVentaComponent implements OnInit {
     this.cargarProds()
   }
   agregarInventario(formValue:any){
+    formValue.comprobante = this.comprob
     formValue.total = this.Total
     formValue.detalle = this.TableDet
     // console.log(formValue);
@@ -272,6 +293,16 @@ export class GenerarVentaComponent implements OnInit {
     this.secondService.getSingle(id)
                       .then(response => {
                         this.selectedData = response;
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                      })
+  }
+
+  comprobante(){
+    this.firstMainService.getComprobante()
+                      .then(response => {
+                        this.comprob = +response.comprobante+1;
                       }).catch(error => {
                         console.clear
                         this.createError(error)
