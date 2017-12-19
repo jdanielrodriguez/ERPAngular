@@ -12,7 +12,7 @@ declare var $: any
   styleUrls: ['./cuentas-cobrar-pagadas.component.css']
 })
 export class CuentasCobrarPagadasComponent implements OnInit {
-  title:string="Cuentas Cobrar"
+  title:string="Cuentas Cobrar Pagadas"
   Table:any = []
   selectedData:any
   idRol=+localStorage.getItem('currentRolId');

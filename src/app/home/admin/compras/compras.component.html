@@ -69,7 +69,7 @@
                               <td>{{((data.tipos.descripcion!=null)?data.tipos.descripcion:'')}}</td>
                               <td>
 
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i> Editar</button>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-eye"></i> Ver</button>
                                 <button *ngIf="Eliminar==1" type="button" class="btn btn-danger" (click)="update(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
 
                               </td>

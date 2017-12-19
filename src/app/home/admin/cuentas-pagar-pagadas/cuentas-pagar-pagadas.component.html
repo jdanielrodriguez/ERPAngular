@@ -18,11 +18,10 @@
   <div class="row">
       <div class="col-md-12">
           <!-- Nav -->
-          <div class="col-md-6">
+          <div class="col-md-4">
               <div class="btn-group btn-group-justified">
                   <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../cuentas-cobrar' ]" class="btn btn-warning"><i class="fa fa-download"></i>Cuentas Cobrar</a>
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../cuentas-pagar' ]" class="btn btn-warning"><i class="fa fa-upload"></i>Cuentas Pagar</a>
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../cuentas-pagar-pagadas' ]" class="btn btn-danger"><i class="fa fa-ban"></i>Cuentas Pagar Pagadas</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../cuentas-pagar-pagadas' ]" class="btn btn-warning"><i class="fa fa-upload"></i>Cuentas Pagar</a>
               </div>
 
           </div>
@@ -30,6 +29,9 @@
           <!-- START DEFAULT DATATABLE -->
           <div class="panel panel-default">
               <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <button type="button" class="btn btn-warning form-control" routerLinkActive="active" [routerLink]="[ './../cuentas-pagar' ]" style="cursor:pointer;"><i class="fa fa-upload"></i>Cuentas Pagar</button>
+                  </h3>
                   <ul class="panel-controls">
                       <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
                   </ul>

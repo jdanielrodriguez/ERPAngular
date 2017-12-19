@@ -93,17 +93,21 @@ export class ComprasComponent implements OnInit {
       estado:0,
       id:formValue
     }
-    if(confirm("¿Desea Anular la Venta?")){
+    if(confirm("¿Desea Anular la Compra?")){
       this.mainService.update(formValue)
                         .then(response => {
                           this.cargarAll()
                           console.clear
-                          this.create('Venta Anulada Exitosamente')
+                          this.create('Compra Anulada Exitosamente')
                           $('#Loading').css('display','none')
                         }).catch(error => {
                           console.clear
-                          this.createError(error)
                           $('#Loading').css('display','none')
+                          if(error.status==402){
+                            this.createError(error._body.substring(25,53))
+                          }else{
+                            this.createError(error)
+                          }
                         })
     }else{
       $('#Loading').css('display','none')

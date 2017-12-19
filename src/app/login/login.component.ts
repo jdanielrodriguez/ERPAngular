@@ -92,6 +92,8 @@ closeResult: string;
         $('#Loading').css('display','none')
         if(error.status==401){
           this.create("Usuario o contraseña incorrectos");
+        }else{
+          this.create(error)
         }
 
       })
