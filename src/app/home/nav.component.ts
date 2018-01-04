@@ -57,8 +57,7 @@ export class NavComponent implements OnInit {
       if($('.page-container').hasClass('page-navigation-toggled')){
         $('.page-container').removeClass('page-navigation-toggled page-container-wide')
         $('#navigations').removeClass('x-navigation-minimized')
-        $('.fa-indent').addClass('fa-dedent')
-        $('.fa-dedent').removeClass('fa-indent')
+        $('#nav-bar-menu').css('display','')
       }
     }
   }
@@ -66,13 +65,11 @@ export class NavComponent implements OnInit {
     if($('.page-container').hasClass('page-navigation-toggled')){
       $('.page-container').removeClass('page-navigation-toggled page-container-wide')
       $('#navigations').removeClass('x-navigation-minimized')
-      $('.fa-indent').addClass('fa-dedent')
-      $('.fa-dedent').removeClass('fa-indent')
+      $('#nav-bar-menu').css('display','')
     }else{
       $('.page-container').addClass('page-navigation-toggled page-container-wide')
       $('#navigations').addClass('x-navigation-minimized')
-      $('.fa-dedent').addClass('fa-indent')
-      $('.fa-indent').removeClass('fa-dedent')
+      $('#nav-bar-menu').css('display','none')
       $('.xn-openable').removeClass("active");
     }
   }

@@ -34,10 +34,10 @@ export class ComprasComponent implements OnInit {
     if($('.page-container').hasClass('page-navigation-toggled')){
       $('.page-container').removeClass('page-navigation-toggled page-container-wide')
       $('#navigations').removeClass('x-navigation-minimized')
-      $('.fa-indent').addClass('fa-dedent')
-      $('.fa-dedent').removeClass('fa-indent')
+      $('#nav-bar-menu').css('display','')
     }
   }
+
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')

@@ -1,59 +1,59 @@
 <div class="page-container page-navigation-top-fixed" style="height:100%">
 
-  <!-- START PAGE SIDEBAR -->
-  <div class="page-sidebar mCustomScrollbar _mCS_1 mCS-autoHide page-sidebar-fixed scroll mCS_no_scrollbar" style="height: 858px;background-color: #1b1e24;">
-      <!-- START X-NAVIGATION -->
-      <ul id="navigations" class="x-navigation">
-          <li class="xn-logo">
-              <a [routerLink]="[ './' ]">{{(firstname!=''?firstname+' '+lastname:user)}}</a>
-              <a class="x-navigation-control"  (click)="colapsse()"></a>
-          </li>
-          <li class="xn-profile">
-             <a *ngIf="idRol<3" class="profile-mini" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
-                  <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
-              </a>
-              <a *ngIf="idRol>=3" class="profile-mini" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
-                  <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
-              </a>
-              <div class="profile">
-                  <div *ngIf="idRol<3" class="profile-image" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
-                      <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
-                  </div>
-                  <div *ngIf="idRol>=3" class="profile-image" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
-                      <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
-                  </div>
-                  <div class="profile-data">
-                      <div class="profile-data-name">{{(firstname!=''?firstname+' '+lastname:user)}}</div>
-                      <div class="profile-data-title">{{rol}}</div>
-                  </div>
-                  <div class="profile-controls">
-                  </div>
-              </div>
-          </li>
-          <li class="xn-title">Menu {{rol}}</li>
-          <li *ngIf="idRol==2">
-              <a routerLinkActive="active"
-              [routerLink]="[ './admin/modulos' ]"><span class="fa fa-pencil"></span> <span class="xn-text">Modulos</span></a>
-          </li>
-          <li *ngFor="let data of modulos">
-              <a *ngIf="data.mostrar==1" (click)="permiso(data)" routerLinkActive="active"
-              [routerLink]="[ './admin/'+data.link ]"><span class="fa fa-{{data.icono}}"></span> <span class="xn-text">{{data.nombre}}</span></a>
-          </li>
-          <li class="xn-openable" #mas *ngIf="modulosOcultos">
-              <a (click)="abrir(mas)"><span class="fa fa-plus"></span> <span class="xn-text">Mas</span></a>
-              <ul>
-                  <li *ngFor="let data of modulosOcultos">
-                      <a *ngIf="data.mostrar==1" (click)="permiso(data)" routerLinkActive="active"
-                      [routerLink]="[ './admin/'+data.link ]"><span class="fa fa-{{data.icono}}"></span> <span class="xn-text">{{data.nombre}}</span></a>
-                  </li>
-              </ul>
-          </li>
+<!-- aqui va el sidebar -->
+<!-- aqui termina el sidebar -->
+<nav class="navbar navbar-inverse sidebar" role="navigation" id="nav-bar-menu">
+  <div class="container-fluid">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
 
-      </ul>
-      <!-- END X-NAVIGATION -->
+  <div class="profile">
+      <div *ngIf="idRol<3" class="profile-image" [routerLink]="[ './admin/perfil' ]" style="cursor:pointer;">
+          <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
+      </div>
+      <div *ngIf="idRol>=3" class="profile-image" [routerLink]="[ './usuario/perfil' ]" style="cursor:pointer;">
+          <img src="{{((picture!=null)?picture:'')}}" alt="{{((firstname!=null)?firstname+' '+lastname:user)}}"/>
+      </div>
+      <div class="profile-data">
+          <div class="profile-data-name">{{(firstname!=''?firstname+' '+lastname:user)}}</div>
+          <div class="profile-data-title">{{rol}}</div>
+      </div>
+      <div class="profile-controls">
+      </div>
   </div>
-  <!-- END PAGE SIDEBAR -->
+  </div>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="xn-title">Menu {{rol}}</li>
+      <li *ngIf="idRol==2" routerLinkActive="active"
+      [routerLink]="[ './admin/modulos' ]">
+          <a ><span class="fa fa-pencil"></span> <span class="xn-text">Modulos</span></a>
+      </li>
+      <li *ngFor="let data of modulos" routerLinkActive="active"
+      [routerLink]="[ './admin/'+data.link ]" (click)="permiso(data)">
+          <a *ngIf="data.mostrar==1"  ><span class="fa fa-{{data.icono}}"></span> <span class="xn-text">{{data.nombre}}</span></a>
+      </li>
 
+      <li class="dropdown" #mas *ngIf="modulosOcultos">
+          <a (click)="abrir(mas)" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-plus"></span> <span class="xn-text">Mas</span></a>
+          <ul class="dropdown-menu forAnimate" role="menu">
+              <li *ngFor="let data of modulosOcultos" (click)="permiso(data)" routerLinkActive="active"
+              [routerLink]="[ './admin/'+data.link ]">
+                  <a *ngIf="data.mostrar==1"><span class="fa fa-{{data.icono}}"></span> <span class="xn-text">{{data.nombre}}</span></a>
+              </li>
+          </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+</nav>
   <div class="page-content">
 
     <!-- START X-NAVIGATION VERTICAL -->

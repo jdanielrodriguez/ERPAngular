@@ -42,8 +42,7 @@ export class InventarioInicialComponent implements OnInit {
     }else{
       $('.page-container').addClass('page-navigation-toggled page-container-wide')
       $('#navigations').addClass('x-navigation-minimized')
-      $('.fa-dedent').addClass('fa-indent')
-      $('.fa-indent').removeClass('fa-dedent')
+      $('#nav-bar-menu').css('display','none')
       $('.xn-openable').removeClass("active");
     }
   }
