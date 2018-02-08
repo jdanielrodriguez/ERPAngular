@@ -10,6 +10,31 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-checkbox-dropdown
 
 import { AdminRoutingModule } from './admin.routing';
 
+import { UsersService } from "./_services/users.service";
+import { EmployeesService } from "./_services/employees.service";
+import { RolesService } from "./_services/roles.service";
+import { PuestosService } from "./_services/puestos.service";
+import { SucursalesService } from "./_services/sucursales.service";
+import { ClientesService } from "./_services/clientes.service";
+import { ProveedoresService } from "./_services/proveedores.service";
+import { ModulosService } from "./_services/modulos.service";
+import { AccesosService } from "./_services/accesos.service";
+import { ComprasService } from "./_services/compras.service";
+import { VentasService } from "./_services/ventas.service";
+import { InventarioService } from "./_services/inventario.service";
+import { ProductosService } from "./_services/productos.service";
+import { TiposProductoService } from "./_services/tipos-producto.service";
+import { TiposVentaService } from "./_services/tipos-venta.service";
+import { TiposCompraService } from "./_services/tipos-compra.service";
+import { CuentasCobrarService } from "./_services/cuentas-cobrar.service";
+import { CuentasPagarService } from "./_services/cuentas-pagar.service";
+import { MovimientosPagarService } from "./_services/movimientos-pagar.service";
+import { MovimientosCobrarService } from "./_services/movimientos-cobrar.service";
+import { GastosService } from "./_services/gastos.service";
+import { SueldosService } from "./_services/sueldos.service";
+import { ComisionesService } from "./_services/comisiones.service";
+import { EstadisticasService } from "./_services/estadisticas.service";
+
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -41,30 +66,10 @@ import { InventarioAdminComponent } from './inventario-admin/inventario-admin.co
 import { InventarioInicialComponent } from './inventario-inicial/inventario-inicial.component';
 import { SueldosComponent } from './sueldos/sueldos.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';
-
-import { UsersService } from "./_services/users.service";
-import { EmployeesService } from "./_services/employees.service";
-import { RolesService } from "./_services/roles.service";
-import { PuestosService } from "./_services/puestos.service";
-import { SucursalesService } from "./_services/sucursales.service";
-import { ClientesService } from "./_services/clientes.service";
-import { ProveedoresService } from "./_services/proveedores.service";
-import { ModulosService } from "./_services/modulos.service";
-import { AccesosService } from "./_services/accesos.service";
-import { ComprasService } from "./_services/compras.service";
-import { VentasService } from "./_services/ventas.service";
-import { InventarioService } from "./_services/inventario.service";
-import { ProductosService } from "./_services/productos.service";
-import { TiposProductoService } from "./_services/tipos-producto.service";
-import { TiposVentaService } from "./_services/tipos-venta.service";
-import { TiposCompraService } from "./_services/tipos-compra.service";
-import { CuentasCobrarService } from "./_services/cuentas-cobrar.service";
-import { CuentasPagarService } from "./_services/cuentas-pagar.service";
-import { MovimientosPagarService } from "./_services/movimientos-pagar.service";
-import { MovimientosCobrarService } from "./_services/movimientos-cobrar.service";
-import { GastosService } from "./_services/gastos.service";
-import { SueldosService } from "./_services/sueldos.service";
-import { ComisionesService } from "./_services/comisiones.service";
+import { EstadisticaVendedorComponent } from './estadistica-vendedor/estadistica-vendedor.component';
+import { EstadisticaFlujoComponent } from './estadistica-flujo/estadistica-flujo.component';
+import { EstadisticaVentasComponent } from './estadistica-ventas/estadistica-ventas.component';
+import { EstadisticaClientesComponent } from './estadistica-clientes/estadistica-clientes.component';
 
 @NgModule({
   imports: [
@@ -109,7 +114,11 @@ import { ComisionesService } from "./_services/comisiones.service";
     InventarioAdminComponent,
     InventarioInicialComponent,
     SueldosComponent,
-    ComisionesComponent
+    ComisionesComponent,
+    EstadisticaVendedorComponent,
+    EstadisticaFlujoComponent,
+    EstadisticaVentasComponent,
+    EstadisticaClientesComponent
   ],
   providers: [
     UsersService,
@@ -134,7 +143,8 @@ import { ComisionesService } from "./_services/comisiones.service";
     MovimientosCobrarService,
     GastosService,
     SueldosService,
-    ComisionesService
+    ComisionesService,
+    EstadisticasService
   ]
 })
 export class AdminModule { }

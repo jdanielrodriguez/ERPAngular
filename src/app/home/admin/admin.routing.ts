@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { AdminComponent } from "./admin.component";
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -27,9 +28,13 @@ import { InventarioAdminComponent } from './inventario-admin/inventario-admin.co
 import { InventarioInicialComponent } from './inventario-inicial/inventario-inicial.component';
 import { TiposProductoComponent } from './tipos-producto/tipos-producto.component';
 import { PagosComponent } from './pagos/pagos.component';
-import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { EstadisticaVendedorComponent } from './estadistica-vendedor/estadistica-vendedor.component';
+import { EstadisticaFlujoComponent } from './estadistica-flujo/estadistica-flujo.component';
+import { EstadisticaClientesComponent } from './estadistica-clientes/estadistica-clientes.component';
+import { EstadisticaVentasComponent } from './estadistica-ventas/estadistica-ventas.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';
 import { SueldosComponent } from './sueldos/sueldos.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '', component: AdminComponent, children: [
@@ -55,7 +60,10 @@ const routes: Routes = [
     { path: 'inventario-inicial', component: InventarioInicialComponent },
     { path: 'tipos-producto', component: TiposProductoComponent },
     { path: 'pagos', component: PagosComponent },
-    { path: 'estadistica', component: EstadisticasComponent },
+    { path: 'estadistica', component: EstadisticaVendedorComponent },
+    { path: 'estadistica-clientes', component: EstadisticaClientesComponent },
+    { path: 'estadistica-flujo', component: EstadisticaFlujoComponent },
+    { path: 'estadistica-ventas', component: EstadisticaVentasComponent },
     { path: 'sueldos', component: SueldosComponent },
     { path: 'comisiones', component: ComisionesComponent },
   ]},

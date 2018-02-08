@@ -154,8 +154,9 @@ export class GenerarVentaComponent implements OnInit {
     this.searchterm=data.productos.codigo
   }
   agregarVenta(formValue:any){
-    // console.log(formValue);
     $("#prodModal .close").click();
+    formValue.precioClienteEs = $( "#precioClienteEs" ).val()
+    formValue.precioDistribuidor = $( "#precioDistribuidor").val()
     if($( "#precioClienteEs" ).is(':enabled'))
     {
       formValue.precioVenta = $( "#precioClienteEs" ).val()
@@ -172,6 +173,7 @@ export class GenerarVentaComponent implements OnInit {
     $('#prod-form')[0].reset()
     this.searchterm = ""
     this.cargarProds()
+    // console.log(formValue);
   }
   agregarInventario(formValue:any){
     formValue.comprobante = this.comprob
