@@ -26,7 +26,7 @@ return Promise.reject(error.message || error)
 }
 
     getBarVendedores(form):Promise<any> {
-    let url = `${this.basePath}/api/vendedores/estadistica?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
+    let url = `${this.basePath}/api/vendedores/estadistica/barra?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
       return this.http.get(url)
                       .toPromise()
                         .then(response => {
@@ -36,10 +36,9 @@ return Promise.reject(error.message || error)
                         .catch(this.handleError)
     }
 
-
-    create(form):Promise<any> {
-    let url = `${this.basePath}/api/apidir`
-      return this.http.post(url,form)
+    getBarClientes(form):Promise<any> {
+    let url = `${this.basePath}/api/clientes/estadistica/barra?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
+      return this.http.get(url)
                       .toPromise()
                         .then(response => {
                           //console.log(response.json())
@@ -48,9 +47,9 @@ return Promise.reject(error.message || error)
                         .catch(this.handleError)
     }
 
-    delete(id):Promise<any> {
-    let url = `${this.basePath}/api/apidir/${id}`
-      return this.http.delete(url)
+    getBarVentas(form):Promise<any> {
+    let url = `${this.basePath}/api/ventas/estadistica/barra?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
+      return this.http.get(url)
                       .toPromise()
                         .then(response => {
                           //console.log(response.json())
@@ -59,9 +58,9 @@ return Promise.reject(error.message || error)
                         .catch(this.handleError)
     }
 
-    update(form):Promise<any> {
-    let url = `${this.basePath}/api/apidir/${form.id}`
-      return this.http.put(url,form)
+    getBarFlujo(form):Promise<any> {
+    let url = `${this.basePath}/api/flujo/estadistica/barra?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
+      return this.http.get(url)
                       .toPromise()
                         .then(response => {
                           //console.log(response.json())
@@ -70,8 +69,41 @@ return Promise.reject(error.message || error)
                         .catch(this.handleError)
     }
 
-    getSingle(id:number):Promise<any> {
-    let url = `${this.basePath}/api/apidir/${id}`
+    getPieFlujo(form):Promise<any> {
+    let url = `${this.basePath}/api/flujo/estadistica/pie?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
+      return this.http.get(url)
+                      .toPromise()
+                        .then(response => {
+                          //console.log(response.json())
+                          return response.json()
+                        })
+                        .catch(this.handleError)
+    }
+
+    getPieVentas(form):Promise<any> {
+    let url = `${this.basePath}/api/ventas/estadistica/pie?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
+      return this.http.get(url)
+                      .toPromise()
+                        .then(response => {
+                          //console.log(response.json())
+                          return response.json()
+                        })
+                        .catch(this.handleError)
+    }
+
+    getPieClientes(form):Promise<any> {
+    let url = `${this.basePath}/api/clientes/estadistica/pie?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
+      return this.http.get(url)
+                      .toPromise()
+                        .then(response => {
+                          //console.log(response.json())
+                          return response.json()
+                        })
+                        .catch(this.handleError)
+    }
+
+    getPieVendedores(form):Promise<any> {
+    let url = `${this.basePath}/api/vendedores/estadistica/pie?fechaInicio=${form.fechaInicio}&fechaFin=${form.fechaFin}`
       return this.http.get(url)
                       .toPromise()
                         .then(response => {

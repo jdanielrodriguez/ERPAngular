@@ -20,10 +20,10 @@
           <!-- Nav -->
           <div *ngIf="idRol<=2" class="col-md-6">
               <div class="btn-group btn-group-justified">
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica' ]" class="btn btn-default"><i class="fa fa-money"></i>Estadistica Vendedor</a>
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica-clientes' ]" class="btn btn-default"><i class="fa fa-suitcase"></i>Estadistica Clientes</a>
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica-ventas' ]" class="btn btn-default"><i class="fa fa-tasks"></i>Estadistica Ventas</a>
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica-flujo' ]" class="btn btn-default"><i class="fa fa-tasks"></i>Estadistica Flujo</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica' ]" class="btn btn-default"><i class="fa fa-tags"></i>Estadistica Ventas</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica-ventas' ]" class="btn btn-default"><i class="fa fa-users"></i>Estadistica Vendedor</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica-clientes' ]" class="btn btn-default"><i class="fa fa-ticket"></i>Estadistica Clientes</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estadistica-flujo' ]" class="btn btn-default"><i class="fa fa-money"></i>Estadistica Flujo</a>
               </div>
 
           </div>
@@ -32,17 +32,17 @@
           <div class="panel panel-default">
               <div class="panel-heading">
                   <h3 class="col-md-4 col-xs-offset-2" style="text-align:center;">
-                    <input type="date" class="form-control" style="text-align:center;" (change)="cargarDias();cargarAll();" [(ngModel)]="fechaMes" id="fechaInicio" #fechaInicio>
+                    <input type="date" class="form-control" style="text-align:center;" (change)="cargarDias();cargarBarra();cargarPie();" [(ngModel)]="fechaMes" id="fechaInicio" #fechaInicio>
                   </h3>
                   <h3 class="col-md-4" style="text-align:center;">
-                      <input type="date" class="form-control" style="text-align:center;" (change)="cargarDias();cargarAll();" [(ngModel)]="fechaHoy" id="fechaFin" #fechaFin>
+                      <input type="date" class="form-control" style="text-align:center;" (change)="cargarDias();cargarBarra();cargarPie();" [(ngModel)]="fechaHoy" id="fechaFin" #fechaFin>
                   </h3>
               </div>
               <div class="panel-body">
                 <div class="row">
                   <div class="col-md-8 col-xs-offset-2">
                     <div style="display: block">
-                      <canvas baseChart
+                      <canvas baseChart *ngIf='barChartLabels'
                               [datasets]="barChartData"
                               [labels]="barChartLabels"
                               [options]="barChartOptions"
@@ -55,7 +55,7 @@
 
                   <div class="col-md-8 col-xs-offset-2">
                       <div style="display: block">
-                          <canvas baseChart
+                          <canvas baseChart *ngIf='pieChartLabels'
                                   [data]="pieChartData"
                                   [labels]="pieChartLabels"
                                   [chartType]="pieChartType"
@@ -80,7 +80,7 @@
                           <h4 class="modal-title">Ingreso de datos</h4>
                       </div>
                       <div>
-                          <form id="insert-form"  #InsertForm="ngForm" (ngSubmit)="insert(InsertForm.value)">
+                          <form id="insert-form"  #InsertForm="ngForm">
                             <div class="form-group col-xs-12 m-b-15">
                               <label for="fecha">Fecha</label>
                               <div class="input-group">
@@ -145,7 +145,7 @@
                           <h4 class="modal-title">Edicion de datos</h4>
                       </div>
                       <div>
-                          <form *ngIf="selectedData" id="edit-form"  #EditForm="ngForm" (ngSubmit)="update(EditForm.value)">
+                          <form *ngIf="selectedData" id="edit-form"  #EditForm="ngForm">
                             <div class="form-group col-xs-12 m-b-15">
                               <label for="fecha">Fecha</label>
                               <div class="input-group">

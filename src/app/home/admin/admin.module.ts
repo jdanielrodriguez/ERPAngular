@@ -40,7 +40,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ComprasComponent } from './compras/compras.component';
 import { VentasComponent } from './ventas/ventas.component';
-import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { PagosComponent } from './pagos/pagos.component';
 import { ClientesComponent } from './clientes/clientes.component';
@@ -89,7 +88,6 @@ import { EstadisticaClientesComponent } from './estadistica-clientes/estadistica
     UsuariosComponent,
     ComprasComponent,
     VentasComponent,
-    EstadisticasComponent,
     InventarioComponent,
     PagosComponent,
     ClientesComponent,

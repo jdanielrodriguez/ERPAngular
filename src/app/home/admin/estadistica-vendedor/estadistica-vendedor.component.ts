@@ -40,14 +40,19 @@ export class EstadisticaVendedorComponent implements OnInit {
     {data:[],label:'Vacio'}
   ];
 
-   public pieChartLabels:string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-   public pieChartData:number[] = [300, 500, 100];
+   public pieChartLabels:any[];
+   public pieChartData:any=[];
    public pieChartType:string = 'pie';
 
   ngOnInit() {
     this.getDate();
-    this.cargarDias()
-    this.cargarAll()
+    this.cargarPie();
+    this.cargarDias();
+    this.cargarBarra();
+    setTimeout(() => {
+      this.cargarDias();
+      this.cargarBarra();
+    }, 500);
   }
   cargarDias(){
     let dias;
@@ -60,7 +65,7 @@ export class EstadisticaVendedorComponent implements OnInit {
     let diff = fechaFin - fechaInicio;
     dias = (diff/(1000*60*60*24))
     var hoy = new Date(this.fechaMes);
-    for(let i=1;i<=(dias+2);i++){
+    for(let i=1;i<=(dias+1);i++){
       var calculado = new Date(this.fechaMes);
       calculado.setDate(
         (hoy.getDate()) + i
@@ -98,7 +103,7 @@ export class EstadisticaVendedorComponent implements OnInit {
     this.fechaHoy= date.getFullYear()+'-'+month2+'-'+dia2
     this.fechaMes= date.getFullYear()+'-'+monthB2+'-'+dia2
   }
-  cargarAll(){
+  cargarBarra(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
     let data = {
@@ -108,28 +113,43 @@ export class EstadisticaVendedorComponent implements OnInit {
     this.mainService.getBarVendedores(data)
                       .then(response => {
                         if(response){
-                          response.forEach(element => {
-                              let dat = []
-                              this.barChartLabels.forEach(element2 => {
+                          let fortex:any = []
+                          fortex.length = 0
+                          response.forEach((element,index) => {
+                              let dat = {
+                                label:element.username,
+                                data:[]
+                              }
+                              let bandera = 0
+                              this.barChartLabels.forEach((element2,x) => {
                                 if(element2==element.fecha){
-                                  dat.push(element.total)
+                                  if(fortex.find((element1,i) => {
+                                     return element1.label==element.username
+                                  })){
+                                    fortex[fortex.findIndex((element1,i) => {
+                                      return element1.label==element.username
+                                   })].data[x]=element.total
+                                        bandera=1
+                                  }else{
+                                    dat.data.push(element.total)
+
+                                  }
                                 }else{
-                                  dat.push(0)
+                                  dat.data.push(0)
                                 }
                               })
-                            let clone = JSON.parse(JSON.stringify(this.barChartData));
-                            clone[0].data=dat
-                            clone[0].label = element.username
-                            // clone.push({
-                            //   data: dat,
-                            //   label: element.username
-                            // })
-                            this.barChartData = clone;
+                              if(bandera==0){
+                                fortex.push(dat)
+                              }
 
                           });
+                          if(fortex.length>0){
+                            this.barChartData = fortex;
+                          }
+
                         }
-                        console.log(this.barChartLabels);
-                        console.log(this.barChartData)
+                        // console.log(this.barChartLabels);
+                        // console.log(this.barChartData)
 
                         $('#Loading').css('display','none')
                         console.clear
@@ -140,72 +160,43 @@ export class EstadisticaVendedorComponent implements OnInit {
                       })
   }
 
-  insert(formValue:any){
+  cargarPie(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.create(formValue)
-                      .then(response => {
-                        this.cargarAll()
-                        console.clear
-                        this.create('Pago Ingresado')
-                        $('#Loading').css('display','none')
-                        $('#insert-form')[0].reset()
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                        $('#Loading').css('display','none')
-                      })
-
-
-  }
-
-  cargarSingle(id:number){
-    this.mainService.getSingle(id)
-                      .then(response => {
-                        this.selectedData = response;
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                      })
-  }
-
-  update(formValue:any){
-    $('#Loading').css('display','block')
-    $('#Loading').addClass('in')
-    //console.log(data)
-    this.mainService.update(formValue)
-                      .then(response => {
-                        this.cargarAll()
-                        console.clear
-                        this.create('Pago Actualizado exitosamente')
-                        $('#Loading').css('display','none')
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                        $('#Loading').css('display','none')
-                      })
-
-  }
-
-  delete(id:string){
-    $('#Loading').css('display','block')
-    $('#Loading').addClass('in')
-    if(confirm("¿Desea eliminar el Pago?")){
-      this.mainService.delete(id)
-                        .then(response => {
-                          this.cargarAll()
-                          console.clear
-                          this.create('Pago Eliminado exitosamente')
-                          $('#Loading').css('display','none')
-                        }).catch(error => {
-                          console.clear
-                          this.createError(error)
-                          $('#Loading').css('display','none')
-                        })
-    }else{
-      $('#Loading').css('display','none')
+    let data = {
+      fechaInicio: this.fechaMes,
+      fechaFin: this.fechaHoy
     }
+    this.pieChartData = null
+    this.pieChartLabels = null
+    this.mainService.getPieVendedores(data)
+                      .then(response => {
+                          let labels:any[] = []
+                          let data:any[] = []
+                          response.forEach((element,index) => {
+                            labels.push(element.username)
+                            data.push(element.total)
 
+                          });
+                          // if(fortex.length>0 && fortexData.length>0){
+                          //   this.pieChartLabels = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
+                          //   this.pieChartData = [300, 500, 100];
+                          // }else{
+                          //   this.pieChartData = [0]
+                          //   this.pieChartLabels = ["Vacio"]
+                          // }
+                          this.pieChartLabels=labels
+                          this.pieChartData=data
+                        // console.log(this.pieChartLabels);
+                        // console.log(this.pieChartData)
+
+                        $('#Loading').css('display','none')
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
   }
 
   public chartClicked(e:any):void {
