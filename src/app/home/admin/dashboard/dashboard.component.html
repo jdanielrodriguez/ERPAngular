@@ -1,87 +1,206 @@
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
   <li><a href="#">Home</a></li>
-  <li class="active">Dashboard</li>
+  <li><a href="#">Tables</a></li>
+  <li class="active">{{title}}</li>
 </ul>
 <!-- END BREADCRUMB -->
+
+<!-- PAGE TITLE -->
+<div class="page-title">
+  <h2>{{title}}</h2>
+</div>
+<!-- END PAGE TITLE -->
 
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
 
-  <!-- START WIDGETS -->
   <div class="row">
-    <div class="col-md-6">
-      <div style="display: block;">
-      <canvas baseChart width="200" height="100"
-                  [datasets]="lineChartData"
-                  [labels]="lineChartLabels"
-                  [options]="lineChartOptions"
-                  [colors]="lineChartColors"
-                  [legend]="lineChartLegend"
-                  [chartType]="lineChartType"
-                  (chartHover)="chartHovered($event)"
-                  (chartClick)="chartClicked($event)"></canvas>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div style="display: block">
-        <canvas baseChart
-                [datasets]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"
-                [legend]="barChartLegend"
-                [chartType]="barChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></canvas>
-      </div>
-    </div>
+      <div class="col-md-12">
+          <!-- START DEFAULT DATATABLE -->
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="col-md-4 col-xs-offset-2" style="text-align:center;">
+                    <input type="date" class="form-control" style="text-align:center;" (change)="cargarDias();cargarBarra();cargarPie();" [(ngModel)]="fechaMes" id="fechaInicio" #fechaInicio>
+                  </h3>
+                  <h3 class="col-md-4" style="text-align:center;">
+                      <input type="date" class="form-control" style="text-align:center;" (change)="cargarDias();cargarBarra();cargarPie();" [(ngModel)]="fechaHoy" id="fechaFin" #fechaFin>
+                  </h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-8 col-xs-offset-2">
+                    <div style="display: block">
+                      <canvas baseChart *ngIf='barChartLabels'
+                              [datasets]="barChartData"
+                              [labels]="barChartLabels"
+                              [options]="barChartOptions"
+                              [legend]="barChartLegend"
+                              [chartType]="barChartType"
+                              (chartHover)="chartHovered($event)"
+                              (chartClick)="chartClicked($event)" id="barrasEstadisticas"></canvas>
+                    </div>
+                  </div>
 
-    <div class="col-md-6">
-      <div style="display: block">
-        <canvas baseChart
-                    [data]="doughnutChartData"
-                    [labels]="doughnutChartLabels"
-                    [chartType]="doughnutChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
-      </div>
-    </div>
-    <div class="col-md-6">
-        <div style="display: block">
-            <canvas baseChart
-                    [datasets]="radarChartData"
-                    [labels]="radarChartLabels"
-                    [chartType]="radarChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
-        </div>
-    </div>
+                  <div class="col-md-8 col-xs-offset-2">
+                      <div style="display: block">
+                          <canvas baseChart *ngIf='pieChartLabels'
+                                  [data]="pieChartData"
+                                  [labels]="pieChartLabels"
+                                  [chartType]="pieChartType"
+                                  (chartHover)="chartHovered($event)"
+                                  (chartClick)="chartClicked($event)"></canvas>
+                        </div>
+                  </div>
 
-    <div class="col-md-6">
-        <div style="display: block">
-            <canvas baseChart
-                    [data]="pieChartData"
-                    [labels]="pieChartLabels"
-                    [chartType]="pieChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
+
+                </div>
+                <!-- END DASHBOARD CHART -->
+              </div>
           </div>
-    </div>
+          <!-- END DEFAULT DATATABLE -->
 
-    <div class="col-md-6">
-        <div style="display: block">
-            <canvas baseChart
-                    [data]="polarAreaChartData"
-                    [labels]="polarAreaChartLabels"
-                    [legend]="polarAreaLegend"
-                    [chartType]="polarAreaChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
-          </div>
-    </div>
+          <!-- Inicio Modal Ingreso -->
+            <div id="insertModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Ingreso de datos</h4>
+                      </div>
+                      <div>
+                          <form id="insert-form"  #InsertForm="ngForm">
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="fecha">Fecha</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required
+                                        ngModel #fecha="ngModel" [(ngModel)]="fechaHoy">
+                              </div>
+                                <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="fecha.errors.required">
+                                        El Fecha es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="descripcion">Descripcion</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion" required autofocus
+                                        ngModel #descripcion="ngModel" placeholder="descripcion">
+                              </div>
+                                <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="descripcion.errors.required">
+                                        El Descripcion es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="monto">Monto</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="number" class="form-control" id="monto" name="monto" required
+                                        ngModel #monto="ngModel" placeholder="Monto" value="0">
+                              </div>
+                                <div *ngIf="monto.invalid && (monto.dirty || monto.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="monto.errors.required">
+                                        El Monto es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 text-right m-b-15">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                            </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer" style="border:none;">
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <!-- Final Modal Ingreso -->
 
+          <!-- Inicio Modal Ingreso -->
+            <div id="editModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Edicion de datos</h4>
+                      </div>
+                      <div>
+                          <form *ngIf="selectedData" id="edit-form"  #EditForm="ngForm">
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="fecha">Fecha</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required
+                                        ngModel #fecha="ngModel" placeholder="Fecha" [(ngModel)]="selectedData.fecha">
+                              </div>
+                                <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="fecha.errors.required">
+                                        El Fecha es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="descripcion">Descripcion</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion" required
+                                        ngModel #descripcion="ngModel" placeholder="descripcion" [(ngModel)]="selectedData.descripcion">
+                              </div>
+                                <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="descripcion.errors.required">
+                                        El Descripcion es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="monto">Monto</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="number" class="form-control" id="monto" name="monto" required
+                                        ngModel #monto="ngModel" placeholder="Monto" [(ngModel)]="selectedData.monto">
+                              </div>
+                                <div *ngIf="monto.invalid && (monto.dirty || monto.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="monto.errors.required">
+                                        El Monto es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" id="id" name="id" required
+                                        ngModel #id="ngModel" [(ngModel)]="selectedData.id">
+                            <div class="form-group col-xs-12 text-right m-b-15">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                            </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer" style="border:none;">
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <!-- Final Modal Ingreso -->
+
+<!-- Inicio Notificaciones -->
+  <simple-notifications [options]="options"></simple-notifications>
+<!-- Fin Notificaciones -->
+<!-- Inicio Loader Modal -->
+  <div class="modal fade" id="Loading">
+    <div class="modal-dialog">
+      <div class="text-center" style="margin-top:50%;">
+        <app-loader></app-loader>
+      </div>
+    </div>
   </div>
-  <!-- END DASHBOARD CHART -->
-
-</div>
-<!-- END PAGE CONTENT WRAPPER -->
+<!-- Fin Loader Modal -->
