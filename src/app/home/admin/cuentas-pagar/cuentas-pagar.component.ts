@@ -103,25 +103,28 @@ export class CuentasPagarComponent implements OnInit {
     formValue.saldo = formValue.credito-formValue.monto
     formValue.abono = formValue.monto
     // console.log(formValue);
-
-    $('#Loading').css('display','block')
-    $('#Loading').addClass('in')
-    this.childService.create(formValue)
-                      .then(response => {
-                        console.log(response);
-                        this.selectedData = response;
-                        // this.cargarSingle(response.cuentapagar)
-                        console.clear
-                        this.create('Sucursal Ingresado')
-                        $('#Loading').css('display','none')
-                        $('#movimiento-form')[0].reset()
-                        this.getDate()
-                        this.cargarAll()
-                      }).catch(error => {
-                        console.clear
-                        this.createError(error)
-                        $('#Loading').css('display','none')
-                      })
+    if(formValue.descripcion!=''){
+      $('#Loading').css('display','block')
+      $('#Loading').addClass('in')
+      this.childService.create(formValue)
+                        .then(response => {
+                          console.log(response);
+                          this.selectedData = response;
+                          // this.cargarSingle(response.cuentapagar)
+                          console.clear
+                          this.create('Sucursal Ingresado')
+                          $('#Loading').css('display','none')
+                          $('#movimiento-form')[0].reset()
+                          this.getDate()
+                          this.cargarAll()
+                        }).catch(error => {
+                          console.clear
+                          this.createError(error)
+                          $('#Loading').css('display','none')
+                        })
+    }else{
+      this.createError("Debe agregar Descripcion")
+    }
   }
 
   cargarSingle(id:number){

@@ -190,7 +190,12 @@ export class GenerarVentaComponent implements OnInit {
                         this.router.navigate([`home/admin/ventas`])
                       }).catch(error => {
                         console.clear
-                        this.createError(error)
+                        if(error.status==401){
+                          console.clear
+                          this.createError(error._body.substring(25,55))
+                        }else{
+                          this.createError(error)
+                        }
                         $('#Loading').css('display','none')
                       })
 
