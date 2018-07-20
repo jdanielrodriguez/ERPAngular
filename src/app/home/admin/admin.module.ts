@@ -69,6 +69,12 @@ import { EstadisticaVendedorComponent } from './estadistica-vendedor/estadistica
 import { EstadisticaFlujoComponent } from './estadistica-flujo/estadistica-flujo.component';
 import { EstadisticaVentasComponent } from './estadistica-ventas/estadistica-ventas.component';
 import { EstadisticaClientesComponent } from './estadistica-clientes/estadistica-clientes.component';
+import { DiarioComponent } from './conta/diario/diario.component';
+import { MayorComponent } from './conta/mayor/mayor.component';
+import { BalanceComponent } from './conta/balance/balance.component';
+import { EstadoResultadosComponent } from './conta/estado-resultados/estado-resultados.component';
+import { FlujoComponent } from './conta/flujo/flujo.component';
+import { BalanceSaldosComponent } from './conta/balance-saldos/balance-saldos.component';
 
 @NgModule({
   imports: [
@@ -116,7 +122,13 @@ import { EstadisticaClientesComponent } from './estadistica-clientes/estadistica
     EstadisticaVendedorComponent,
     EstadisticaFlujoComponent,
     EstadisticaVentasComponent,
-    EstadisticaClientesComponent
+    EstadisticaClientesComponent,
+    DiarioComponent,
+    MayorComponent,
+    BalanceComponent,
+    EstadoResultadosComponent,
+    FlujoComponent,
+    BalanceSaldosComponent
   ],
   providers: [
     UsersService,

@@ -1,0 +1,324 @@
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Tables</a></li>
+    <li class="active">{{title}}</li>
+  </ul>
+  <!-- END BREADCRUMB -->
+
+  <!-- PAGE TITLE -->
+  <div class="page-title">
+    <h2>{{title}}</h2>
+  </div>
+  <!-- END PAGE TITLE -->
+
+  <!-- PAGE CONTENT WRAPPER -->
+  <div class="page-content-wrap">
+
+    <div class="row" style="margin-right:0px;">
+        <div class="col-md-12">
+            <!-- Nav -->
+            <div class="col-md-7">
+                <div class="btn-group btn-group-justified">
+                    <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../diario' ]" class="btn btn-default"><i class="fa fa-list"></i>Diario</a>
+                    <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../mayor' ]" class="btn btn-default"><i class="fa fa-list"></i>Mayor</a>
+                    <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../balance-general' ]" class="btn btn-default"><i class="fa fa-list"></i>Balance General</a>
+                    <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../estado-de-resultados' ]" class="btn btn-default"><i class="fa fa-list"></i>Estado de Resultados</a>
+                </div>
+
+            </div>
+            <!-- End Nav -->
+            <!-- START DEFAULT DATATABLE -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="col-md-4 col-xs-offset-2" style="text-align:center;">
+                        <input type="date" class="form-control" style="text-align:center;" [(ngModel)]="fechaMes" id="fechaInicio" #fechaInicio>
+                      </h3>
+                      <h3 class="col-md-4" style="text-align:center;">
+                          <input type="date" class="form-control" style="text-align:center;" [(ngModel)]="fechaHoy" id="fechaFin" #fechaFin>
+                      </h3>
+                    <ul class="panel-controls">
+                        <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <table class="table datatable table-hover table-responsive"  [mfData]="Table | filter : search" #mf="mfDataTable"
+                    [mfRowsOnPage]="rowsOnPage">
+
+                        <tbody class="w-100">
+                            <div class="row" style="margin-right:0px;">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-center">
+                                    <mfDefaultSorter by="fecha">Cuenta</mfDefaultSorter>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                                    <mfDefaultSorter by="poliza">Nombre</mfDefaultSorter>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center">
+                                </div>
+                              </div>
+                            <div class="row" style="margin-right:0px;" *ngFor="let data of mf.data">
+                              <div class="row hover" style="margin-right:0px;" *ngFor="let detalle of data.detalle">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <strong *ngIf="detalle.tipo==1">
+                                        {{((detalle.idCuenta!=null)?detalle.idCuenta:'')}}
+                                    </strong>
+                                    <span *ngIf="detalle.tipo!=1">
+                                        {{((detalle.idCuenta!=null)?detalle.idCuenta:'')}}
+                                    </span>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"  [ngStyle]="{'padding-left': detalle.padding+'0px'}">
+                                    <strong *ngIf="detalle.tipo==1">
+                                        {{((detalle.cuenta!=null)?detalle.cuenta:'')}}
+                                    </strong>
+                                    <span *ngIf="detalle.tipo!=1">
+                                        {{((detalle.cuenta!=null)?detalle.cuenta:'')}}
+                                    </span>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                    <span *ngIf="detalle.nivel5>0">
+                                        <strong *ngIf="detalle.tipo==1">
+                                            {{((detalle.nivel5!=null)?detalle.nivel5:'')}}
+                                        </strong>
+                                        <span *ngIf="detalle.tipo!=1">
+                                            {{((detalle.nivel5!=null)?detalle.nivel5:'')}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="detalle.nivel5<=0" style="color:white;">
+                                        {{((detalle.nivel5!=null)?detalle.nivel5:'')}}
+                                    </span>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                    <span *ngIf="detalle.nivel4>0">
+                                        <strong *ngIf="detalle.tipo==1">
+                                            {{((detalle.nivel4!=null)?detalle.nivel4:'')}}
+                                        </strong>
+                                        <span *ngIf="detalle.tipo!=1">
+                                            {{((detalle.nivel4!=null)?detalle.nivel4:'')}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="detalle.nivel4<=0" style="color:white;">
+                                        {{((detalle.nivel4!=null)?detalle.nivel4:'')}}
+                                    </span>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                    <span *ngIf="detalle.nivel3>0">
+                                        <strong *ngIf="detalle.tipo==1">
+                                            {{((detalle.nivel3!=null)?detalle.nivel3:'')}}
+                                        </strong>
+                                        <span *ngIf="detalle.tipo!=1">
+                                            {{((detalle.nivel3!=null)?detalle.nivel3:'')}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="detalle.nivel3<=0" style="color:white;">
+                                        {{((detalle.nivel3!=null)?detalle.nivel3:'')}}
+                                    </span>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                    <span *ngIf="detalle.nivel2>0">
+                                        <strong *ngIf="detalle.tipo==1">
+                                            {{((detalle.nivel2!=null)?detalle.nivel2:'')}}
+                                        </strong>
+                                        <span *ngIf="detalle.tipo!=1">
+                                            {{((detalle.nivel2!=null)?detalle.nivel2:'')}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="detalle.nivel2<=0" style="color:white;">
+                                        {{((detalle.nivel2!=null)?detalle.nivel2:'')}}
+                                    </span>
+                                </div>
+
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                    <span *ngIf="detalle.nivel1>0">
+                                        <strong *ngIf="detalle.tipo==1">
+                                            {{((detalle.nivel1!=null)?detalle.nivel1:'')}}
+                                        </strong>
+                                        <span *ngIf="detalle.tipo!=1">
+                                            {{((detalle.nivel1!=null)?detalle.nivel1:'')}}
+                                        </span>
+                                    </span>
+                                    <span *ngIf="detalle.nivel1<=0" style="color:white;">
+                                        {{((detalle.nivel1!=null)?detalle.nivel1:'')}}
+                                    </span>
+                                </div>
+                              </div>
+
+                              <div class="row" style="margin-right:0px;">
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xs-offset-7 totales text-right">
+                                  Totales: {{((data.total!=null)?data.total:'')}}
+                                </div>
+                              </div>
+
+                            </div>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                              <td colspan="5">
+                                  <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                              </td>
+                          </tr>
+                          </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- END DEFAULT DATATABLE -->
+
+            <!-- Inicio Modal Ingreso -->
+              <div id="insertModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Ingreso de datos</h4>
+                        </div>
+                        <div>
+                            <form id="insert-form"  #InsertForm="ngForm" (ngSubmit)="insert(InsertForm.value)">
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="username">Usuario</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="text" class="form-control" id="username" name="username" required
+                                          ngModel #username="ngModel" placeholder="username">
+                                </div>
+                                  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="username.errors.required">
+                                          El Usuario es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="text" class="form-control" id="email" name="email" required
+                                          ngModel #email="ngModel" placeholder="email">
+                                </div>
+                                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="email.errors.required">
+                                          El Email es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="privileges">Privilegios</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="privileges" name="privileges"
+                                          ngModel #privileges="ngModel">
+                                    <option value="0"></option>
+                                    <option value="1" selected>Acceso Total</option>
+                                    <option value="2">Acceso Limitado</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="privileges.invalid && (privileges.dirty || privileges.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="privileges.errors.required">
+                                          El Privilegios es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-12 text-right m-b-15">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                              </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer" style="border:none;">
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <!-- Final Modal Ingreso -->
+
+            <!-- Inicio Modal Ingreso -->
+              <div id="editModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Edicion de datos</h4>
+                        </div>
+                        <div>
+                            <form *ngIf="selectedData" id="edit-form"  #EditForm="ngForm" (ngSubmit)="update(EditForm.value)">
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="username">Usuario</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="text" class="form-control" id="username" name="username" required
+                                          ngModel #username="ngModel" placeholder="username" [(ngModel)]="selectedData.username">
+                                </div>
+                                  <div *ngIf="username.invalid && (username.dirty || username.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="username.errors.required">
+                                          El Usuario es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-12 m-b-15">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <input type="email" class="form-control" id="email" name="email" required
+                                          ngModel #email="ngModel" placeholder="email" [(ngModel)]="selectedData.email">
+                                </div>
+                                  <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="email.errors.required">
+                                          El Email es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <div class="form-group col-xs-4 m-b-15">
+                                <label for="privileges">Privilegios</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                  <select class="form-control" id="privileges" name="privileges"
+                                          ngModel #privileges="ngModel" [(ngModel)]="selectedData.privileges">
+                                    <option value="0"></option>
+                                    <option value="1" selected>Acceso Total</option>
+                                    <option value="2">Acceso Limitado</option>
+                                  </select>
+                                </div>
+                                  <div *ngIf="privileges.invalid && (privileges.dirty || privileges.touched)"
+                                        class="alert alert-danger" role="alert">
+                                      <small *ngIf="privileges.errors.required">
+                                          El Privilegios es invalido
+                                      </small>
+                                  </div>
+                              </div>
+                              <input type="hidden" class="form-control" id="id" name="id" required
+                                          ngModel #id="ngModel" [(ngModel)]="selectedData.id">
+                              <div class="form-group col-xs-12 text-right m-b-15">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                              </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer" style="border:none;">
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <!-- Final Modal Ingreso -->
+
+  <!-- Inicio Notificaciones -->
+    <simple-notifications [options]="options"></simple-notifications>
+  <!-- Fin Notificaciones -->
+  <!-- Inicio Loader Modal -->
+    <div class="modal fade" id="Loading">
+      <div class="modal-dialog">
+        <div class="text-center" style="margin-top:50%;">
+          <app-loader></app-loader>
+        </div>
+      </div>
+    </div>
+  <!-- Fin Loader Modal -->
