@@ -37,6 +37,7 @@ import { SueldosComponent } from './sueldos/sueldos.component';
 
 import { DiarioComponent } from './conta/diario/diario.component';
 import { BalanceComponent } from './conta/balance/balance.component';
+import { BalanceSaldosComponent } from './conta/balance-saldos/balance-saldos.component';
 import { FlujoComponent } from './conta/flujo/flujo.component';
 import { MayorComponent } from './conta/mayor/mayor.component';
 import { EstadoResultadosComponent } from './conta/estado-resultados/estado-resultados.component';
@@ -77,6 +78,7 @@ const routes: Routes = [
     { path: 'contabilidad/flujo-de-efectivo', component: FlujoComponent },
     { path: 'contabilidad/estado-de-resultados', component: EstadoResultadosComponent },
     { path: 'contabilidad/balance-general', component: BalanceComponent },
+    { path: 'contabilidad/balance-de-saldos', component: BalanceSaldosComponent },
   ]},
   { path: 'compras-anuladas', component: ComprasAnuladasComponent },
   { path: 'generar-compra', component: GenerarCompraComponent },
