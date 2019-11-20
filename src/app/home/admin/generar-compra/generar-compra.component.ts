@@ -3,12 +3,15 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { ProveedoresService } from "./../_services/proveedores.service";
 import { ProductosService } from "./../_services/productos.service";
 import { TiposCompraService } from "./../_services/tipos-compra.service";
+import { InventarioService } from "./../_services/inventario.service";
 import { ComprasService } from "./../_services/compras.service";
 import { TiposProductoService } from "./../_services/tipos-producto.service";
 
+import { SucursalesService } from "./../_services/sucursales.service";
 import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any
+let prods = []
 
 @Component({
   selector: 'app-generar-compra',
@@ -20,6 +23,7 @@ export class GenerarCompraComponent implements OnInit {
   Table:any
   TableDet:any = []
   productos:any
+  comboSucursalesProducto:any
   comboTiposCompra:any
   comboTiposProducto:any
   selectedData:any
@@ -56,6 +60,8 @@ export class GenerarCompraComponent implements OnInit {
     private _service: NotificationsService,
     private mainService: ProductosService,
     private parentService: TiposCompraService,
+    private subParentService: SucursalesService,
+    private InventarioService: InventarioService,
     private secondParentService: TiposProductoService,
     private secondService: ProveedoresService,
     private firstMainService: ComprasService
@@ -78,10 +84,39 @@ export class GenerarCompraComponent implements OnInit {
       dia2=dia
     }
     this.fechaHoy= date.getFullYear()+'-'+month2+'-'+dia2
+    // this.getProductos();
     this.cargarAll()
     this.cargarProds()
     this.cargarCombos()
     this.colapsse()
+  }
+
+  getProductos() {
+    this.mainService.getAll()
+                        .then(element =>{
+                          let data=[]
+                          element.forEach(element => {
+                            data.push(element.nombre+" - "+element.descripcion+" - "+element.codigo)
+                          });
+                          prods=data;
+                          this.productos = element
+                          console.log(element);
+
+                        }).catch(error => {
+                          console.log("Error adquirido");
+
+                        })
+  }
+  findChoices(searchText: string) {
+
+    return prods
+    .filter(item => item.toLowerCase().includes(searchText.toLowerCase()))
+    .slice(0, 5);
+
+  }
+
+  getChoiceLabel(choice: string) {
+    return `@${choice} `;
   }
   colapsse(){
     if($('.page-container').hasClass('page-navigation-toggled')){
@@ -128,6 +163,11 @@ export class GenerarCompraComponent implements OnInit {
                         console.clear
                         this.prov={};
                         $('#secondModal').modal()
+                        setTimeout(function(){
+                          $('#insertModal').modal();
+                          $('#insertModal #insert-form #nit').val(text)
+                        },0);
+
                       })
   }
 
@@ -155,6 +195,7 @@ export class GenerarCompraComponent implements OnInit {
   }
   agregarInventario(formValue:any){
     formValue.total = this.Total
+    formValue.detalle = this.TableDet
     formValue.detalle = this.TableDet
     // console.log(formValue);
     $('#Loading').css('display','block')
@@ -209,15 +250,9 @@ export class GenerarCompraComponent implements OnInit {
                         this.createError(error)
                         $('#Loading').css('display','none')
                       })
-  }
-
-  cargarProds(){
-    $('#Loading').css('display','block')
-    $('#Loading').addClass('in')
-    this.mainService.getAll()
+    this.subParentService.getAll()
                       .then(response => {
-                        this.productos = response
-                        $('#Loading').css('display','none')
+                        this.comboSucursalesProducto = response
                         console.clear
                       }).catch(error => {
                         console.clear
@@ -226,10 +261,49 @@ export class GenerarCompraComponent implements OnInit {
                       })
   }
 
+  async cargarProds(){
+    $('#Loading').css('display','block')
+    $('#Loading').addClass('in')
+    let sucursal = localStorage.getItem('currentSucursal')+''
+    console.log(sucursal);
+
+    if(+sucursal){
+        let data = {
+          id:0,
+          state:sucursal,
+          filter:'sucursal'
+        }
+        await this.InventarioService.getAllFilter(data)
+                        .then(response => {
+                          this.productos = response
+                          $('#Loading').css('display','none')
+                        }).catch(error => {
+                          console.clear
+                          this.createError(error)
+                          $('#Loading').css('display','none')
+                        })
+    }else{
+    await this.InventarioService.getAll()
+                        .then(response => {
+                          response.forEach(element => {
+                            element.productos.inventario = element
+                          });
+                          this.productos = response
+                          $('#Loading').css('display','none')
+                          console.clear
+                        }).catch(error => {
+                          console.clear
+                          this.createError(error)
+                          $('#Loading').css('display','none')
+                        })
+                      }
+            console.log(this.productos);
+
+  }
+
   insert(formValue:any){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-
     this.secondService.create(formValue)
                       .then(response => {
                         this.cargarAll()

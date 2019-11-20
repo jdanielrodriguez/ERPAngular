@@ -35,6 +35,9 @@
                       <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                       <input autofocus type="text" class="form-control" id="nit" name="nit" required
                               ngModel #nit="ngModel" placeholder="Nit" (keyup)="abrir($event)" [(ngModel)]="prov.nit">
+                      <span class="input-group-addon"  (click)="buscar(prov.nit)"  style="padding: 0px;margin: 0px; color: #fff;background-color: #428bca;border-color: #357ebd;cursor:pointer;">
+                        <i class="fa fa-search"></i>
+                       </span>
                     </div>
                       <div *ngIf="nit.invalid && (nit.dirty || nit.touched)"
                             class="alert alert-danger" role="alert">
@@ -372,6 +375,8 @@
                                   </div>
                                   <input type="hidden" class="form-control" id="id" name="id" required
                                         ngModel #id="ngModel" [(ngModel)]="prod.id">
+                                  <input type="hidden" class="form-control" id="sucursal" name="sucursal" required
+                                        ngModel #sucursal="ngModel" [(ngModel)]="prod.sucursal">
                                   <div class="form-group col-xs-12 text-right m-b-15">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
                                       <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
@@ -428,7 +433,7 @@
                                               <td>{{((data.telefono!=null)?data.telefono:'')}}</td>
                                               <td>
 
-                                                <button type="button" class="btn btn-default" (click)="seleccionar(data)" style="cursor:pointer;"><i class="fa fa-hand-o-up"></i></button>
+                                                <button type="button" class="btn btn-success" (click)="seleccionar(data)" style="cursor:pointer;"><i class="fa fa-check"></i></button>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i></button>
                                                 <!-- <button type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i></button> -->
 

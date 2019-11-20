@@ -2,28 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { ClientesService } from "./../_services/clientes.service";
 import { ProductosService } from "./../_services/productos.service";
-import { InventarioService } from "./../_services/inventario.service";
 import { TiposVentaService } from "./../_services/tipos-venta.service";
 import { VentasService } from "./../_services/ventas.service";
 import { TiposProductoService } from "./../_services/tipos-producto.service";
+import { VehiculosService } from "./../_services/vehiculos.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any
 
 @Component({
-  selector: 'app-generar-venta',
-  templateUrl: './generar-venta.component.html',
-  styleUrls: ['./generar-venta.component.css']
+  selector: 'app-generar-orden',
+  templateUrl: './generar-orden.component.html',
+  styleUrls: ['./generar-orden.component.css']
 })
-export class GenerarVentaComponent implements OnInit {
-  title:string="Venta"
+export class GenerarOrdenComponent implements OnInit {
+  title:string="Orden de Taller"
   Table:any
   TableDet:any = []
   productos:any
   comboTiposCompra:any
   comboTiposProducto:any
   selectedData:any
+  comboVehiculos:any
   comprob:number
   idRol=+localStorage.getItem('currentRolId');
   idUser=+localStorage.getItem('currentId');
@@ -60,9 +61,9 @@ export class GenerarVentaComponent implements OnInit {
     private _service: NotificationsService,
     private mainService: ProductosService,
     private parentService: TiposVentaService,
-    private InventarioService: InventarioService,
     private secondParentService: TiposProductoService,
     private secondService: ClientesService,
+    private VehiculosService: VehiculosService,
     private firstMainService: VentasService
   ) { }
 
@@ -136,15 +137,12 @@ export class GenerarVentaComponent implements OnInit {
                         this.prov.nombre = this.prov.nombre+' '+this.prov.apellido
                         // console.log(response);
                         $("#secondModal .close").click();
+                        this.cargarVehiculos()
                         $('#tipo').focus();
                       }).catch(error => {
                         console.clear
                         this.prov={};
                         $('#secondModal').modal()
-                        setTimeout(function(){
-                          $('#insertModal').modal();
-                          $('#insertModal #insert-form #nit').val(text)
-                        },0);
                       })
   }
 
@@ -152,18 +150,18 @@ export class GenerarVentaComponent implements OnInit {
     this.prov=data
     this.prov.tipo = 1
     this.prov.nombre = this.prov.nombre+' '+this.prov.apellido
+    this.cargarVehiculos();
     $("#secondModal .close").click();
   }
   seleccionarProd(data){
     this.prod=data
-    this.prod.cantidad = 1
+    this.prod.cantidad = 0
     this.searchterm=data.productos.codigo
   }
   agregarVenta(formValue:any){
     $("#prodModal .close").click();
     formValue.precioClienteEs = $( "#precioClienteEs" ).val()
     formValue.precioDistribuidor = $( "#precioDistribuidor").val()
-    formValue.sucursal = this.prod.sucursal
     if($( "#precioClienteEs" ).is(':enabled'))
     {
       formValue.precioVenta = $( "#precioClienteEs" ).val()
@@ -246,41 +244,37 @@ export class GenerarVentaComponent implements OnInit {
                       })
   }
 
-  async cargarProds(){
+  cargarVehiculos(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    let sucursal = localStorage.getItem('currentSucursal')
-    if(+sucursal){
-        let data = {
-          id:0,
-          state:sucursal,
-          filter:'sucursal'
-        }
-      await this.InventarioService.getAllFilter(data)
-                        .then(response => {
-                          this.productos = response
-                          $('#Loading').css('display','none')
-                        }).catch(error => {
-                          console.clear
-                          this.createError(error)
-                          $('#Loading').css('display','none')
-                        })
-    }else{
-      await this.InventarioService.getAll()
-                                .then(response => {
-                                  response.forEach(element => {
-                                    element.productos.inventario = element
-                                  });
-                                  this.productos = response
-                                  $('#Loading').css('display','none')
-                                  console.clear
-                                }).catch(error => {
-                                  console.clear
-                                  this.createError(error)
-                                  $('#Loading').css('display','none')
-                                })
-    }
+    this.idUser = +localStorage.getItem('currentId');
+    this.VehiculosService.getAllMine(this.prov.id)
+                      .then(response => {
+                        this.comboVehiculos = response
+                        console.log(response);
+                        $('#Loading').css('display','none')
 
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+  }
+
+  cargarProds(){
+    $('#Loading').css('display','block')
+    $('#Loading').addClass('in')
+    this.mainService.getAllExistencia()
+                      .then(response => {
+                        this.productos = response
+                        $('#Loading').css('display','none')
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
   }
 
   insert(formValue:any){
@@ -296,6 +290,25 @@ export class GenerarVentaComponent implements OnInit {
                         $("#insertModal .close").click();
                         $('#Loading').css('display','none')
                         $('#insert-form')[0].reset()
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+
+
+  }
+
+  insertVehiculo(formValue:any){
+    $('#Loading').css('display','block')
+    $('#Loading').addClass('in')
+
+    this.VehiculosService.create(formValue)
+                      .then(response => {
+                        this.cargarVehiculos()
+                        console.clear
+                        $("#insertVehiculoModal .close").click();
+                        this.create('Vehiculo Ingresado')
                       }).catch(error => {
                         console.clear
                         this.createError(error)

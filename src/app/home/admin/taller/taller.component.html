@@ -18,11 +18,11 @@
   <div class="row">
       <div class="col-md-12">
           <!-- Nav -->
-          <div *ngIf="Agregar==1" class="col-md-6">
+          <div *ngIf="Agregar==1" class="col-md-3">
               <div class="btn-group btn-group-justified">
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../generar-venta' ]" class="btn btn-warning"><i class="fa fa-plus"></i>Generar Venta</a>
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../ventas-anuladas' ]" class="btn btn-danger"><i class="fa fa-ban"></i>Ventas Anuladas</a>
-                  <!-- <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../generar-orden' ]" class="btn btn-info"><i class="fa fa-gear"></i>Orden Taller</a> -->
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../generar-orden' ]" class="btn btn-info"><i class="fa fa-gear"></i>Orden Taller</a>
+                  <!-- <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../generar-venta' ]" class="btn btn-warning"><i class="fa fa-plus"></i>Generar Venta</a> -->
+                  <!-- <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../ventas-anuladas' ]" class="btn btn-danger"><i class="fa fa-ban"></i>Ventas Anuladas</a> -->
               </div>
 
           </div>
@@ -70,6 +70,7 @@
                               <td>{{((data.tipos.descripcion!=null)?data.tipos.descripcion:'')}}</td>
                               <td>
 
+                                <button type="button" class="btn btn-info" [routerLink]="[ './../orden-taller',data.id ]" style="cursor:pointer;"><i class="fa fa-pencil"></i> Agregar</button>
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-eye"></i> Ver</button>
                                 <button *ngIf="Eliminar==1" type="button" class="btn btn-danger" (click)="update(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i> Eliminar</button>
 

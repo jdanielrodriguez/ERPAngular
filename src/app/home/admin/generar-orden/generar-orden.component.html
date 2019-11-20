@@ -20,7 +20,7 @@
           <!-- Nav -->
           <div class="col-md-3">
               <div class="btn-group btn-group-justified">
-                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../compras' ]" class="btn btn-warning"><i class="fa fa-chevron-left"></i>Compras</a>
+                  <a style="cursor:pointer;" routerLinkActive="active" [routerLink]="[ './../taller' ]" class="btn btn-warning"><i class="fa fa-chevron-left"></i>Taller</a>
               </div>
 
           </div>
@@ -35,10 +35,6 @@
                       <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                       <input autofocus type="text" class="form-control" id="nit" name="nit" required
                               ngModel #nit="ngModel" placeholder="Nit" (keyup)="abrir($event)" [(ngModel)]="prov.nit">
-                      <span class="input-group-addon"  (click)="buscar(prov.nit)"  style="padding: 0px;margin: 0px; color: #fff;background-color: #428bca;border-color: #357ebd;cursor:pointer;">
-                        <i class="fa fa-search"></i>
-                       </span>
-
                     </div>
                       <div *ngIf="nit.invalid && (nit.dirty || nit.touched)"
                             class="alert alert-danger" role="alert">
@@ -93,13 +89,36 @@
                     <label for="comprobante">No. Factura</label>
                     <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                      <input type="text" class="form-control" id="comprobante" name="comprobante"
-                              ngModel #comprobante="ngModel" placeholder="Comprobante">
+                      <input type="text" class="form-control" id="comprobante" name="comprobante" disabled
+                              ngModel #comprobante="ngModel" placeholder="Comprobante" [(ngModel)]="comprob">
                     </div>
                       <div *ngIf="comprobante.invalid && (comprobante.dirty || comprobante.touched)"
                             class="alert alert-danger" role="alert">
                           <small *ngIf="comprobante.errors.required">
                               El No. Factura es invalido
+                          </small>
+                      </div>
+                  </div>
+                  <div *ngIf="prov.id>0" class="form-group col-xs-12 m-b-15">
+                    <label for="vehiculo">Vehiculo</label>
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="fa fa-car"></span></span>
+                      <select class="form-control" id="vehiculo" name="vehiculo" required
+                              ngModel #vehiculo="ngModel" [(ngModel)]="prov.vehiculo">
+                        <option value=""></option>
+                        <option *ngFor="let data of comboVehiculos" value="{{data.id}}">{{data.placa}}</option>
+                      </select>
+                      <span class="input-group-addon" style="margin:0px;padding:0px;" data-toggle="modal" data-target="#insertVehiculoModal" style="cursor:pointer;">
+                        <button type="button" class="btn btn-secondary" style="margin:0px;padding:0px;">
+                          <span class="fa fa-plus"></span>
+                        </button>
+                      </span>
+
+                    </div>
+                      <div *ngIf="(vehiculo.invalid && (vehiculo.dirty || vehiculo.touched))"
+                            class="alert alert-danger" role="alert">
+                          <small *ngIf="vehiculo.errors.required">
+                              El Vehiculo es invalido
                           </small>
                       </div>
                   </div>
@@ -126,7 +145,6 @@
                       <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                       <select class="form-control" id="tipoPlazo" name="tipoPlazo" required
                               ngModel #tipoPlazo="ngModel" >
-                        <option value=""></option>
                         <option value="1">Dia</option>
                         <option value="2">Mes</option>
                         <option value="3">Año</option>
@@ -153,8 +171,8 @@
                           </small>
                       </div>
                   </div>
-                  <input type="hidden" class="form-control" id="proveedor" name="proveedor" required
-                                        ngModel #proveedor="ngModel" [(ngModel)]="prov.id">
+                  <input type="hidden" class="form-control" id="cliente" name="cliente" required
+                                        ngModel #cliente="ngModel" [(ngModel)]="prov.id">
                   <input type="hidden" class="form-control" id="usuario" name="usuario" required
                                         ngModel #usuario="ngModel" [(ngModel)]="idUser">
                   <div *ngIf="prov.id>0" class="form-group col-xs-12 text-center m-b-15">
@@ -172,14 +190,12 @@
                               [mfRowsOnPage]="rowsOnPage">
                                   <thead>
                                       <tr>
-                                          <th style="width:20%;">
+                                          <th style="width:30%;">
                                             <mfDefaultSorter by="codigo">Codigo</mfDefaultSorter></th>
-                                          <th style="width:20%;">
+                                          <th style="width:30%;">
                                             <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter></th>
                                           <th style="width:20%;">
                                             <mfDefaultSorter by="cantidad">Cantidad</mfDefaultSorter></th>
-                                          <th style="width:20%;">
-                                            <mfDefaultSorter by="precioCosto">Costo</mfDefaultSorter></th>
                                           <th style="width:20%;">
                                             <mfDefaultSorter by="precioVenta">Venta</mfDefaultSorter></th>
                                           <th style="width:20%;">
@@ -192,9 +208,8 @@
                                           <td>{{((data.codigo!=null)?data.codigo:'')}}</td>
                                           <td>{{((data.nombre!=null)?data.nombre:'')}}</td>
                                           <td>{{((data.cantidad!=null)?data.cantidad:'')}}</td>
-                                          <td>{{((data.precioCosto!=null)?data.precioCosto:'')}}</td>
                                           <td>{{((data.precioVenta!=null)?data.precioVenta:'')}}</td>
-                                          <td>{{((data.precioCosto!=null && data.cantidad!=null)?data.precioCosto*data.cantidad:'')}}</td>
+                                          <td>{{((data.precioVenta!=null && data.cantidad!=null)?data.precioVenta*data.cantidad:'')}}</td>
                                           <td>
 
                                             <button type="button" class="btn btn-danger" (click)="deleteDet(data)" style="cursor:pointer;"><i class="fa fa-times"></i></button>
@@ -223,8 +238,8 @@
                           </div>
                       </div>
                   </div>
-                  <div *ngIf="TableDet.length>0" class="form-group col-xs-12 text-right m-b-15">
-                      <button type="button" class="btn btn-danger" [routerLink]="[ './../compras' ]"><i class="fa fa-times-circle" ></i> Cancel</button>
+                  <div *ngIf="prov.id>0" class="form-group col-xs-12 text-right m-b-15">
+                      <button type="button" class="btn btn-danger" [routerLink]="[ './../ventas' ]"><i class="fa fa-times-circle" ></i> Cancel</button>
                       <button type="button" class="btn btn-success" (click)="agregarInventario(CompraForm.value)"><i class="fa fa-save"></i> Guardar</button>
                   </div>
                 </form>
@@ -241,10 +256,10 @@
                       </div>
                       <div>
                         <ul class="list-group border-bottom col-xs-6 m-b-15">
-                            <li class="list-group-item" *ngFor = "let data of productos | filter:searchterm" (click)="seleccionarProd(data.productos)">{{data.productos.codigo}} - {{data.productos.nombre}}<span class="badge">{{data.cantidad}}</span></li>
+                            <li class="list-group-item" *ngFor = "let data of productos |filter:searchterm" (click)="seleccionarProd(data)">{{data.productos.codigo}} - {{data.productos.nombre}}<span class="badge">{{data.cantidad}}</span></li>
                         </ul>
                         <div class="form-group col-xs-6 m-b-15">
-                            <form id="prod-form"  #ProdForm="ngForm" (ngSubmit)="insertProd(ProdForm.value)">
+                            <form id="prod-form"  #ProdForm="ngForm" (ngSubmit)="agregarVenta(ProdForm.value)">
                               <div class="form-group col-xs-12 m-b-15">
                                 <label for="codigo">Codigo</label>
                                 <div class="input-group">
@@ -264,7 +279,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                   <input type="text" class="form-control" id="nombre" name="nombre" required
-                                          ngModel #nombre="ngModel" placeholder="Nombre" [(ngModel)]="prod.nombre">
+                                          ngModel #nombre="ngModel" placeholder="Nombre" [(ngModel)]="prod.productos.nombre">
                                 </div>
                                   <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
                                         class="alert alert-danger" role="alert">
@@ -278,7 +293,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                   <input type="text" class="form-control" id="descripcion" name="descripcion"
-                                          ngModel #descripcion="ngModel" placeholder="Descripcion" [(ngModel)]="prod.descripcion">
+                                          ngModel #descripcion="ngModel" placeholder="Descripcion" [(ngModel)]="prod.productos.descripcion">
                                 </div>
                                   <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
                                         class="alert alert-danger" role="alert">
@@ -292,7 +307,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                   <input type="text" class="form-control" id="marcaDes" name="marcaDes" required
-                                          ngModel #marcaDes="ngModel" placeholder="Marca" [(ngModel)]="prod.marcaDes">
+                                          ngModel #marcaDes="ngModel" placeholder="Marca" [(ngModel)]="prod.productos.marcaDes">
                                 </div>
                                   <div *ngIf="marcaDes.invalid && (marcaDes.dirty || marcaDes.touched)"
                                         class="alert alert-danger" role="alert">
@@ -306,7 +321,7 @@
                                 <div class="input-group">
                                   <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                   <select class="form-control" id="tipo" name="tipo" required
-                                          ngModel #tipo="ngModel" [(ngModel)]="prod.tipo">
+                                          ngModel #tipo="ngModel" [(ngModel)]="prod.productos.tipo">
                                     <option value=""></option>
                                     <option *ngFor="let data of comboTiposProducto" value="{{data.id}}">{{data.descripcion}}</option>
                                   </select>
@@ -319,46 +334,14 @@
                                   </div>
                               </div>
                               <input type="hidden" class="form-control" id="producto" name="producto" required
-                                        ngModel #producto="ngModel" [(ngModel)]="prod.id">
-                              <div *ngIf="prod.id<=0" class="form-group col-xs-12 text-right m-b-15">
-                                  <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
-                                  <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
-                              </div>
+                                        ngModel #producto="ngModel" [(ngModel)]="prod.productos.id">
                               <div *ngIf="prod.id>0" class="form-group col-xs-12 m-b-15">
                                   <div class="form-group col-xs-6 m-b-15">
-                                    <label for="precioCosto">precioCosto</label>
-                                    <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="precioCosto" name="precioCosto" required
-                                              ngModel #precioCosto="ngModel" placeholder="precioCosto" [(ngModel)]="prod.inventario.precioCosto">
-                                    </div>
-                                      <div *ngIf="precioCosto.invalid && (precioCosto.dirty || precioCosto.touched)"
-                                            class="alert alert-danger" role="alert">
-                                          <small *ngIf="precioCosto.errors.required">
-                                              El precioCosto es invalido
-                                          </small>
-                                      </div>
-                                  </div>
-                                  <div class="form-group col-xs-6 m-b-15">
-                                    <label for="cantidad">cantidad</label>
-                                    <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="cantidad" name="cantidad" required
-                                              ngModel #cantidad="ngModel" placeholder="cantidad" [(ngModel)]="prod.inventario.cantidad">
-                                    </div>
-                                      <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)"
-                                            class="alert alert-danger" role="alert">
-                                          <small *ngIf="cantidad.errors.required">
-                                              El cantidad es invalido
-                                          </small>
-                                      </div>
-                                  </div>
-                                  <div class="form-group col-xs-12 m-b-15">
                                     <label for="precioVenta">precioVenta</label>
                                     <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="precioVenta" name="precioVenta" required (change)="changeCalc()" (keyup)="changeCalc()"
-                                              ngModel #precioVenta="ngModel" placeholder="precioVenta" [(ngModel)]="prod.inventario.precioVenta">
+                                    <span class="input-group-addon"><input type="radio" name="precioAlt" checked (change)="verifica(precioVenta,'precioVenta')"></span>
+                                      <input type="number" class="form-control" id="precioVenta" name="precioVenta" required
+                                              ngModel #precioVenta="ngModel" placeholder="precioVenta" [(ngModel)]="prod.precioVenta">
                                     </div>
                                       <div *ngIf="precioVenta.invalid && (precioVenta.dirty || precioVenta.touched)"
                                             class="alert alert-danger" role="alert">
@@ -368,11 +351,26 @@
                                       </div>
                                   </div>
                                   <div class="form-group col-xs-6 m-b-15">
-                                    <label for="precioClienteEs">precioClienteEs</label>
+                                    <label for="cantidad">cantidad</label>
                                     <div class="input-group">
                                       <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="precioClienteEs" name="precioClienteEs"
-                                              ngModel #precioClienteEs="ngModel" placeholder="precioClienteEs" [(ngModel)]="prod.inventario.precioClienteEs">
+                                      <input type="number" class="form-control" id="cantidad" name="cantidad" required autofocus
+                                              ngModel #cantidad="ngModel" placeholder="cantidad" [(ngModel)]="prod.cantidad">
+                                    </div>
+                                      <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)"
+                                            class="alert alert-danger" role="alert">
+                                          <small *ngIf="cantidad.errors.required">
+                                              El cantidad es invalido
+                                          </small>
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group col-xs-6 m-b-15">
+                                    <label for="precioClienteEs">precioClienteEs</label>
+                                    <div class="input-group">
+                                      <span class="input-group-addon"><input type="radio" name="precioAlt" (change)="verifica(precioClienteEs,'precioClienteEs')"></span>
+                                      <input type="number" class="form-control" id="precioClienteEs" name="precioClienteEs" disabled
+                                              ngModel #precioClienteEs="ngModel" placeholder="precioClienteEs" [(ngModel)]="prod.precioClienteEs">
                                     </div>
                                       <div *ngIf="precioClienteEs.invalid && (precioClienteEs.dirty || precioClienteEs.touched)"
                                             class="alert alert-danger" role="alert">
@@ -384,9 +382,9 @@
                                   <div class="form-group col-xs-6 m-b-15">
                                     <label for="precioDistribuidor">precioDistribuidor</label>
                                     <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <input type="number" class="form-control" id="precioDistribuidor" name="precioDistribuidor"
-                                              ngModel #precioDistribuidor="ngModel" placeholder="precioDistribuidor" [(ngModel)]="prod.inventario.precioDistribuidor">
+                                      <span class="input-group-addon"><input type="radio" name="precioAlt" (change)="verifica(precioDistribuidor,'precioDistribuidor')"></span>
+                                      <input type="number" class="form-control" id="precioDistribuidor" name="precioDistribuidor" disabled
+                                              ngModel #precioDistribuidor="ngModel" placeholder="precioDistribuidor" [(ngModel)]="prod.precioDistribuidor">
                                     </div>
                                       <div *ngIf="precioDistribuidor.invalid && (precioDistribuidor.dirty || precioDistribuidor.touched)"
                                             class="alert alert-danger" role="alert">
@@ -395,28 +393,11 @@
                                           </small>
                                       </div>
                                   </div>
-                                  <div class="form-group col-xs-12 m-b-15">
-                                    <label for="sucursal">Sucursal</label>
-                                    <div class="input-group">
-                                      <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                      <select class="form-control" id="sucursal" name="sucursal" required
-                                              ngModel #sucursal="ngModel" [(ngModel)]="prod.sucursal">
-                                        <option value=""></option>
-                                        <option *ngFor="let data of comboSucursalesProducto" value="{{data.id}}">{{data.nombre}}</option>
-                                      </select>
-                                    </div>
-                                      <div *ngIf="sucursal.invalid && (sucursal.dirty || sucursal.touched)"
-                                            class="alert alert-danger" role="alert">
-                                          <small *ngIf="sucursal.errors.required">
-                                              El sucursal es invalido
-                                          </small>
-                                      </div>
-                                  </div>
                                   <input type="hidden" class="form-control" id="id" name="id" required
-                                        ngModel #id="ngModel" [(ngModel)]="prod.inventario.id">
+                                        ngModel #id="ngModel" [(ngModel)]="prod.id">
                                   <div class="form-group col-xs-12 text-right m-b-15">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
-                                      <button type="button" class="btn btn-success" (click)="agregarVenta(ProdForm.value)"><i class="fa fa-save"></i> Guardar</button>
+                                      <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
                                   </div>
                               </div>
                             </form>
@@ -470,7 +451,7 @@
                                               <td>{{((data.telefono!=null)?data.telefono:'')}}</td>
                                               <td>
 
-                                                <button type="button" class="btn btn-success" (click)="seleccionar(data)" style="cursor:pointer;"><i class="fa fa-check"></i></button>
+                                                <button type="button" class="btn btn-default" (click)="seleccionar(data)" style="cursor:pointer;"><i class="fa fa-hand-o-up"></i></button>
                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="cargarSingle(data.id)" style="cursor:pointer;"><i class="fa fa-edit"></i></button>
                                                 <!-- <button type="button" class="btn btn-danger" (click)="delete(data.id)" style="cursor:pointer;"><i class="fa fa-times"></i></button> -->
 
@@ -495,7 +476,7 @@
             </div>
           <!-- Final Modal Ingreso -->
 
-          <!-- Inicio Modal Ingreso Proveedores -->
+          <!-- Inicio Modal Ingreso Clientes -->
           <div id="insertModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
               <div class="modal-dialog modal-lg">
                   <div class="modal-content">
@@ -516,6 +497,20 @@
                                       class="alert alert-danger" role="alert">
                                     <small *ngIf="nombre.errors.required">
                                         El Nombre es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="apellido">Apellido</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="apellido" name="apellido" required
+                                        ngModel #apellido="ngModel" placeholder="Apellido">
+                              </div>
+                                <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="apellido.errors.required">
+                                        El Apellido es invalido
                                     </small>
                                 </div>
                             </div>
@@ -562,16 +557,16 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-4 m-b-15">
-                              <label for="cuenta">Cuenta</label>
+                              <label for="celular">Celular</label>
                               <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                <input type="number" class="form-control" id="cuenta" name="cuenta" required
-                                        ngModel #cuenta="ngModel" placeholder="Cuenta">
+                                <input type="number" class="form-control" id="celular" name="celular" required
+                                        ngModel #celular="ngModel" placeholder="Celular">
                               </div>
-                                <div *ngIf="cuenta.invalid && (cuenta.dirty || cuenta.touched)"
+                                <div *ngIf="celular.invalid && (celular.dirty || celular.touched)"
                                       class="alert alert-danger" role="alert">
-                                    <small *ngIf="cuenta.errors.required">
-                                        El Cuenta es invalido
+                                    <small *ngIf="celular.errors.required">
+                                        El Celular es invalido
                                     </small>
                                 </div>
                             </div>
@@ -586,9 +581,9 @@
                   </div>
               </div>
             </div>
-          <!-- Final Modal Ingreso Proveedores -->
+          <!-- Final Modal Ingreso Clientes -->
 
-          <!-- Inicio Modal Editar Proveedores -->
+          <!-- Inicio Modal Editar Clientes -->
             <div id="editModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
               <div class="modal-dialog modal-lg">
                   <div class="modal-content">
@@ -609,6 +604,20 @@
                                       class="alert alert-danger" role="alert">
                                     <small *ngIf="nombre.errors.required">
                                         El Nombre es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="apellido">Apellido</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="apellido" name="apellido" required
+                                        ngModel #apellido="ngModel" placeholder="Apellido" [(ngModel)]="selectedData.apellido">
+                              </div>
+                                <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="apellido.errors.required">
+                                        El Apellido es invalido
                                     </small>
                                 </div>
                             </div>
@@ -655,16 +664,16 @@
                                 </div>
                             </div>
                             <div class="form-group col-xs-4 m-b-15">
-                              <label for="cuenta">Cuenta</label>
+                              <label for="celular">Celular</label>
                               <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                <input type="number" class="form-control" id="cuenta" name="cuenta" required
-                                        ngModel #cuenta="ngModel" placeholder="Cuenta" [(ngModel)]="selectedData.cuenta">
+                                <input type="number" class="form-control" id="celular" name="celular" required
+                                        ngModel #celular="ngModel" placeholder="Celular" [(ngModel)]="selectedData.celular">
                               </div>
-                                <div *ngIf="cuenta.invalid && (cuenta.dirty || cuenta.touched)"
+                                <div *ngIf="celular.invalid && (celular.dirty || celular.touched)"
                                       class="alert alert-danger" role="alert">
-                                    <small *ngIf="cuenta.errors.required">
-                                        El Cuenta es invalido
+                                    <small *ngIf="celular.errors.required">
+                                        El Celular es invalido
                                     </small>
                                 </div>
                             </div>
@@ -681,7 +690,62 @@
                   </div>
               </div>
             </div>
-          <!-- Final Modal Editar Proveedores -->
+          <!-- Final Modal Editar Clientes -->
+
+          <!-- Inicio Modal Ingreso Vehiculo-->
+          <div id="insertVehiculoModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content" *ngIf="prov">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h4 class="modal-title">Ingreso de datos</h4>
+                      </div>
+                      <div>
+                          <form id="insertVehiculo-form"  #InsertVehiculoForm="ngForm" (ngSubmit)="insertVehiculo(InsertVehiculoForm.value)">
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="placa">placa</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="placa" name="placa" required
+                                        ngModel #placa="ngModel" placeholder="placa">
+                              </div>
+                                <div *ngIf="placa.invalid && (placa.dirty || placa.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="placa.errors.required">
+                                        El placa es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-6 m-b-15">
+                              <label for="modelo">modelo</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <input type="text" class="form-control" id="modelo" name="modelo" required
+                                        ngModel #modelo="ngModel" placeholder="modelo">
+                              </div>
+                                <div *ngIf="modelo.invalid && (modelo.dirty || modelo.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="modelo.errors.required">
+                                        El modelo es invalido
+                                    </small>
+                                </div>
+                            </div>
+
+                            <input type="hidden" class="form-control" id="cliente" name="cliente" required
+                                        ngModel #cliente="ngModel" [(ngModel)]="prov.id">
+                            <div class="form-group col-xs-12 text-right m-b-15">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times-circle" ></i> Cancel</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+                            </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer" style="border:none;">
+                      </div>
+                  </div>
+              </div>
+            </div>
+          <!-- Final Modal Ingreso -->
+
 <!-- Inicio Notificaciones -->
   <simple-notifications [options]="options"></simple-notifications>
 <!-- Fin Notificaciones -->

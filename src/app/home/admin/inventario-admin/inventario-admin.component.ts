@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InventarioService } from "./../_services/inventario.service";
 import { TiposProductoService } from "./../_services/tipos-producto.service";
+import { SucursalesService } from "./../_services/sucursales.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
@@ -15,6 +16,8 @@ export class InventarioAdminComponent implements OnInit {
   title:string="Inventario Administrador"
   Table:any = []
   comboTiposProducto:any
+  comboSucursalesProducto:any
+  filter:any = "All"
   idRol=+localStorage.getItem('currentRolId');
   Agregar = +localStorage.getItem('permisoAgregar')
   Modificar = +localStorage.getItem('permisoModificar')
@@ -26,6 +29,7 @@ export class InventarioAdminComponent implements OnInit {
   constructor(
     private _service: NotificationsService,
     private mainService: InventarioService,
+    private subParentService: SucursalesService,
     private parentService: TiposProductoService
   ) { }
 
@@ -47,8 +51,37 @@ export class InventarioAdminComponent implements OnInit {
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.getAllAdmin()
+    if(this.filter=="All"){
+      this.mainService.getAllAdmin()
+                            .then(response => {
+                              this.Table.length = 0
+                              let num:number=0
+                              response.forEach(element => {
+                                num++
+                                element.correl = num
+                                this.Table.push(element)
+                              });
+                              console.log(this.Table);
+
+                              $("#editModal .close").click();
+                              $("#insertModal .close").click();
+                              $('#Loading').css('display','none')
+                              console.clear
+                            }).catch(error => {
+                              console.clear
+                              this.createError(error)
+                              $('#Loading').css('display','none')
+                            })
+    }else{
+      let data = {
+        id:0,
+        state:this.filter,
+        filter:'sucursal'
+      }
+      this.mainService.getAllFilter(data)
                       .then(response => {
+                        console.log(response);
+
                         this.Table.length = 0
                         let num:number=0
                         response.forEach(element => {
@@ -67,6 +100,8 @@ export class InventarioAdminComponent implements OnInit {
                         this.createError(error)
                         $('#Loading').css('display','none')
                       })
+    }
+
   }
 
   insert(formValue:any){
@@ -104,6 +139,15 @@ export class InventarioAdminComponent implements OnInit {
     this.parentService.getAll()
                       .then(response => {
                         this.comboTiposProducto = response
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+    this.subParentService.getAll()
+                      .then(response => {
+                        this.comboSucursalesProducto = response
                         console.clear
                       }).catch(error => {
                         console.clear

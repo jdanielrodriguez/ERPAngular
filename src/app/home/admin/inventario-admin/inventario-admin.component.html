@@ -40,9 +40,14 @@
                   <h3 class="panel-title">
                       <button *ngIf="idRol<=2" type="button" class="btn btn-primary form-control" routerLinkActive="active" [routerLink]="[ './../tipos-producto' ]" style="cursor:pointer;"><i class="fa fa-list"></i>Tipo Producto</button>
                   </h3>
-                  <ul class="panel-controls">
-                      <input type="text" class="form-control" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                  <ul class="panel-controls d-inline" >
+                      <input type="text" class="form-control d-inline" placeholder="Busqueda" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                      <select class="form-control d-inline" id="filter" name="filter" (change)="cargarAll()" [(ngModel)]="filter" [ngModelOptions]="{standalone: true}">
+                        <option value="All">Todas las Sucursales</option>
+                        <option *ngFor="let data of comboSucursalesProducto" value="{{data.id}}">{{data.nombre}}</option>
+                      </select>
                   </ul>
+
               </div>
               <div class="panel-body">
                   <table class="table datatable table-hover table-responsive text-center"  [mfData]="Table | filter : search" #mf="mfDataTable"
@@ -257,6 +262,7 @@
                                     </small>
                                 </div>
                             </div>
+
                             <input type="hidden" class="form-control" id="producto" name="producto" required
                                       ngModel #producto="ngModel" [(ngModel)]="selectedData.productos.id">
                             <div class="form-group col-xs-6 m-b-15">
@@ -326,6 +332,23 @@
                                       class="alert alert-danger" role="alert">
                                     <small *ngIf="precioDistribuidor.errors.required">
                                         El precioDistribuidor es invalido
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 m-b-15">
+                              <label for="sucursal">Sucursal</label>
+                              <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                <select class="form-control" id="sucursal" name="sucursal" required
+                                        ngModel #sucursal="ngModel" [(ngModel)]="selectedData.sucursal">
+                                  <option value=""></option>
+                                  <option *ngFor="let data of comboSucursalesProducto" value="{{data.id}}">{{data.nombre}}</option>
+                                </select>
+                              </div>
+                                <div *ngIf="sucursal.invalid && (sucursal.dirty || sucursal.touched)"
+                                      class="alert alert-danger" role="alert">
+                                    <small *ngIf="sucursal.errors.required">
+                                        El sucursal es invalido
                                     </small>
                                 </div>
                             </div>

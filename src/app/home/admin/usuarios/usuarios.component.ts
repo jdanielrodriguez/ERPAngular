@@ -4,6 +4,7 @@ import { EmployeesService } from "./../_services/employees.service";
 import { RolesService } from "./../_services/roles.service";
 import { AccesosService } from "./../_services/accesos.service";
 import { ModulosService } from '../_services/modulos.service';
+import { SucursalesService } from "./../_services/sucursales.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
@@ -22,6 +23,7 @@ export class UsuariosComponent implements OnInit {
   selectedData:any
   parentCombo:any
   secondParentCombo:any
+  comboSucursalesProducto:any
   modulos:any = []
   idRol=+localStorage.getItem('currentRolId');
   Agregar = +localStorage.getItem('permisoAgregar')
@@ -41,6 +43,7 @@ export class UsuariosComponent implements OnInit {
     private mainService: UsersService,
     private parentService: EmployeesService,
     private secondParentService: RolesService,
+    private subParentService: SucursalesService,
     private secondChildService: ModulosService,
     private childService: AccesosService
   ) { }
@@ -239,6 +242,15 @@ export class UsuariosComponent implements OnInit {
                       }).catch(error => {
                         console.clear
                         this.createError(error)
+                      })
+    this.subParentService.getAll()
+                      .then(response => {
+                        this.comboSucursalesProducto = response
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
                       })
   }
 

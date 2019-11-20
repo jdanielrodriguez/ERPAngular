@@ -34,6 +34,8 @@ import { EstadisticaClientesComponent } from './estadistica-clientes/estadistica
 import { EstadisticaVentasComponent } from './estadistica-ventas/estadistica-ventas.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';
 import { SueldosComponent } from './sueldos/sueldos.component';
+import { TallerComponent } from './taller/taller.component';
+import { GenerarOrdenComponent } from './generar-orden/generar-orden.component';
 
 import { DiarioComponent } from './conta/diario/diario.component';
 import { BalanceComponent } from './conta/balance/balance.component';
@@ -66,6 +68,7 @@ const routes: Routes = [
     { path: 'inventario-admin', component: InventarioAdminComponent },
     { path: 'inventario-inicial', component: InventarioInicialComponent },
     { path: 'tipos-producto', component: TiposProductoComponent },
+    { path: 'taller', component: TallerComponent },
     { path: 'pagos', component: PagosComponent },
     { path: 'estadistica', component:  EstadisticaVentasComponent},
     { path: 'estadistica-clientes', component: EstadisticaClientesComponent },
@@ -81,6 +84,8 @@ const routes: Routes = [
     { path: 'contabilidad/balance-de-saldos', component: BalanceSaldosComponent },
   ]},
   { path: 'compras-anuladas', component: ComprasAnuladasComponent },
+  { path: 'generar-orden', component: GenerarOrdenComponent },
+  { path: 'orden-taller/:id', component: GenerarOrdenComponent },
   { path: 'generar-compra', component: GenerarCompraComponent },
   { path: 'generar-venta', component: GenerarVentaComponent },
   { path: 'ventas-anuladas', component: VentasAnuladasComponent },

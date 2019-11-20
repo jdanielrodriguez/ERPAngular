@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductosService } from "./../_services/productos.service";
 import { InventarioService } from "./../_services/inventario.service";
 import { TiposProductoService } from "./../_services/tipos-producto.service";
+import { SucursalesService } from "./../_services/sucursales.service";
 
 import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any
-
+let prods = []
 @Component({
   selector: 'app-inventario-inicial',
   templateUrl: './inventario-inicial.component.html',
@@ -15,6 +17,7 @@ export class InventarioInicialComponent implements OnInit {
   title:string="Inventario Inicial"
   Table:any = []
   comboTiposProducto:any
+  comboSucursalesProducto:any
   idRol=+localStorage.getItem('currentRolId');
   Agregar = +localStorage.getItem('permisoAgregar')
   Modificar = +localStorage.getItem('permisoModificar')
@@ -23,15 +26,28 @@ export class InventarioInicialComponent implements OnInit {
   precioClienteEs1:number
   precioDistribuidor1:number
   selectedData:any
+  productos:any
+  prod:any = {
+    codigo:"",
+    id:0,
+    descripcion:"",
+    nombre:"",
+    tipo:'',
+    marcaDes:''
+  }
   public rowsOnPage = 5;
+  public searchterm:any
   public search:any
   constructor(
     private _service: NotificationsService,
+    private subParentService: SucursalesService,
+    private ProductosService: ProductosService,
     private mainService: InventarioService,
     private parentService: TiposProductoService
   ) { }
 
   ngOnInit() {
+    this.getProductos();
     this.cargarAll()
     this.cargarCombos()
     this.colapsse()
@@ -46,6 +62,20 @@ export class InventarioInicialComponent implements OnInit {
       $('.xn-openable').removeClass("active");
     }
   }
+  async getProductos() {
+    await this.ProductosService.getAll()
+                        .then(element =>{
+                          this.productos = element;
+                        }).catch(error => {
+                          console.log("Error adquirido");
+
+                        })
+  }
+  seleccionarProd(data){
+    this.prod=data
+    this.prod.inventario.cantidad = 0
+    this.searchterm=data.codigo
+  }
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
@@ -59,7 +89,6 @@ export class InventarioInicialComponent implements OnInit {
                           this.Table.push(element)
                         });
                         // console.log(this.Table);
-
                         $("#editModal .close").click();
                         $("#insertModal .close").click();
                         $('#Loading').css('display','none')
@@ -75,7 +104,8 @@ export class InventarioInicialComponent implements OnInit {
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
     console.log(formValue);
-
+    formValue.id =this.prod.id
+    {
     this.mainService.create(formValue)
                       .then(response => {
                         this.cargarAll()
@@ -94,7 +124,7 @@ export class InventarioInicialComponent implements OnInit {
                         }
                         $('#Loading').css('display','none')
                       })
-
+                    }
 
   }
 
@@ -114,6 +144,15 @@ export class InventarioInicialComponent implements OnInit {
     this.parentService.getAll()
                       .then(response => {
                         this.comboTiposProducto = response
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+    this.subParentService.getAll()
+                      .then(response => {
+                        this.comboSucursalesProducto = response
                         console.clear
                       }).catch(error => {
                         console.clear

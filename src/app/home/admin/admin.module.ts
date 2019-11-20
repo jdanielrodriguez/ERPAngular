@@ -34,6 +34,8 @@ import { GastosService } from "./_services/gastos.service";
 import { SueldosService } from "./_services/sueldos.service";
 import { ComisionesService } from "./_services/comisiones.service";
 import { EstadisticasService } from "./_services/estadisticas.service";
+import { VehiculosService } from "./_services/vehiculos.service";
+import { TallerService } from "./_services/taller.service";
 
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -75,6 +77,8 @@ import { BalanceComponent } from './conta/balance/balance.component';
 import { EstadoResultadosComponent } from './conta/estado-resultados/estado-resultados.component';
 import { FlujoComponent } from './conta/flujo/flujo.component';
 import { BalanceSaldosComponent } from './conta/balance-saldos/balance-saldos.component';
+import { TallerComponent } from './taller/taller.component';
+import { GenerarOrdenComponent } from './generar-orden/generar-orden.component';
 
 @NgModule({
   imports: [
@@ -128,7 +132,9 @@ import { BalanceSaldosComponent } from './conta/balance-saldos/balance-saldos.co
     BalanceComponent,
     EstadoResultadosComponent,
     FlujoComponent,
-    BalanceSaldosComponent
+    BalanceSaldosComponent,
+    TallerComponent,
+    GenerarOrdenComponent
   ],
   providers: [
     UsersService,
@@ -153,7 +159,9 @@ import { BalanceSaldosComponent } from './conta/balance-saldos/balance-saldos.co
     MovimientosCobrarService,
     GastosService,
     SueldosService,
+    VehiculosService,
     ComisionesService,
+    TallerService,
     EstadisticasService
   ]
 })

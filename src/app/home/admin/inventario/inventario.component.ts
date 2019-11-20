@@ -41,7 +41,36 @@ export class InventarioComponent implements OnInit {
   cargarAll(){
     $('#Loading').css('display','block')
     $('#Loading').addClass('in')
-    this.mainService.getAll()
+    let sucursal = localStorage.getItem('currentSucursal')
+    console.log(this.idRol);
+
+    if(this.idRol>2){
+      if(sucursal && sucursal!=''){
+          let data = {
+            id:0,
+            state:sucursal,
+            filter:'sucursal'
+          }
+          this.mainService.getAllFilter(data)
+                                .then(response => {
+                                  this.Table.length = 0
+                                  let num:number=0
+                                  response.forEach(element => {
+                                    num++
+                                    element.correl = num
+                                    this.Table.push(element)
+                                  });
+                                  $("#editModal .close").click();
+                                  $("#insertModal .close").click();
+                                  $('#Loading').css('display','none')
+                                  console.clear
+                                }).catch(error => {
+                                  console.clear
+                                  this.createError(error)
+                                  $('#Loading').css('display','none')
+                                })
+      }else{
+        this.mainService.getAll()
                       .then(response => {
                         this.Table.length = 0
                         let num:number=0
@@ -59,6 +88,30 @@ export class InventarioComponent implements OnInit {
                         this.createError(error)
                         $('#Loading').css('display','none')
                       })
+      }
+    }else{
+      this.mainService.getAll()
+                      .then(response => {
+                        console.log(response);
+
+                        this.Table.length = 0
+                        let num:number=0
+                        response.forEach(element => {
+                          num++
+                          element.correl = num
+                          this.Table.push(element)
+                        });
+                        $("#editModal .close").click();
+                        $("#insertModal .close").click();
+                        $('#Loading').css('display','none')
+                        console.clear
+                      }).catch(error => {
+                        console.clear
+                        this.createError(error)
+                        $('#Loading').css('display','none')
+                      })
+    }
+
   }
 
   insert(formValue:any){

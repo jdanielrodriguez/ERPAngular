@@ -47,7 +47,7 @@ closeResult: string;
     this.authenticationService.Authentication(formValue)
       .then(response => {
         this.auth = response
-        if(response.estado>0){
+        if(1){
           // console.log(response.username)
           let type:string = null;
           localStorage.setItem('currentUser', response.username);
@@ -56,6 +56,7 @@ closeResult: string;
           localStorage.setItem('currentLastName', ((response.empleados?response.empleados.apellido:'')));
           localStorage.setItem('currentId', response.id);
           localStorage.setItem('currentPicture', response.picture);
+          localStorage.setItem('currentSucursal', response.sucursal);
           localStorage.setItem('currentState', response.estado);
           localStorage.setItem('currentRol', response.roles.descripcion);
           localStorage.setItem('currentRolId', response.rol);

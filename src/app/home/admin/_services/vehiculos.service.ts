@@ -6,7 +6,7 @@ import { path } from "../../../config.module";
 import "rxjs/add/operator/toPromise";
 
 @Injectable()
-export class InventarioService {
+export class VehiculosService {
 
  	headers = new Headers({'Access-Control-Allow-Origin':'*',
    'cache-control':'no-cache',
@@ -26,7 +26,7 @@ export class InventarioService {
  }
 
      getAll():Promise<any> {
-     let url = `${this.basePath}/api/inventario`
+     let url = `${this.basePath}/api/vehiculos`
        return this.http.get(url)
                        .toPromise()
                          .then(response => {
@@ -36,32 +36,21 @@ export class InventarioService {
                          .catch(this.handleError)
      }
 
-     getAllAdmin():Promise<any> {
-      let url = `${this.basePath}/api/admin/inventario`
-        return this.http.get(url)
-                        .toPromise()
-                          .then(response => {
-                            //console.log(response.json())
-                            return response.json()
-                          })
-                          .catch(this.handleError)
-      }
 
+     getAllMine(id):Promise<any> {
+     let url = `${this.basePath}/api/usuarios/${id}/vehiculos`
+       return this.http.get(url)
+                       .toPromise()
+                         .then(response => {
+                           //console.log(response.json())
+                           return response.json()
+                         })
+                         .catch(this.handleError)
+     }
 
-      getAllFilter(data):Promise<any> {
-      let filter = data.filter?"?filter="+data.filter:"";
-      let url = `${this.basePath}/api/filter/${data.id}/inventario/${data.state}${filter}`
-        return this.http.get(url,{headers: this.headers})
-                        .toPromise()
-                          .then(response => {
-                            //console.log(response)
-                            return response.json()
-                          })
-                          .catch(this.handleError)
-      }
 
      create(form):Promise<any> {
-     let url = `${this.basePath}/api/inventario`
+     let url = `${this.basePath}/api/vehiculos`
        return this.http.post(url,form)
                        .toPromise()
                          .then(response => {
@@ -72,7 +61,7 @@ export class InventarioService {
      }
 
      delete(id):Promise<any> {
-     let url = `${this.basePath}/api/inventario/${id}`
+     let url = `${this.basePath}/api/vehiculos/${id}`
        return this.http.delete(url)
                        .toPromise()
                          .then(response => {
@@ -83,7 +72,7 @@ export class InventarioService {
      }
 
      update(form):Promise<any> {
-     let url = `${this.basePath}/api/inventario/${form.id}`
+     let url = `${this.basePath}/api/vehiculos/${form.id}`
        return this.http.put(url,form)
                        .toPromise()
                          .then(response => {
@@ -94,7 +83,7 @@ export class InventarioService {
      }
 
      getSingle(id:number):Promise<any> {
-     let url = `${this.basePath}/api/inventario/${id}`
+     let url = `${this.basePath}/api/vehiculos/${id}`
        return this.http.get(url)
                        .toPromise()
                          .then(response => {
