@@ -32,7 +32,7 @@
     "bootstrap": "^3.4.1",
     "core-js": "^2.6.10",
     "jquery": "^3.4.1",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.0",
     "materialize-css": "^0.100.2",
     "ng2-charts": "^1.6.0",
     "ng2-drag-drop": "^2.9.2",
